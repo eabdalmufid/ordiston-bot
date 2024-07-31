@@ -82,8 +82,8 @@ const Smakanancentaur = 10000
 const Bhealtmonster = 20000
 const Bpet = 150000
 const Spet = 1000
-const Blimit = 25000
-const Slimit = 20000
+const Blimit = 1000000
+const Slimit = 100000
 const Bexp = 550
 const Baqua = 5000
 const Saqua = 1000
@@ -1424,4 +1424,5 @@ handler.tags = ['rpg']
 handler.command = /^(shop)$/i
 handler.limit = true
 handler.group = true
+handler.disabled = true
 export default handler

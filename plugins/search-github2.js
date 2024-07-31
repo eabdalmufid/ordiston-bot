@@ -24,12 +24,13 @@ ${repo.description}` : ''}
 $ git clone ${repo.clone_url}
 `.trim()
     }).join('\n— — — — — — — — — — — — — —\n')
-    conn.sendHydrated(m.chat, `*${htki} ɢɪᴛʜᴜʙ sᴇᴀʀᴄʜ ${htka}*\n` + str, botdate, null, json.items.map((repo, index) => { return `${repo.html_url}` }), ['[ 1 ] ʟ ɪ ɴ ᴋ', '[ 2 ] ʟ ɪ ɴ ᴋ', '[ 3 ] ʟ ɪ ɴ ᴋ'], null,null, [[null,null],[null,null],[null,null]],m)
+    //conn.sendButton(m.chat, `*${htki} ɢɪᴛʜᴜʙ sᴇᴀʀᴄʜ ${htka}*\n` + str, botdate, null, json.items.map((repo, index) => { return `${repo.html_url}` }), ['[ 1 ] ʟ ɪ ɴ ᴋ', '[ 2 ] ʟ ɪ ɴ ᴋ', '[ 3 ] ʟ ɪ ɴ ᴋ'], null,null, [[null,null],[null,null],[null,null]],m)
+    conn.sendTemplateButtonDoc(m.chat, null, `*${htki} ɢɪᴛʜᴜʙ sᴇᴀʀᴄʜ ${htka}*\n` + str, wm, null, null, fakes, fakefb)
 }
-handler.help = ['ghs'].map(v => v + ' <pencarian>')
+handler.help = ['githubsearch'].map(v => v + ' <pencarian>')
 handler.tags = ['internet','downloader']
 
-handler.command = /^(ghs|githubs)?$/i
+handler.command = /^g(ithub|h)s(earch)?$/i
 
 export default handler
 

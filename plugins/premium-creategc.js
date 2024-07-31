@@ -31,10 +31,9 @@ ${JSON.stringify(ha.participants)}`)
     }
   }
 }
-handler.help = ['prembuatgroup']
+handler.help = ['creategroup']
 handler.tags = ['premium']
-handler.command = /^prembuatgroup$/
-handler.owner = false
-handler.group = true
-handler.premium = true
+handler.command = /^((create|buat)(gc|grup|group))$/
+handler.owner = true
+handler.premium = false
 export default handler

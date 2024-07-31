@@ -1,124 +1,130 @@
-let handler = (m, { conn, usedPrefix, command, text }) => {
-  conn.tembak = conn.tembak || { musuh: [], tembak: [] }
-   if(/kiri/i.test(text)) {
-
-    let kiri = [
-      ["🤠", "・", "・", "・", "・", "・"],
-      ["・", "🤠", "・", "・", "・", "・"],
-      ["・", "・", "🤠", "・", "・", "・"],
-      ["・", "・", "・", "🤠", "・", "・"],
-      ["・", "・", "・", "・", "🤠", "・"],
-      ["・", "・", "・", "・", "・", "🤠"]
-    ]
-
-    if(conn.tembak.tembak.indexOf("🤠") == 0) {
-      conn.tembak.tembak = kiri[0]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 1) {
-      conn.tembak.tembak = kiri[0]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 2) {
-      conn.tembak.tembak = kiri[1]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 3) {
-      conn.tembak.tembak = kiri[2]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 4) {
-      conn.tembak.tembak = kiri[3]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 5) {
-      conn.tembak.tembak = kiri[4]
+const handler = async (m, { conn }) => {
+    conn.koboy = conn.koboy || {};
+  
+    if (conn.koboy[m.chat]) return m.reply('Kamu sedang bermain game Koboy!');
+    let playerPosition, criminalPosition;
+    do {
+      playerPosition = Math.floor(Math.random() * 6);
+      criminalPosition = Math.floor(Math.random() * 6);
+    } while (playerPosition === criminalPosition);
+  
+    let gameState = `🤠 Koboy Mengejar Penjahat 🥷
+  
+  Wilayah saya:
+  ${"・".repeat(playerPosition)}🤠${"・".repeat(5 - playerPosition)}
+  Wilayah penjahat:
+  ${"・".repeat(criminalPosition)}🥷${"・".repeat(5 - criminalPosition)}
+  Ketik *'kanan'* untuk bergerak ke kanan.
+  Ketik *'kiri'* untuk bergerak ke kiri.`;
+  
+    let { key } = await conn.reply(m.chat, gameState, m);
+  
+    conn.koboy[m.chat] = {
+      playerPosition,
+      criminalPosition,
+      key,
+      oldkey: key,
+      earnedExp: 10000,
+      earnedMoney: 1000000,
+      sender: m.sender,
+      moveCount: 0,
+      maxMoves: 5,
+      roomId: m.chat,
+      timeout: setTimeout(() => {
+        if (conn.koboy && conn.koboy[m.chat] && conn.koboy[m.chat].roomId === m.chat) {
+          conn.sendMessage(m.chat, { delete: key });
+          delete conn.koboy[m.chat];
+        }
+      }, 60000 * 2),
+    };
+  };
+  
+  handler.before = async (m, { conn }) => {
+    conn.koboy = conn.koboy || {};
+    let user = global.db.data.users[m.sender];
+    if (!conn.koboy[m.chat] || conn.koboy[m.chat].roomId !== m.chat || !['kiri', 'kanan'].includes(m.text.toLowerCase())) return;
+  
+    let gameData = conn.koboy[m.chat];
+    let { playerPosition, criminalPosition, key, oldkey, moveCount, maxMoves, timeout, earnedExp, earnedMoney, sender } = gameData;
+    
+    if (m.quoted || m.quoted.id == key) {
+      if (m.text.toLowerCase() === 'kiri') {
+        if (playerPosition > 0) {
+          playerPosition--;
+          moveCount++;
+        } else {
+          return m.reply('Anda sudah berada di batas kiri!');
+        }
+      } else if (m.text.toLowerCase() === 'kanan') {
+        if (playerPosition < 5) {
+          playerPosition++;
+          moveCount++;
+        } else {
+          return m.reply('Anda sudah berada di batas kanan!');
+        }
+      }
+  
+      if (playerPosition === criminalPosition) {
+      conn.sendMessage(m.chat, { delete: oldkey });
+      let earnedMoneys = randomMoney(earnedMoney, 1);
+      let earnedExps = randomMoney(earnedExp, 1);
+      user.money = (user.money || 0) + earnedMoneys;
+      user.exp = (user.exp || 0) + earnedExps;
+        delete conn.koboy[m.chat];
+        return conn.reply(m.chat, `🎉 Selamat! @${sender.split('@')[0]} berhasil mengejar penjahat! 🎉\n\n💰 Mendapatkan uang senilai *${formatRupiah(earnedMoneys)}*\n🔼 Dapatkan *${earnedExps}* EXP\n`, m, { mentions: [sender] });
+      } else if (moveCount === maxMoves) {
+      conn.sendMessage(m.chat, { delete: oldkey });
+        delete conn.koboy[m.chat];
+        return conn.reply(m.chat, `😔 Kamu kalah! @${sender.split('@')[0]} sudah mencapai batas maksimum gerakan.`, m, { mentions: [sender] });
+      }
+  
+      let gameState = `🤠 Koboy Mengejar Penjahat 🥷
+  
+  Wilayah saya:
+  ${"・".repeat(playerPosition)}🤠${"・".repeat(5 - playerPosition)}
+  Wilayah penjahat:
+  ${"・".repeat(criminalPosition)}🥷${"・".repeat(5 - criminalPosition)}
+  Ketik *'kanan'* untuk bergerak ke kanan.
+  Ketik *'kiri'* untuk bergerak ke kiri.`;
+  
+      let msg = await conn.relayMessage(m.chat, {
+        protocolMessage: {
+          key: key,
+          type: 14,
+          editedMessage: {
+            conversation: gameState
+          }
+        }
+      }, {});
+  
+      let additionalData = {
+        ...gameData,
+        playerPosition,
+        moveCount,
+        key: { id: msg }
+      };
+  
+      conn.koboy[m.chat] = Object.assign({}, conn.koboy[m.chat], additionalData);
     }
-
-    let pos = conn.tembak.musuh.join(" ") + "\n\n\n" + conn.tembak.tembak.join(" ")
-
-
-
-    if(conn.tembak.musuh.indexOf("🥷") === conn.tembak.tembak.indexOf("🤠")) return conn.sendButton(m.chat, pos, wm, [
-                                                                                              ['🔫 Tembak', `${usedPrefix}koboy tembak`]             
-                                                                                              ])
-    return conn.sendButton(m.chat, pos, wm, [
-          ['←', `${usedPrefix}koboy kiri`], ['→', `${usedPrefix}koboy kanan`]
-])
-  } else if(/kanan/i.test(text)) {
-
-    let kanan = [
-      ["🤠", "・", "・", "・", "・", "・"],
-      ["・", "🤠", "・", "・", "・", "・"],
-      ["・", "・", "🤠", "・", "・", "・"],
-      ["・", "・", "・", "🤠", "・", "・"],
-      ["・", "・", "・", "・", "🤠", "・"],
-      ["・", "・", "・", "・", "・", "🤠"]
-    ]
-
-    if(conn.tembak.tembak.indexOf("🤠") == 0) {
-      conn.tembak.tembak = kanan[1]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 1) {
-      conn.tembak.tembak = kanan[2]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 2) {
-      conn.tembak.tembak = kanan[3]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 3) {
-      conn.tembak.tembak = kanan[4]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 4) {
-      conn.tembak.tembak = kanan[5]
-    } else if(conn.tembak.tembak.indexOf("🤠") == 5) {
-      conn.tembak.tembak = kanan[5]
-    }
-
-    let pos = conn.tembak.musuh.join(" ") + "\n\n\n" + conn.tembak.tembak.join(" ")
-
-
-
-    if(conn.tembak.musuh.indexOf("🥷") === conn.tembak.tembak.indexOf("🤠")) return conn.sendButton(m.chat, pos, wm, [
-                                                                                              ['🔫 Tembak', `${usedPrefix}koboy tembak`]             
-                                                                                              ])             
-    return conn.sendButton(m.chat, pos, wm, [
-          ['←', `${usedPrefix}koboy kiri`], ['→', `${usedPrefix}koboy kanan`]
-])
-  } else if(/tembak/i.test(text)) {
-
-    if(conn.tembak.tembak.indexOf("🤠") == conn.tembak.musuh.indexOf("🥷")) {
-      conn.tembak = {}
-      global.db.data.users[m.sender].money += 1000
-      m.reply("Kamu menang!\n\nUang += 1000")
-    }
-
-  } else {
-   let randMusuh = [
-      ["🥷", "・", "・", "・", "・", "・"],
-      ["・", "🥷", "・", "・", "・", "・"],
-      ["・", "・", "🥷", "・", "・", "・"],
-      ["・", "・", "・", "🥷", "・", "・"],
-      ["・", "・", "・", "・", "🥷", "・"],
-      ["・", "・", "・", "・", "・", "🥷"]
-    ]
-   let randAku = [
-      ["🤠", "・", "・", "・", "・", "・"],
-      ["・", "🤠", "・", "・", "・", "・"],
-      ["・", "・", "🤠", "・", "・", "・"],
-      ["・", "・", "・", "🤠", "・", "・"],
-      ["・", "・", "・", "・", "🤠", "・"],
-      ["・", "・", "・", "・", "・", "🤠"]
-    ]
-
-    let musuh = random(randMusuh)
-   let aku = random(randAku)
-
-    conn.tembak.musuh = musuh
-    conn.tembak.tembak = aku
-
-    let pos = conn.tembak.musuh.join(" ") + "\n\n\n" + conn.tembak.tembak.join(" ")
-
-    if(conn.tembak.musuh.indexOf("🥷") === conn.tembak.tembak.indexOf("🤠")) return conn.sendButton(m.chat, pos, wm, [
-                                                                                              ['🔫 Tembak', `${usedPrefix}koboy tembak`]             
-                                                                                              ])
-    return conn.sendButton(m.chat, pos, wm, [
-          ['←', `${usedPrefix}koboy kiri`], ['→', `${usedPrefix}koboy kanan`]
-])
+  };
+  
+  handler.help = ['koboy'];
+  handler.tags = ['rpg'];
+  handler.command = /^(koboy)$/i;
+  handler.premium = true;
+  
+  export default handler;
+  
+  function randomMoney(max, min) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-}
-handler.help = ['koboy']
-handler.tags = ['rpg']
-handler.command = /^(koboy|coboy)/i
-
-export default handler
-
-
-function random(arr) {
-  return arr[Math.floor(Math.random() * arr.length)]
-}
+  
+  function formatRupiah(number) {
+    const formatter = new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+    });
+  
+    return formatter.format(number);
+  }

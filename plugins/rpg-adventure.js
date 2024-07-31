@@ -1,58 +1,53 @@
+import cheerio from 'cheerio'
 import fetch from 'node-fetch'
 
 const cooldown = 300000
-let handler = async (m, { usedPrefix }) => {
+let handler = async (m, {
+    usedPrefix
+}) => {
+    let imgr = flaaa
 
-let ct = ['AF','AX','AL','DZ','AS','AD','AO','AI','AQ','AG','AR','AM','AW','AU','AT','AZ','BS','BH','BD','BB','BY','BE','BZ','BJ','BM','BT','BO','BQ','BA','BW','BV','BR','IO','BN','BG','BF','BI','KH','CM','CA','CV','KY','CF','TD','CL','CN','CX','CC','CO','KM','CG','CD','CK','CR','CI','HR','CU','CW','CY','CZ','DK','DJ','DM','DO','EC','EG','SV','GQ','ER','EE','ET','FK','FO','FJ','FI','FR','GF','PF','TF','GA','GM','GE','DE','GH','GI','GR','GL','GD','GP','GU','GT','GG','GN','GW','GY','HT','HM','VA','HN','HK','HU','IS','IN','ID','IR','IQ','IE','IM','IL','IT','JM','JP','JE','JO','KZ','KE','KI','KP','KR','XK','KW','KG','LA','LV','LB','LS','LR','LY','LI','LT','LU','MO','MK','MG','MW','MY','MV','ML','MT','MH','MQ','MR','MU','YT','MX','FM','MD','MC','MN','ME','MS','MA','MZ','MM','NA','NR','NP','NL','AN','NC','NZ','NI','NE','NG','NU','NF','MP','NO','OM','PK','PW','PS','PA','PG','PY','PE','PH','PN','PL','PT','PR','QA','RS','RE','RO','RU','RW','BL','SH','KN','LC','MF','PM','VC','WS','SM','ST','SA','SN','CS','SC','SL','SG','SX','SK','SI','SB','SO','ZA','GS','SS','ES','LK','SD','SR','SJ','SZ','SE','CH','SY','TW','TJ','TZ','TH','TL','TG','TK','TO','TT','TN','TR','XT','TM','TC','TV','UG','UA','AE','GB','US','UM','UY','UZ','VU','VE','VN','VG','VI','WF','EH','YE','ZM','ZW']
-
-let ke = await fetch(`https://api.worldbank.org/v2/country/${ct.getRandom()}?format=json`)
-let kt = await ke.json()
-let imgr = flaaa.getRandom()
     let user = global.db.data.users[m.sender]
     let timers = (cooldown - (new Date - user.lastadventure))
-    if (user.health < 80) return conn.sendButton(m.chat,
-`${htki} LOW HEALTH ${htka}`,
-`ʏᴏᴜʀ ʜᴇᴀʟᴛʜ ɪs ʙᴇʟᴏᴡ 80﹗
-ᴩʟᴇᴀsᴇ ʜᴇᴀʟ ❤ ғɪʀsᴛ ᴛᴏ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴀɢᴀɪɴ.`.trim(), imgr + 'lowhealth', [
-[`ʜᴇᴀʟ ❤`, `${usedPrefix}heal`]
-], m)
-    if (new Date - user.lastadventure <= cooldown) return conn.sendButton(m.chat, 
-`${htki} COOLDOWN ${htka}`,
-`ʏᴏᴜ'ᴠᴇ ᴀʟʀᴇᴀᴅʏ *ᴀᴅᴠᴇɴᴛᴜʀᴇ*, ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ ᴛɪʟʟ ᴄᴏᴏʟᴅᴏᴡɴ ғɪɴɪsʜ.
+    let a = `ʏᴏᴜʀ ʜᴇᴀʟᴛʜ ɪs ʙᴇʟᴏᴡ 80﹗
+ᴩʟᴇᴀsᴇ ʜᴇᴀʟ ❤ ғɪʀsᴛ ᴛᴏ ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴀɢᴀɪɴ.`.trim()
+    if (user.health < 80) return conn.sendFthumb(m.chat, `LOW HEALTH`, a, imgr + 'lowhealth', '', m)
+    //conn.sendFile(m.chat, imgr + 'lowhealth', '', a, m)
+    let b = `ʏᴏᴜ'ᴠᴇ ᴀʟʀᴇᴀᴅʏ *ᴀᴅᴠᴇɴᴛᴜʀᴇ*, ᴩʟᴇᴀsᴇ ᴡᴀɪᴛ ᴛɪʟʟ ᴄᴏᴏʟᴅᴏᴡɴ ғɪɴɪsʜ.
 
-⏱️ ${timers.toTimeString()}`.trim(), imgr + 'cooldown', [
-[`ɪɴᴠᴇɴᴛᴏʀʏ`, `${usedPrefix}inventory`],
-[`ᴅᴀɪʟʏ`, `${usedPrefix}daily`]
-], m)
+⏱️ ${timers.toTimeString()}`.trim()
+    if (new Date - user.lastadventure <= cooldown) return conn.sendFthumb(m.chat, `COOLDOWN`, b, imgr + 'cooldown', '', m)
+    //conn.sendFile(m.chat, imgr + 'cooldown', '', b, m)
     const rewards = reward(user)
-    let text = `🔖 ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴛᴏ *${kt[1][0].name}*
+    const info = await getInfoNegaraAcak()
+    let teks = `🔖 ᴀᴅᴠᴇɴᴛᴜʀᴇ ᴛᴏ *${info.nama}*
 
-${cmenut}
-${cmenub} *ɪᴅ :* ${kt[1][0].id}
-${cmenub} *ᴄɪᴛʏ :* ${kt[1][0].capitalCity}
-${cmenub} *ʟᴏɴɢɪᴛᴜᴅᴇ :* ${kt[1][0].longitude}
-${cmenub} *ʟᴀᴛɪᴛᴜᴅᴇ :* ${kt[1][0].latitude}
-${cmenuf}
+*❖─···─〈*
+*│𖥂* *Nama resmi:* ${info.namaResmi}
+*│𖥂* *Wilayah:* ${info.wilayah}
+*│𖥂* *Subwilayah:* ${info.subwilayah}
+*│𖥂* *Zona waktu:* ${info.zonaWaktu.join(', ')}
+*│𖥂* *Bendera:* ${info.bendera}
+*│𖥂* *Populasi:* ${info.populasi}
+*┗───···─────𖡹*
 
 ᴀᴅᴠᴇɴᴛᴜʀᴇ ғɪɴɪsʜ (. ❛ ᴗ ❛.)
-${cmenua}`
-    for (const lost in rewards.lost) if (user[lost]) {
-        const total = rewards.lost[lost].getRandom()
-        user[lost] -= total * 1
-        if (total) text += `\n${global.rpg.emoticon(lost)}${lost}: ${total}`
-    }
-    text += '\n\n🔖 ᴀᴅᴠᴇɴᴛᴜʀᴇ ʀᴇᴡᴀʀᴅ ʀᴇᴄᴇɪᴠᴇᴅ :'
-    for (const rewardItem in rewards.reward) if (rewardItem in user) {
-        const total = rewards.reward[rewardItem].getRandom()
-        user[rewardItem] += total * 1
-        if (total) text += `\n⮕ ${global.rpg.emoticon(rewardItem)}${rewardItem}: ${total}`
-    }
-    conn.sendButton(m.chat, 
-    `${htki} ADVENTURE ${htka}`, 
-    text.trim(), `https://static-maps.yandex.ru/1.x/?lang=id-ID&ll=${kt[1][0].longitude},${kt[1][0].latitude}&z=12&l=map&size=600,300`, [
-[`ɪɴᴠᴇɴᴛᴏʀʏ`, `${usedPrefix}inventory`],
-[`ᴅᴀɪʟʏ`, `${usedPrefix}daily`]
-], m)
+${readMore}`
+    for (const lost in rewards.lost)
+        if (user[lost]) {
+            const total = rewards.lost[lost].getRandom()
+            user[lost] -= total * 1
+            if (total) teks += `\n${global.rpg.emoticon(lost)}${lost}: ${total}`
+        }
+    teks += '\n\n🔖 ᴀᴅᴠᴇɴᴛᴜʀᴇ ʀᴇᴡᴀʀᴅ ʀᴇᴄᴇɪᴠᴇᴅ :'
+    for (const rewardItem in rewards.reward)
+        if (rewardItem in user) {
+            const total = rewards.reward[rewardItem].getRandom()
+            user[rewardItem] += total * 1
+            if (total) teks += `\n⮕ ${global.rpg.emoticon(rewardItem)}${rewardItem}: ${total}`
+        }
+    conn.sendFthumb(m.chat, 'ADVENTURE', teks.trim(), info.urlGambarOg, '', m)
+    //conn.sendFile(m.chat, info.urlGambarOg, '', `${htki} ADVENTURE ${htka}\n` + teks.trim(), m)
     user.lastadventure = new Date * 1
 }
 handler.help = ['adventure']
@@ -61,8 +56,40 @@ handler.command = /^adv(entur(es?)?)?$/i
 
 handler.cooldown = cooldown
 handler.disabled = false
+handler.register = true
 
 export default handler
+
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4201)
+
+async function getInfoNegaraAcak() {
+    try {
+        const response = await fetch('https://restcountries.com/v3.1/all');
+        const data = await response.json();
+        const indeksAcak = Math.floor(Math.random() * data.length);
+        const negara = data[indeksAcak];
+        const html = await (await fetch(negara.maps.googleMaps)).text();
+        const $ = cheerio.load(html);
+        const ogImageURL = $('meta[property="og:image"]').attr('content');
+
+        const info = {
+            nama: negara.name.common || 'Tidak diketahui',
+            namaResmi: negara.name.official || 'Tidak diketahui',
+            wilayah: negara.region || 'Tidak diketahui',
+            subwilayah: negara.subregion || 'Tidak diketahui',
+            zonaWaktu: negara.timezones || 'Tidak diketahui',
+            bendera: negara.flag || 'Tidak diketahui',
+            populasi: negara.population || 'Tidak diketahui',
+            urlGambarOg: ogImageURL || 'https://raw.githubusercontent.com/abclimadasar/silence/master/thumbnail.jpg'
+        };
+
+        return info;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
 
 function reward(user = {}) {
     let rewards = {
@@ -101,7 +128,6 @@ function reward(user = {}) {
             kyubi: [0, 1, 0, 0, 0],
             lion: [0, 1, 0, 0, 0],
             pet: [0, 1, 0, 0, 0],
-            joinlimit: [0, 0, 1, 0, 0,],
             phonix: [0, 1, 0, 0, 0],
             rhinoceros: [0, 1, 0, 0, 0],
             robo: [0, 1, 0, 0, 0],

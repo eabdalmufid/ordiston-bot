@@ -41,8 +41,3 @@ handler.help = ['stickertag (caption|reply media)', 'sticktag <url>']
 handler.tags = ['tag']
 handler.command = /^(stickertag|sticktag)$/i
 export default handler
-
-
-const isUrl = (text) => {
-  return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/, 'gi'))
-}

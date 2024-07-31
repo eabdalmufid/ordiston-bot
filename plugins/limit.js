@@ -4,10 +4,8 @@ let list = Object.entries(global.db.data.users)
 	let lim = !args || !args[0] ? 1000 : isNumber(args[0]) ? parseInt(args[0]) : 1000
 	lim = Math.max(1, lim)
 	list.map(([user, data], i) => (Number(data.limit = lim)))
-		conn.reply(m.chat, `*berhasil direset ${lim} / user*`, m)
+		conn.reply(m.chat, `*Berhasil direset ${lim} / user*`, fakes, adReply)
 		}
-    let thumbLimit = `https://telegra.ph/file/e26524fd8d6192c362cc4.jpg`
-		
     let who
     if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     else who = m.sender
@@ -15,18 +13,16 @@ let list = Object.entries(global.db.data.users)
     let ke2 = global.db.data.users[who].exp
     let ke3 = global.db.data.users[who].money
     
-    conn.sendButton(m.chat, bottime,  `LIMIT YANG KAMU MILIKI
-🎫️ Sisa Limit
-*${ke1}*
+    let caption = `
+${dmenut} *B A N K  U S E R*
+${dmenub} 📛 *Limit:* ${ke1}
+${dmenub} 💳 *Exp:* ${ke2}
+${dmenub} 🏛️ *Money:* ${ke3}
+${dmenuf}
+`
+  conn.sendFthumb(m.chat, `Ordiston Bot`, caption, 'https://telegra.ph/file/0451b07945f7f9633b59b.jpg', '', m)
+  //conn.reply(m.chat, caption, fakes, adReply)
 
--------------------
-
-🎟️ Sisa Join limit
-*${ke2}*
-`, thumbLimit, [
-        ['BUY LIMIT', '.buylimit'],
-        ['TOPUP', `${usedPrefix}topup`]
-    ], m, {quoted:{key : {participant : '0@s.whatsapp.net'},message: {documentMessage: {title: bottime,jpegThumbnail: Buffer.alloc(0)}}}})
 }
 handler.help = ['limit [@user]']
 handler.tags = ['xp']

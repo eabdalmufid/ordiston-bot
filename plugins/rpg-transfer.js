@@ -1,10 +1,9 @@
 const items = [
-    'money', 'potion', 'trash', 'wood',
+    'money', 'bank', 'potion', 'trash', 'wood',
     'rock', 'string', 'petFood', 'emerald',
     'diamond', 'gold', 'iron', 'common',
-    'uncommon', 'mythic', 'legendary', 'pet', 'exp',
+    'uncommon', 'mythic', 'legendary', 'pet',
 ]
-let imgr = flaaa.getRandom()
 let confirmation = {}
 async function handler(m, { conn, args, usedPrefix, command }) {
     if (confirmation[m.sender]) return m.reply('Kamu sedang melakukan transfer!')
@@ -23,19 +22,27 @@ ${item.map(v => `${rpg.emoticon(v)}${v}`.trim()).join('\n')}
     if (!who) return m.reply('Tag salah satu, atau ketik Nomernya!!')
     if (!(who in global.db.data.users)) return m.reply(`User ${who} not in database`)
     if (user[type] * 1 < count) return m.reply(`Your *${rpg.emoticon(type)}${type}${special(type)}* is less *${count - user[type]}*`)
+                let txt = `Apakah Anda yakin ingin melakukan transfer\n ✅ (Yes) ❌ (No)\n\n`
     let confirm = `
-Are you sure you want to transfer\n\n🧾Jumlah: *${count}*\n🎁Tipe: ${rpg.emoticon(type)}${type}${special(type)}\n👤Penerima: *@${(who || '').replace(/@s\.whatsapp\.net/g, '')}*\n
-Timeout *60* detik
+*––––––『 TRANSFER 』––––––*
+*🗂️ Type:* ${type} ${rpg.emoticon(type)}${special(type)}
+*🧮 Count:* ${count} 
+*📨 To:* @${(who || '').replace(/@s\.whatsapp\.net/g, '')}
+
+${txt}
+⏰ Timeout *60* detik
 `.trim()
-    let c = global.bottime
-    conn.sendButton(m.chat, c, confirm, `${imgr + 'Transfer'}`, [['LANJUT', '✅'], ['BATAL', '❎']], m, { mentions: [who] })
+    let c = wm
+    let { key } = await conn.reply(m.chat, confirm, m, { mentions: [who] })
     confirmation[m.sender] = {
         sender: m.sender,
         to: who,
         message: m,
         type,
         count,
-        timeout: setTimeout(() => (m.reply('Waktu Transfer selesai !'), delete confirmation[m.sender]), 60 * 1000)
+        key,
+        pesan: conn,
+        timeout: setTimeout(() => (conn.sendMessage(m.chat, { delete: key }), delete confirmation[m.sender]), 60 * 1000)
     }
 }
 
@@ -43,26 +50,29 @@ handler.before = async m => {
     if (m.isBaileys) return
     if (!(m.sender in confirmation)) return
     if (!m.text) return
-    let { timeout, sender, message, to, type, count } = confirmation[m.sender]
+    let { timeout, sender, message, to, type, count, key, pesan } = confirmation[m.sender]
     if (m.id === message.id) return
     let user = global.db.data.users[sender]
     let _user = global.db.data.users[to]
-    if (/(❎|n(o)?)/g.test(m.text.toLowerCase())) {
+    if (/(✖️|n(o)?)/g.test(m.text.toLowerCase())) {
+        pesan.sendMessage(m.chat, { delete: key })
         clearTimeout(timeout)
         delete confirmation[sender]
-        return m.reply('Coba Lagi')
+        return m.reply('Reject')
     }
-    if (/(✅|y(es)?)/g.test(m.text.toLowerCase())) {
+    if (/(✔️|y(es)?)/g.test(m.text.toLowerCase())) {
         let previous = user[type] * 1
         let _previous = _user[type] * 1
         user[type] -= count * 1
         _user[type] += count * 1
-        if (previous > user[type] * 1 && _previous < _user[type] * 1) m.reply(`Succes transfer *${count}* ${rpg.emoticon(type)}${type}${special(type)} to *@${(to || '').replace(/@s\.whatsapp\.net/g, '')}*`, null, { mentions: [to] })
+        if (previous > user[type] * 1 && _previous < _user[type] * 1) m.reply(`*––––––『 TRANSFER 』––––––*\n*📊 Status:* Succes\n*🗂️ Type:* ${type}${special(type)} ${rpg.emoticon(type)}\n*🧮 Count:* ${count}\n*📨 To:* @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`, null, { mentions: [to] })
         else {
             user[type] = previous
             _user[type] = _previous
-            m.reply(`Failted to transfer *${count}* ${rpg.emoticon(type)}${type}${special(type)} to *@${(to || '').replace(/@s\.whatsapp\.net/g, '')}*`, null, { mentions: [to] })
+            m.reply(`*––––––『 TRANSFER 』––––––*\n*📊 Status:* Failted\n*📍 Item:* ${count} ${rpg.emoticon(type)}${type}${special(type)}\n*📨 To:* @${(to || '').replace(/@s\.whatsapp\.net/g, '')}`, null, { mentions: [to] })
         }
+        
+        pesan.sendMessage(m.chat, { delete: key })
         clearTimeout(timeout)
         delete confirmation[sender]
     }

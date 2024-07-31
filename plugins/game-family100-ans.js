@@ -1,11 +1,11 @@
 import similarity from 'similarity'
 const threshold = 0.72 // semakin tinggi nilai, semakin mirip
 export async function before(m) {
-    this.game = this.game ? this.game : {}
+    this.familygame = this.familygame ? this.familygame : {}
     let id = 'family100_' + m.chat
-    if (!(id in this.game))
+    if (!(id in this.familygame))
         return !0
-    let room = this.game[id]
+    let room = this.familygame[id]
     let text = m.text.toLowerCase().replace(/[^\w\s\-]+/, '')
     let isSurrender = /^((me)?nyerah|surr?ender)$/i.test(m.text)
     if (!isSurrender) {
@@ -38,6 +38,6 @@ ${isSurrender ? '' : `+${room.winScore} XP tiap jawaban benar`}
     })
     room.msg = msg
     if (isWin || isSurrender)
-        delete this.game[id]
+        delete this.familygame[id]
     return !0
 }

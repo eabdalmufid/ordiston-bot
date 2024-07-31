@@ -1,29 +1,14 @@
-import { tmpdir } from 'os'
-import path, { join } from 'path'
-import {
-  readdirSync,
-  statSync,
-  unlinkSync,
-  existsSync,
-  readFileSync,
-  watch
-} from 'fs'
-let handler = async (m, { conn, usedPrefix: _p, __dirname, args }) => {
+import  { readdirSync, rmSync } from 'fs'
 
-conn.reply(m.chat, 'Succes !', m)
-
-const tmp = [tmpdir(), join(__dirname, '../tmp')]
-  const filename = []
-  tmp.forEach(dirname => readdirSync(dirname).forEach(file => filename.push(join(dirname, file))))
-  return filename.map(file => {
-    const stats = statSync(file)
-    unlinkSync(file)
-})
+let handler = async (m, { conn, text }) => {
+ const dir = './tmp'
+ readdirSync(dir).forEach(f => rmSync(`${dir}/${f}`));
+ let pesan = "The *tmp* folder has been cleaned"
+ await m.reply(pesan)
 }
 handler.help = ['cleartmp']
 handler.tags = ['owner']
+handler.owner = false
 handler.command = /^(cleartmp)$/i
-
-handler.rowner = true
 
 export default handler

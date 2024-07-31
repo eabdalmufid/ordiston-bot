@@ -12,7 +12,7 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
 [6] Kesempatan menyerang adalah 40 detik, lebih dari itu dianggap AFK (pengurangan 2500 HP)
 [7] Sebuah tim akan menang jika tim lawan kalah semua (HP <= 0) dan mendapatkan harta rampasan perang
 
-*⧉  TUTORIAL*
+*❏  C O M M A N D S*
 *${usedPrefix + command} join A/B* = join game
 *${usedPrefix + command} left* = left game
 *${usedPrefix + command} money 10xx* = uang taruhan
@@ -25,11 +25,11 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
     if(m.sender == conn.war[m.chat][0].user){
       if (args[1] != "undefined" && !isNaN(args[1])){
         args[1] = parseInt(args[1])
-        if (args[1] < 1000000) return m.reply('*Minimal Rp. 1.000.000*')
+        if (args[1] < 1000) return m.reply('*Minimal Rp. 1.000*')
         conn.war2[m.chat].money = args[1]
         return m.reply("*Berhasil menetapkan modal perang sebesar Rp. " + Number(args[1]).toLocaleString() + "*")
       }else {
-        return m.reply("*Masukkan modal taruhan perang berupa angka (Tidak boleh menggunakan titik)*\n\n.war money 100000000")
+        return m.reply("*Masukkan modal taruhan perang berupa angka (Tidak boleh menggunakan titik)*\n\n.war money 100000")
       }
     }else {
       return conn.reply(m.chat,`*Hanya @${conn.war[m.chat][0].user.split('@')[0]} sebagai pembuat room yang bisa mengganti modal awal perang*`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
@@ -39,7 +39,7 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
   // JOIN
   if (args[0] == "join"){
     
-    if (global.db.data.users[m.sender].money < 10000) return m.reply("*Uang kamu minimal Rp. 10.000 untuk bermain game ini.*")
+    if (global.db.data.users[m.sender].money < 1000) return m.reply("*Uang kamu minimal Rp. 1000 untuk bermain game ini.*")
     // FIRST PLAYER
     if (!(m.chat in conn.war)) {
       conn.war2[m.chat] = {"war" : false, "turn" : 0, "time" : 0, "money" : 0}
@@ -127,11 +127,11 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
   if (args[0] == "left"){
     // IF GAME START
     if (conn.war2[m.chat].war) {
-      m.reply(`*Selsaikan Pertandingan terlebih dahulu*`)
+      m.reply(`*Perang sudah dimulai, anda tidak bisa keluar*`)
     }else {   // IF NOT
       for (let i = 0 ; i < 10 ; i++) {
         if (m.sender == conn.war[m.chat][i].user){
-          return m.reply(`*Meninggalkan permainan*`)
+          return m.reply(`*Berhasil keluar dari game*`)
         }
       }
       return m.reply(`*Kamu tidak sedang berada di dalam game*`)
@@ -160,7 +160,7 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
 
   // START GAME
   if (args[0] == "start"){
-    if (conn.war2[m.chat].war) return m.reply(`*Perang sedang Berlangsung*`)
+    if (conn.war2[m.chat].war) return m.reply(`*Perang sudah dimulai, tidak bisa join.*`)
     teamA = 0
     teamB = 0
     for (let i=0;i<10;i++){
@@ -192,7 +192,7 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
 
 }
 handler.help = ['war']
-handled.tags = ['game', 'rpg']
+handler.tags = ['game']
 handler.command = /^(war)$/i
 handler.group = true
 export default handler

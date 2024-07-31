@@ -1,10 +1,11 @@
-import { areJidsSameUser } from '@adiwajshing/baileys'
+import {
+  areJidsSameUser
+} from '@adiwajshing/baileys'
 const leaderboards = [
   'level',
   'exp',
   'limit',
   'money',
-  'joinlimit',
   'iron',
   'gold',
   'diamond',
@@ -21,10 +22,19 @@ const leaderboards = [
   'legendary',
   'pet'
 ]
-let handler = async (m, { conn, args, participants, usedPrefix, command }) => {
-let imgr = flaaa.getRandom()
+let handler = async (m, {
+  conn,
+  args,
+  participants,
+  usedPrefix,
+  command
+}) => {
+  let imgr = flaaa
   let users = Object.entries(global.db.data.users).map(([key, value]) => {
-    return { ...value, jid: key }
+      return {
+          ...value,
+          jid: key
+      }
   })
   let leaderboard = leaderboards.filter(v => v && users.filter(user => user && user[v]).length)
   let type = (args[0] || '').toLowerCase()
@@ -39,11 +49,9 @@ ${leaderboard.map(v => `
 ${usedPrefix}${command} [type]
 ★ ᴇxᴀᴍᴩʟᴇ:
 ${usedPrefix}${command} legendary`.trim()
-  if (!leaderboard.includes(type)) 
-  return conn.sendButton(m.chat,'*––––『 LEADERBOARD 』––––*', wrong, imgr + 'leaderboard', [
-[`✉️ ᴇxᴩ`, `${usedPrefix}lb exp`],
-[`💰 ᴍᴏɴᴇʏ`, `${usedPrefix}lb money`]
-], m)
+  if (!leaderboard.includes(type))
+      return conn.sendFthumb(m.chat, `LEADERBOARD`, wrong, imgr + 'leaderboard', '', m)
+      //return conn.sendMessage(m.chat, { image: { url: imgr + 'leaderboard' }, caption: '*––––『 LEADERBOARD 』––––*' + '\n' + wrong }, { quoted: fliveLocc })
   let page = isNumber(args[1]) ? Math.min(Math.max(parseInt(args[1]), 0), getPage(type)) : 0
   let sortedItem = users.map(toNumber(type)).sort(sort(type))
   let userItem = sortedItem.map(enumGetKey)
@@ -51,15 +59,15 @@ ${usedPrefix}${command} legendary`.trim()
   let text = `
 🏆 ʀᴀɴᴋ: ${userItem.indexOf(m.sender) + 1} ᴏᴜᴛ ᴏғ ${userItem.length}
 
-                    *• ${rpg.emoticon(type)} ${type} •*
+                  *• ${rpg.emoticon(type)} ${type} •*
 
 ${sortedItem.slice(page * 0, page * 5 + 5).map((user, i) => `${i + 1}.*﹙${user[type]}﹚*- ${participants.some(p => areJidsSameUser(user.jid, p.id)) ? `${conn.getName(user.jid)} \nwa.me/` : 'ғʀᴏᴍ ᴏᴛʜᴇʀ ɢʀᴏᴜᴩ\n @'}${user.jid.split`@`[0]}`).join`\n\n`}
-`.trim()
-  return conn.sendButton(m.chat, `*–『 GLOBAL LEADERBOARD 』–*`, text, imgr + 'leaderboard', [
-[`ᴛᴏᴩ 50`, `${usedPrefix}lb ${type} 9`],
-[`ᴛᴏᴩ 100`, `${usedPrefix}lb ${type} 19`]
-], m, {
-    mentions: [...userItem.slice(page * 0, page * 5 + 5)].filter(v => !participants.some(p => areJidsSameUser(v, p.id)))})
+
+*Ketik:*
+${usedPrefix}lb ${type} 9  _(ᴛᴏᴩ 50)_
+${usedPrefix}lb ${type} 19 _(ᴛᴏᴩ 100)_`.trim()
+  return conn.sendFthumb(m.chat, `GLOBAL LEADERBOARD`, text, imgr + 'leaderboard', '', m, { mentions: [...userItem.slice(page * 0, page * 5 + 5)].filter(v => !participants.some(p => areJidsSameUser(v, p.id))) })
+  //return conn.sendMessage(m.chat, { image: { url: imgr + 'leaderboard' }, caption: '*–『 GLOBAL LEADERBOARD 』–*' + '\n' + text, mentions: [...userItem.slice(page * 0, page * 5 + 5)].filter(v => !participants.some(p => areJidsSameUser(v, p.id))) }, { quoted: fliveLocc })
 }
 handler.help = ['leaderboard [jumlah user]', 'lb [jumlah user]']
 handler.tags = ['xp']
@@ -74,7 +82,10 @@ function sort(property, ascending = true) {
 
 function toNumber(property, _default = 0) {
   if (property) return (a, i, b) => {
-    return { ...b[i], [property]: a[property] === undefined ? _default : a[property] }
+      return {
+          ...b[i],
+          [property]: a[property] === undefined ? _default : a[property]
+      }
   }
   else return a => a === undefined ? _default : a
 }
@@ -85,9 +96,9 @@ function enumGetKey(a) {
 
 
 /**
- * Detect Number
- * @param {Number} x 
- */
+* Detect Number
+* @param {Number} x 
+*/
 function isNumber(number) {
   if (!number) return number
   number = parseInt(number)

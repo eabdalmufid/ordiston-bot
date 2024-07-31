@@ -1,22 +1,10 @@
-import fs from 'fs'
-let handler = async (m, { conn, args, command }) => {
+let handler = async (m) => {
     let who
     if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
     else who = m.sender
     if (typeof db.data.users[who] == 'undefined') throw 'Pengguna tidak ada didalam data base'
- await conn.sendButton(m.chat, `${global.db.data.users[who].joinlimit}\n`,hiasan + '\n\n' + , jlimit, [['KANNA','Fangz']], m, {
-contextInfo: { externalAdReply :{
-                        mediaUrl: '',
-                        mediaType: 2,
-                        description: 'anu',
-                        title: author,
-                        body: 'JOIN LIMIT',          previewType: 0,
-                        sourceUrl: swb
-                      }}
-})
+    m.reply(`${global.db.data.users[who].joinlimit} Join Limit Left=͟͟͞͞🏀`)
 }
-
-
 handler.help = ['joinlimit [@user]']
 handler.tags = ['xp']
 handler.command = /^(joinlimit)$/i

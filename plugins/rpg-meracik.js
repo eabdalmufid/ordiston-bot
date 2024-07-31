@@ -343,33 +343,33 @@ Selamat kamu mendapatkan string:
                      break
                      case 'sword':
                                      let iron = global.db.data.users[m.sender].iron
-                                     let kayu = global.db.data.users[m.sender].kayu
+                                     let wood = global.db.data.users[m.sender].wood
                                      let string = global.db.data.users[m.sender].string
                                      let __waktutions = (new Date - global.db.data.users[m.sender].lastswordclaim)
                                      let _waktutions = (600000 - __waktutions)
                                      let waktutions = clockString(_waktutions)
-                                     if (iron == 0 || kayu == 0 || string == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Iron, Kayu, String*')
+                                     if (iron == 0 || wood == 0 || string == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Iron, Wood, String*')
                                      if (new Date - global.db.data.users[m.sender].lastswordclaim > 600000) {
                                      if (global.db.data.users[m.sender].iron > 4) {
-                                 	if (global.db.data.users[m.sender].kayu > 499) {
+                                 	if (global.db.data.users[m.sender].wood > 499) {
                                  	if (global.db.data.users[m.sender].string > 9) {
                                      let _ironn = `${pickRandom(['1','2','3','4'])}`.trim()
-                                     let _kayunn = `${Math.floor(Math.random() * 500)}`.trim()
+                                     let _woodnn = `${Math.floor(Math.random() * 500)}`.trim()
                                      let _stringn = `${pickRandom(['1','2','3','4','5','6','7','8','9'])}`.trim()
                                      let _swordn = `${pickRandom(['1','2'])}`.trim()
                                      let swordn = (_swordn * 1)
                                      let ironn = (_ironn * 1)
-                                     let kayun = (_kayunn * 1)
+                                     let woodn = (_woodnn * 1)
                                      let stringn = (_stringn * 1)
                                      global.db.data.users[m.sender].iron -= ironn * 1
-                                     global.db.data.users[m.sender].kayu -= kayun * 1
+                                     global.db.data.users[m.sender].wood -= woodn * 1
                                      global.db.data.users[m.sender].string -= stringn * 1
                                      global.db.data.users[m.sender].sword += swordn * 1
                                      global.db.data.users[m.sender].lastswordclaim = new Date * 1
                                      let srcngs = `
 Berhasil meracik sword:
 -${ironn} Iron
--${kayun} Kayu
+-${woodn} Wood
 -${stringn} String
 
 Selamat kamu mendapatkan sword: 
@@ -385,36 +385,36 @@ Selamat kamu mendapatkan sword:
                                           conn.reply(m.chat, 'Mohon tunggu sedang mengaduk sword', m)
                                       }, timeoutog)
                                  } else m.reply(`Pastikan string kamu *10* untuk bisa meracik sword`)
-                             } else m.reply(`Pastikan kayu kamu *500* untuk bisa meracik sword`)
+                             } else m.reply(`Pastikan wood kamu *500* untuk bisa meracik sword`)
                           } else m.reply(`Pastikan iron kamu *5* untuk bisa meracik sword`)
                        } else m.reply(`Kamu sudah meracik, tidak bisa meracik kembali..\nMohon tunggu ${waktutions} lagi untuk meracik kembali `)
                      break
                      case 'weapon':
                                      let ironw = global.db.data.users[m.sender].iron
-                                     let kayuw = global.db.data.users[m.sender].kayu
+                                     let woodw = global.db.data.users[m.sender].wood
                                      let stringw = global.db.data.users[m.sender].string
                                      let swordw = global.db.data.users[m.sender].sword
                                      let __waktutionsw = (new Date - global.db.data.users[m.sender].lastweaponclaim)
                                      let _waktutionsw = (600000 - __waktutionsw)
                                      let waktutionsw = clockString(_waktutionsw)
-                                     if (ironw == 0 || kayuw == 0 || stringw == 0 || swordw == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Iron, Kayu, String, Sword*')
+                                     if (ironw == 0 || woodw == 0 || stringw == 0 || swordw == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Iron, Wood, String, Sword*')
                                      if (new Date - global.db.data.users[m.sender].lastweaponclaim > 600000) {
                                      if (global.db.data.users[m.sender].iron > 9) {
-                                 	if (global.db.data.users[m.sender].kayu > 999) {
+                                 	if (global.db.data.users[m.sender].wood > 999) {
                                  	if (global.db.data.users[m.sender].string > 9) {
                                  	if (global.db.data.users[m.sender].sword > 9) {
                                      let _ironnw = `${pickRandom(['1','2','3','4','5','6','7','8','9','10'])}`.trim()
-                                     let _kayunnw = `${Math.floor(Math.random() * 1001)}`.trim()
+                                     let _woodnnw = `${Math.floor(Math.random() * 1001)}`.trim()
                                      let _stringnnw = `${pickRandom(['1','2','3','4','5','6','7','8','9','10'])}`.trim()
                                      let _swordnnw = `${pickRandom(['1','2','3','4','5','6','7','8','9','10'])}`.trim()
                              //        let _weaponnw = `${pickRandom(['1','1','1','2','1','1','1','1','1','1','3'])}`.trim()
                                      let swordnnw = (_swordnnw * 1)
                                      let ironnw = (_ironnw * 1)
-                                     let kayunnw = (_kayunnw * 1)
+                                     let woodnnw = (_woodnnw * 1)
                                      let stringnnw = (_stringnnw * 1)
                            //          let weaponnw = (_weaponnw * 1)
                                      global.db.data.users[m.sender].iron -= ironnw * 1
-                                     global.db.data.users[m.sender].kayu -= kayunnw * 1
+                                     global.db.data.users[m.sender].wood -= woodnnw * 1
                                      global.db.data.users[m.sender].string -= stringnnw * 1
                                      global.db.data.users[m.sender].sword -= swordnnw * 1
                                      global.db.data.users[m.sender].weapon += 1
@@ -422,7 +422,7 @@ Selamat kamu mendapatkan sword:
                                      let srcngsw = `
 Berhasil meracik weapon:
 -${ironnw} Iron
--${kayunnw} Kayu
+-${woodnnw} Wood
 -${stringnnw} String
 -${swordnnw} Sword
 
@@ -440,7 +440,7 @@ Selamat kamu mendapatkan weapon:
                                       }, timeoutww)
                                      } else m.reply(`Pastikan sword kamu *10* untuk bisa meracik weapon`)
                                  } else m.reply(`Pastikan string kamu *10* untuk bisa meracik weapon`)
-                             } else m.reply(`Pastikan kayu kamu *1000* untuk bisa meracik weapon`)
+                             } else m.reply(`Pastikan wood kamu *1000* untuk bisa meracik weapon`)
                           } else m.reply(`Pastikan iron kamu *10* untuk bisa meracik weapon`)
                        } else m.reply(`Kamu sudah meracik, tidak bisa meracik kembali..\nMohon tunggu ${waktutionsw} lagi untuk meracik kembali `)
                      break
@@ -486,29 +486,29 @@ Selamat kamu mendapatkan iron:
                        } else m.reply(`Kamu sudah meracik, tidak bisa meracik kembali..\nMohon tunggu ${waktutionsk} lagi untuk meracik kembali `)
                      break
                      case 'pancingan':
-                                     let kayuh = global.db.data.users[m.sender].kayu
+                                     let woodh = global.db.data.users[m.sender].wood
                                      let stringh = global.db.data.users[m.sender].string
-                                     let batuh = global.db.data.users[m.sender].batu 
+                                     let rockh = global.db.data.users[m.sender].rock 
                                      let pancingan = global.db.data.users[m.sender].pancingan
                                      let __waktutionskh = (new Date - global.db.data.users[m.sender].lastsmancingclaim)
                                      let _waktutionskh = (600000 - __waktutionskh)
                                      let waktutionskh = clockString(_waktutionskh)
-                                     if (kayuh == 0 || stringh == 0 || batuh == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Kayu, Batu, String*')
+                                     if (woodh == 0 || stringh == 0 || rockh == 0) return m.reply('*Pastikan kamu memiliki semua*\n*Seperti Wood, Rock, String*')
                                      if (pancingan == 5) return m.reply('*Pancingan kamu dah lvl max*')
                                      if (new Date - global.db.data.users[m.sender].lastsmancingclaim > 600000) {
-                                     if (global.db.data.users[m.sender].kayu > 499) {
+                                     if (global.db.data.users[m.sender].wood > 499) {
                                  	if (global.db.data.users[m.sender].string > 4) {
-                                 	if (global.db.data.users[m.sender].batu > 9) {
-                                     global.db.data.users[m.sender].kayu -= 500
+                                 	if (global.db.data.users[m.sender].rock > 9) {
+                                     global.db.data.users[m.sender].wood -= 500
                                      global.db.data.users[m.sender].string -= 5
-                                     global.db.data.users[m.sender].batu -= 10
+                                     global.db.data.users[m.sender].rock -= 10
                                      global.db.data.users[m.sender].anakpancingan += 150
                                      global.db.data.users[m.sender].lastsmancingclaim = new Date * 1
                                      let srcngsk = `
 Berhasil meracik pancingan:
--10 Batu
+-10 Rock
 -5 String
--500 Kayu
+-500 Wood
 
 Selamat kamu mendapatkan Exp: 
 +150 Exp Pancingan
@@ -530,9 +530,9 @@ Selamat kamu mendapatkan Exp:
                                       conn.reply(m.chat, `*Selamat pancingan kamu naik level*`, m)
                                       }
                                     }
-                                 } else m.reply(`Pastikan batu kamu *10* untuk bisa meracik pancingan`)
+                                 } else m.reply(`Pastikan rock kamu *10* untuk bisa meracik pancingan`)
                               } else m.reply(`Pastikan string kamu *5* untuk bisa meracik pancingan`)
-                          } else m.reply(`Pastikan kayu kamu *500* untuk bisa meracik pancingan`)
+                          } else m.reply(`Pastikan wood kamu *500* untuk bisa meracik pancingan`)
                        } else m.reply(`Kamu sudah meracik, tidak bisa meracik kembali..\nMohon tunggu ${waktutionskh} lagi untuk meracik kembali `)
                      break
                            default:
@@ -553,9 +553,9 @@ function pickRandom(list) {
 }
 
 function clockString(ms) {
-  let h = Math.floor(ms / 3600000)
-  let m = Math.floor(ms / 60000) % 60
-  let s = Math.floor(ms / 1000) % 60
-  console.log({ms,h,m,s})
-  return [h, m, s].map(v => v.toString().padStart(2, 0) ).join(':')
+	let h = Math.floor(ms / 3600000)
+	let m = Math.floor(ms / 60000) % 60
+	let s = Math.floor(ms / 1000) % 60
+	console.log({ ms, h, m, s })
+	return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

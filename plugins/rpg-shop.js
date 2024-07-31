@@ -1,16 +1,13 @@
 const items = {
     buy: {
         limit: {
-            exp: 999
+            money: 1000000
         },
         potion: {
             money: 1250
         },
-        joinlimit: {
-            money: 500000
-        },
         aqua: {
-           money: 500
+            money: 500
         },
         trash: {
             money: 40
@@ -24,8 +21,8 @@ const items = {
         string: {
             money: 400
         },
-        iron: { 
-        	money: 3000
+        iron: {
+            money: 3000
         },
         diamond: {
             money: 7500
@@ -103,9 +100,6 @@ const items = {
             money: 2000
         },
         emasbiasa: {
-            money: 2000
-        },
-        exp: {
             money: 2000
         },
         gardenboc: {
@@ -198,267 +192,263 @@ const items = {
     },
     sell: {
         limit: {
-            exp: 999
+            money: 100000
         },
         potion: {
-            money: 1250
+            money: 125
         },
         aqua: {
-           money: 500
+            money: 50
         },
         trash: {
-            money: 40
+            money: 4
         },
         wood: {
-            money: 700
+            money: 70
         },
         rock: {
-            money: 850
+            money: 85
         },
         string: {
-            money: 400
+            money: 40
         },
-        iron: { 
-        	money: 3000
+        iron: {
+            money: 300
         },
         diamond: {
-            money: 7500
+            money: 750
         },
         emerald: {
-            money: 8500
+            money: 850
         },
         gold: {
-            money: 3500
+            money: 350
         },
         coal: {
-            money: 1500
+            money: 150
         },
         common: {
-            money: 200
+            money: 20
         },
         uncommon: {
-            money: 2000
+            money: 200
         },
         mythic: {
-            money: 25000
+            money: 2500
         },
         legendary: {
-            money: 75000
+            money: 7500
         },
         foodpet: {
-            money: 3500
+            money: 350
         },
         Fox: {
-            money: 40000
+            money: 4000
         },
         naga: {
-            money: 120000
+            money: 12000
         },
         pet: {
-            money: 120000
+            money: 12000
         },
         anggur: {
-            money: 2000
+            money: 200
         },
         apel: {
-            money: 2000
+            money: 200
         },
         batu: {
-            money: 2000
+            money: 200
         },
         berlian: {
-            money: 2000
+            money: 200
         },
         bibitanggur: {
-            money: 2000
+            money: 200
         },
         bibitapel: {
-            money: 2000
+            money: 200
         },
         bibitjeruk: {
-            money: 2000
+            money: 200
         },
         bibitmangga: {
-            money: 2000
+            money: 200
         },
         bibitpisang: {
-            money: 2000
+            money: 200
         },
         botol: {
-            money: 2000
+            money: 200
         },
         centaur: {
-            money: 2000
+            money: 200
         },
         eleksirb: {
-            money: 2000
+            money: 200
         },
         emasbatang: {
-            money: 2000
+            money: 200
         },
         emasbiasa: {
-            money: 2000
-        },
-        exp: {
-            money: 2000
+            money: 200
         },
         gardenboc: {
-            money: 2000
+            money: 200
         },
         gardenboxs: {
-            money: 2000
+            money: 200
         },
         griffin: {
-            money: 2000
+            money: 200
         },
         healtmonster: {
-            money: 2000
+            money: 200
         },
         jeruk: {
-            money: 2000
+            money: 200
         },
         kaleng: {
-            money: 2000
+            money: 200
         },
         kardus: {
-            money: 2000
+            money: 200
         },
         kayu: {
-            money: 2000
+            money: 200
         },
         ketake: {
-            money: 2000
+            money: 200
         },
         koinexpg: {
-            money: 2000
+            money: 200
         },
         kucing: {
-            money: 2000
+            money: 200
         },
         kuda: {
-            money: 2000
+            money: 200
         },
         kyubi: {
-            money: 2000
+            money: 200
         },
         makanancentaur: {
-            money: 2000
+            money: 200
         },
         makanangriffin: {
-            money: 2000
+            money: 200
         },
         makanankyubi: {
-            money: 2000
+            money: 200
         },
         makanannaga: {
-            money: 2000
+            money: 200
         },
         makananpet: {
-            money: 2000
+            money: 200
         },
         makananphonix: {
-            money: 2000
+            money: 200
         },
         mangga: {
-            money: 2000
+            money: 200
         },
         pancingan: {
-            money: 2000
+            money: 200
         },
         phonix: {
-            money: 2000
+            money: 200
         },
         pisang: {
-            money: 2000
+            money: 200
         },
         rubah: {
-            money: 2000
+            money: 200
         },
         sampah: {
-            money: 2000
+            money: 200
         },
         serigala: {
-            money: 2000
+            money: 200
         },
         sword: {
-            money: 2000
+            money: 200
         },
         tiketcoin: {
-            money: 2000
+            money: 200
         },
         umpan: {
-            money: 2000
+            money: 200
         }
     }
 }
 
-let handler = async (m, { command, usedPrefix, args }) => {
-let imgr = flaaa.getRandom()
+let handler = async (m, {
+    command,
+    usedPrefix,
+    args
+}) => {
+    let imgr = flaaa
     let user = global.db.data.users[m.sender]
     const listItems = Object.fromEntries(Object.entries(items[command.toLowerCase()]).filter(([v]) => v && v in user))
-    
+
     let text = ''
     let footer = ''
     let image = ''
     let buttons = ''
     text = (command.toLowerCase() == 'buy' ?
-(`
-*${htki} BUY ${htka}*
-`.trim()) : 
-(`
-*${htki} SELL ${htka}*
-`.trim())
-)
-    footer = (command.toLowerCase() == 'buy' ?
-(`
-🔖 ɪᴛᴇᴍs ʟɪsᴛ :
-${Object.keys(listItems).map((v) => {
-        let paymentMethod = Object.keys(listItems[v]).find(v => v in user)
-        return `⮕ 1 ${global.rpg.emoticon(v)}${v} ﹫ ${listItems[v][paymentMethod]} ${global.rpg.emoticon(paymentMethod)}${paymentMethod}`.trim()
-    }).join('\n')}
-–––––––––––––––––––––––––
+        (`
 💁🏻‍♂ ᴛɪᴩ :
 ⮕ ᴛᴏ ʙᴜʏ ɪᴛᴇᴍs:
 ${usedPrefix}${command} [item] [quantity]
 ★ ᴇxᴀᴍᴩʟᴇ:
 ${usedPrefix}${command} potion 10
-`.trim()) : 
-(`
-🔖 ɪᴛᴇᴍs ʟɪsᴛ :
-${Object.keys(listItems).map((v) => {
-        let paymentMethod = Object.keys(listItems[v]).find(v => v in user)
-        return `⮕ 1 ${global.rpg.emoticon(v)}${v} ﹫ ${listItems[v][paymentMethod]} ${global.rpg.emoticon(paymentMethod)}${paymentMethod}`.trim()
-    }).join('\n')}
-–––––––––––––––––––––––––
+${readMore}
+––––––––––––––––––––––––`.trim()) :
+        (`
 💁🏻‍♂ ᴛɪᴩ :
 ⮕ ᴛᴏ sᴇʟʟ ɪᴛᴇᴍs:
 ${usedPrefix}${command} [item] [quantity]
 ★ ᴇxᴀᴍᴩʟᴇ:
 ${usedPrefix}${command} potion 10
+${readMore}
+––––––––––––––––––––––––`.trim())
+    )
+    footer = (command.toLowerCase() == 'buy' ?
+        (`🔖 ɪᴛᴇᴍs ʟɪsᴛ :
+${Object.keys(listItems).map((v) => {
+        let paymentMethod = Object.keys(listItems[v]).find(v => v in user)
+        return `${global.rpg.emoticon(v)} - ${v}: ${listItems[v][paymentMethod]} ${paymentMethod}`.trim()
+    }).join('\n')}
+`.trim()) :
+        (`🔖 ɪᴛᴇᴍs ʟɪsᴛ :
+${Object.keys(listItems).map((v) => {
+        let paymentMethod = Object.keys(listItems[v]).find(v => v in user)
+        return `${global.rpg.emoticon(v)} - ${v}: ${listItems[v][paymentMethod]} ${paymentMethod}`.trim()
+    }).join('\n')}
 `.trim())
-)
+    )
     image = (command.toLowerCase() == 'buy' ?
-(imgr + 'buy') : 
-(imgr + 'sell')
-)
+        (imgr + 'buy') :
+        (imgr + 'sell')
+    )
     buttons = (command.toLowerCase() == 'buy' ?
-([
-[`ʙᴜʏ ʟɪᴍɪᴛ`, `${usedPrefix}buy limit`],
-[`ʙᴜʏ ᴩᴏᴛɪᴏɴ`, `${usedPrefix}buy potion`]
-]) : 
-([
-[`sᴇʟʟ ᴩᴏᴛɪᴏɴ`, `${usedPrefix}sell potion`],
-[`sᴇʟʟ ᴛʀᴀsʜ`, `${usedPrefix}sell trash`]
-])
-)
+        ([
+            [`ʙᴜʏ ʟɪᴍɪᴛ`, `${usedPrefix}buy limit`],
+            [`ʙᴜʏ ᴩᴏᴛɪᴏɴ`, `${usedPrefix}buy potion`]
+        ]) :
+        ([
+            [`sᴇʟʟ ᴩᴏᴛɪᴏɴ`, `${usedPrefix}sell potion`],
+            [`sᴇʟʟ ᴛʀᴀsʜ`, `${usedPrefix}sell trash`]
+        ])
+    )
     const item = (args[0] || '').toLowerCase()
     const total = Math.floor(isNumber(args[1]) ? Math.min(Math.max(parseInt(args[1]), 1), Number.MAX_SAFE_INTEGER) : 1) * 1
-    if (!listItems[item]) return conn.sendButton(m.chat, text, footer, image, buttons, m)
+    if (!listItems[item]) return conn.sendFthumb(m.chat, `SHOP`, text + '\n\n' + footer, image, '', m)
+    //conn.sendMessage(m.chat, { image: { url: image }, caption: text + '\n\n' + footer }, { quoted: fliveLocc })
     if (command.toLowerCase() == 'buy') {
         let paymentMethod = Object.keys(listItems[item]).find(v => v in user)
-        if (user[paymentMethod] < listItems[item][paymentMethod] * total) return conn.sendButton(m.chat,
-`*–『 INSUFFICIENT CREDIT 』–*`, 
-`ʏᴏᴜ ɴᴇᴇᴅ ᴇxᴛʀᴀ *${(listItems[item][paymentMethod] * total) - user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ᴛᴏ ʙᴜʏ *${total}* ${global.rpg.emoticon(item)}${item}.
+        let low = `ʏᴏᴜ ɴᴇᴇᴅ ᴇxᴛʀᴀ *${(listItems[item][paymentMethod] * total) - user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ᴛᴏ ʙᴜʏ *${total}* ${global.rpg.emoticon(item)}${item}.
 ʏᴏᴜ'ᴠᴇ *${user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ɪɴ ʙᴀɢ.
 –––––––––––––––––––––––––
 💁🏻‍♂ ᴛɪᴩ :
@@ -467,29 +457,23 @@ ${usedPrefix}${command} potion 10
 .open crate
 ⮕ ᴛᴏ ᴄᴏʟʟᴇᴄᴛ ʀᴇᴡᴀʀᴅs:
 .adventure | .daily | .monthly
-`.trim(), imgr + 'lowcredit', [
-[`ᴀsᴋ ᴛᴏ ᴀʟʟ`, `${usedPrefix}tagall sᴏᴍᴇʙᴏᴅʏ ᴩʟᴇᴀsᴇ sᴇɴᴅ *${(listItems[item][paymentMethod] * total) - user[paymentMethod]}* ${global.rpg.emoticon(paymentMethod)}${paymentMethod} ᴛᴏ ᴍᴇ.
-⮕ ᴛᴏ ᴛʀᴀɴsғᴇʀ ${paymentMethod}:
-${usedPrefix}transfer ${paymentMethod} ${(listItems[item][paymentMethod] * total) - user[paymentMethod]} @${conn.getName(m.sender)}`]
-], m)
+`.trim()
+        if (user[paymentMethod] < listItems[item][paymentMethod] * total) return conn.sendFthumb(m.chat, `INSUFFICIENT CREDIT`, low, imgr + 'lowcredit', '', m)
+        //conn.sendMessage(m.chat, { image: { url: imgr + 'lowcredit' }, caption: low }, { quoted: fliveLocc })
         user[paymentMethod] -= listItems[item][paymentMethod] * total
         user[item] += total
-        return conn.sendButton(m.chat,
-`*${htki} BOUGHT ${htka}*`,
-`ʏᴏᴜ *ʙᴏᴜɢʜᴛ ${total} ${global.rpg.emoticon(item)}${item}*.
-`.trim(), imgr + 'bought', [
-[`ɪɴᴠᴇɴᴛᴏʀʏ`, `${usedPrefix}inventory`]
-], m)
+        let bou = `ʏᴏᴜ *ʙᴏᴜɢʜᴛ ${total} ${global.rpg.emoticon(item)}${item}*.
+`.trim()
+        return conn.sendFthumb(m.chat, `BOUGHT`, bou, imgr + 'bought', '', m)
+        //conn.sendMessage(m.chat, { image: { url: imgr + 'bought' }, caption: bou }, { quoted: fliveLocc })
     } else {
         if (user[item] < total) return m.reply(`You don't have enough *${global.rpg.emoticon(item)}${item}* to sell, you only have ${user[item]} items`)
         user[item] -= total
         user.money += listItems[item].money * total
-        return conn.sendButton(m.chat,
-`*${htki} SOLD ${htka}*`,
-`ʏᴏᴜ *sᴏʟᴅ ${total} ${global.rpg.emoticon(item)}${item}*.
-`.trim(), imgr + 'sold', [
-[`ɪɴᴠᴇɴᴛᴏʀʏ`, `${usedPrefix}inventory`]
-], m)
+        let sol = `ʏᴏᴜ *sᴏʟᴅ ${total} ${global.rpg.emoticon(item)}${item}*.
+`.trim()
+        return conn.sendFthumb(m.chat, `SOLD`, sol, imgr + 'sold', '', m)
+        //conn.sendMessage(m.chat, { image: { url: imgr + 'sold' }, caption: sol }, { quoted: fliveLocc })
     }
 }
 
@@ -497,7 +481,7 @@ handler.help = ['buy', 'sell'].map(v => v + ' [item] [count]')
 handler.tags = ['rpg']
 handler.command = /^(buy|sell)$/i
 
-handler.disabled = false
+handler.disabled = true
 
 export default handler
 
@@ -506,3 +490,6 @@ function isNumber(number) {
     number = parseInt(number)
     return typeof number == 'number' && !isNaN(number)
 }
+
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4001)

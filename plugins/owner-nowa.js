@@ -19,6 +19,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
 	m.reply(txt)
 }
 handler.command = /^nowa$/i
+handler.premium = true
 
 export default handler
 

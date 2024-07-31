@@ -1,0 +1,10 @@
+# Dependency directories
+jadibot/
+node_modules/
+sessions/
+tmp/*
+!tmp/.file
+data.store.json
+database.json
+package-lock.json
+session.data.json

@@ -25,6 +25,7 @@ handler.help = ['merampok *@tag*']
 handler.tags = ['rpg']
 handler.command = /^merampok|rob$/
 handler.limit = true
+handler.premium = false
 handler.group = true
 
 export default handler
@@ -37,5 +38,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

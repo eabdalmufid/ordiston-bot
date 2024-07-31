@@ -1,7 +1,7 @@
 import cheerio from 'cheerio'
 import fetch from 'node-fetch'
 import axios from 'axios'
-import { instagramStory, instagramStoryv2 } from '@bochilteam/scraper'
+
 let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!args[0]) throw `uhm.. username nya mana?\n\ncontoh:\n\n${usedPrefix + command} rasel.ganz`
     if (args[0].startsWith('http') || args[0].startsWith('@')) throw `username salah\n\ncontoh: *${usedPrefix}${command} the.sad.boy01*`

@@ -1,26 +1,6 @@
 import fetch from 'node-fetch'
 let handler = async(m, { conn, usedPrefix, text, args, command }) => {
 
-if (command == 'jooxs') {
-if (!text) throw `Contoh:
-${usedPrefix + command} gustixa`
-let f = await fetch(`https://anabotofc.herokuapp.com/api/jooxsearch?apikey=AnaBot&query=${text}`)
-let xx = await f.json()
-let v = xx.result
-let teks = v.map(v => {
-return `
-Album id : ${v.album_id}
-ID : *${v.id}*
-Judul : *${v.name}*
-Album : ${v.album_name}
-Artist : ${v.artist_list.name}
-Img : ${v.images.url}
-Vip : *${v.vip_flag}*
-      `.trim()
-  }).filter(v => v).join('\n\n▣═━–〈 *SEARCH* 〉–━═▣\n\n')
-  m.reply(teks)
-            }
-
 if (command == 'jooxp') {
 if (!text) throw `Contoh:
 ${usedPrefix + command} gustixa`
@@ -42,7 +22,7 @@ let teks = `*Result:*
             
 }
 
-handler.command = handler.help = ['jooxs', 'jooxp']
+handler.command = handler.help = ['jooxp']
 handler.tags = ['tools']
 
 export default handler

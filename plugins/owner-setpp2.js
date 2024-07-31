@@ -7,6 +7,7 @@ const jimp_1 = require('jimp')
 let handler = async (m, { conn, command, usedPrefix }) => {
 	let q = m.quoted ? m.quoted : m
 	let mime = (q.msg || q).mimetype || q.mediaType || ''
+	m.reply(wait)
 	if (/image/g.test(mime) && !/webp/g.test(mime)) {
 		try {
 			let media = await q.download()
@@ -37,9 +38,9 @@ let handler = async (m, { conn, command, usedPrefix }) => {
 	}
 }
 
-handler.menugroup = ['setpp2']
+handler.menugroup = ['setppfull']
 handler.tagsgroup = ['owner']
-handler.command = /^(set(pp|ppbot)2)$/i
+handler.command = /^setpp(panjang|full|f|2)$/i
 
 handler.owner = true
 

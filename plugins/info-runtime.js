@@ -1,6 +1,8 @@
-import fs from 'fs'
-let handler = async (m, { conn, args, command }) => {
-    let imgr = flaaa.getRandom()
+
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
+let pp = await conn.profilePictureUrl(who).catch(_ => hwaifu.getRandom())
+let name = await conn.getName(who)
 	let _muptime
     if (process.send) {
       process.send('uptime')
@@ -10,22 +12,15 @@ let handler = async (m, { conn, args, command }) => {
       }) * 1000
     }
     let muptime = clockString(_muptime)
- await conn.sendButton(m.chat, `${muptime}\n`,wm + '\n\n' + after, `${imgr + command}`, [['WOWW','Fangz'],['MENU', '.menu']], m, {
-contextInfo: { externalAdReply :{
-                        mediaUrl: '',
-                        mediaType: 2,
-                        description: 'anu',
-                        title: bottime,
-                        body: hiasan,          previewType: 0,
-                        sourceUrl: swb
-                      }}
-})
+    conn.sendButton(m.chat, htki + ' R U N T I M E ' + htka + '\n\n• • • • • • • • • • • •' + muptime + '\n• • • • • • • • • • • •', 
+author, knimg, [
+['ᴏᴡɴᴇʀ', '.owner'],
+['ᴅᴏɴᴀᴛᴇ', '.donate']
+], m, adReplyS)
 }
-
-
 handler.help = ['runtime']
 handler.tags = ['info']
-handler.command = ['runtime', 'rt']
+handler.command = /^r(untime?|t)$/i
 export default handler
 
 function clockString(ms) {
@@ -33,5 +28,5 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [d, ' *Hari ☀️*\n ', h, ' *Jam 🕐*\n ', m, ' *Menit ⏰*\n ', s, ' *Detik ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+  return ['\n' + d, ' *Days*\n', h, ' *Hours*\n', m, ' *Minute*\n', s, ' *Second* '].map(v => v.toString().padStart(2, 0)).join('')
 }

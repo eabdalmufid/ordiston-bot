@@ -9,7 +9,7 @@ conn, usedPrefix
     let penambang = await conn.getName(m.sender)
     
     if (user.stamina < 20) return m.reply(`Stamina anda tidak cukup\nharap isi stamina anda dengan *${usedPrefix}eat8`)
-    if (user.lastnambang > 10800000) throw m.reply(`Kamu masih kelelahan\nHarap tunggu ${timers} lagi`)
+    if (user.lastnambang > 10800000) throw `Kamu masih kelelahan\nHarap tunggu ${timers} lagi`
     
     
     let rndm1 = `${Math.floor(Math.random() * 5)}`
@@ -112,39 +112,27 @@ user.diamond += hmsil1
 		user.tiketcoin += hmsil2
 
 setTimeout(() => {
-                     conn.sendButton(m.chat, hsl, wm, null, [
-		['Inventory', '/inv']
-	], m)
+                     conn.reply(m.chat, hsl, m)
                      }, 27000) 
                
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln4, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln4, null)
                       }, 25000)
                 
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln3, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln3, null)
                      }, 20000) 
                         
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln2, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln2, null)
                      }, 15000) 
                     
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln, null)
                      }, 10000) 
                      
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, `🔍 ${penambang} Mencari Area Nambang.....`, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, `🔍 ${penambang} Mencari Area Nambang.....`, null)
                      }, 0) 
   user.lastnambang = new Date * 1
 }
@@ -159,5 +147,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

@@ -1,19 +1,20 @@
-import { extract } from 'zs-extract'
-import { lookup } from 'mime-types'
+import fetch from "node-fetch";
+import { szippydl } from "../lib/scrape.js";
 
-let handler = async (m, { conn, args }) => {
-  if (!args[0]) throw 'Input Zippyshare URL'
-  if (!args[0].includes('zippyshare.com/v')) throw 'Invalid URL'
-  await m.reply('_In progress, please wait..._')
-  for (let i = 0; i < args.length; i++) {
-    if (!args[i].includes('zippyshare.com/v')) continue
-    let res = await extract(args[i])
-    let mimetype = await lookup(res.download)
-    conn.sendMessage(m.chat, { document: { url: res.download }, fileName: res.filename, mimetype }, { quoted: m })
-  }
-}
-handler.help = ['zippyshare']
-handler.tags = ['downloader']
-handler.command = /^z(s|ippy(dl|share)?)$/i 
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+  if (!args[0]) throw `Use example ${usedPrefix}${command} https://www.tiktok.com/@omagadsus/video/7025456384175017243`;
+  let res = await szippydl(args[0]);
+  let done = `*title:* ${res.title}
+*extension:* ${res.extension}
+*filesize:* ${res.filesize}
+*upload:* ${res.upload}
+*link:* ${res.link}`;
+  if (res.link) return conn.sendFile(m.chat, res.link, "", done, m);
+  else throw eror;
+};
+handler.help = ["zippyshare"].map((v) => v + " <url>");
+handler.tags = ["downloader"];
 
-export default handler
+handler.command = /^(zippy(share)?(ser)?(sher)?(sare)?)$/i;
+
+export default handler;

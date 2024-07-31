@@ -1,13 +1,17 @@
-import { dare } from '@bochilteam/scraper'
+import { dare, truth, bucin } from '@bochilteam/scraper'
 
-let thumbDare = 'https://telegra.ph/file/739a201e72a1f20883202.jpg'
-let handler = async (m, { conn, usedPrefix }) => conn.sendButton(m.chat, hiasan, await dare(), thumbDare, [
-    ['DARE', `${usedPrefix}dare`], 
-    ['TRUTH', `${usedPrefix}truth`]
-], m)
-
-handler.help = ['dare']
+let handler = async function (m, { conn, text, command, usedPrefix }) {
+if (command == 'dare') {
+    m.reply(await dare() + '\n\n' + author)
+}
+if (command == 'truth') {
+    m.reply(await truth() + '\n\n' + author)
+}
+if (command == 'bucin') {
+    m.reply(await bucin() + '\n\n' + author)
+}
+}
+handler.command = handler.help = ['dare', 'truth', 'bucin']
 handler.tags = ['quotes', 'fun']
-handler.command = /^(dare)$/i
 
 export default handler

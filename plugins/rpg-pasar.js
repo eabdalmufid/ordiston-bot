@@ -1,28 +1,28 @@
 
-const Skepiting = 7000
-const Slobster = 7000
-const Sudang = 7000
-const Scumi = 7000
-const Sgurita = 7000
-const Sbuntal = 7000
-const Sdory = 7000
-const Sorca = 7000
-const Slumba = 7000
-const Spaus = 7000
-const Sikan = 7000
-const Shiu = 7000
-const Sbanteng = 9000
-const Sharimau = 9000
-const Sgajah = 9000
-const Skambing = 9000
-const Spanda = 9000
-const Sbuaya = 9000
-const Skerbau = 9000
-const Ssapi= 9000
-const Smonyet = 9000
-const Sbabihutan = 9000
-const Sbabi = 9000
-const Sayam = 9000
+const Skepiting = 4500
+const Slobster = 4500
+const Sudang = 4500
+const Scumi = 4500
+const Sgurita = 4500
+const Sbuntal = 4500
+const Sdory = 4500
+const Sorca = 4500
+const Slumba = 4500
+const Spaus = 4500
+const Sikan = 4500
+const Shiu = 4500
+const Sbanteng = 5500
+const Sharimau = 5500
+const Sgajah = 5500
+const Skambing = 5500
+const Spanda = 5500
+const Sbuaya = 5500
+const Skerbau = 5500
+const Ssapi= 5500
+const Smonyet = 5500
+const Sbabihutan = 5500
+const Sbabi = 5500
+const Sayam = 5500
 let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
     const _armor = global.db.data.users[m.sender].armor
     const armor = (_armor == 0 ? 20000 : '' || _armor == 1 ? 49999 : '' || _armor == 2 ? 99999 : '' || _armor == 3 ? 149999 : '' || _armor == 4 ? 299999 : '')
@@ -30,7 +30,9 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
     let _type = (args[1] || '').toLowerCase()
     let jualbeli = (args[0] || '').toLowerCase()
     const Kchat = `⛊━─┈────────┈─━⛊
-*🌱 Hewan   | 💲 Harga Jual*\n⛊━─┈────────┈─━⛊\n
+*🌱 Hewan   | 💲 Harga Jual*
+⛊━─┈────────┈─━⛊
+
 🦀 Kepiting:      ${Skepiting}
 🦞 Lobster:       ${Slobster}
 🦐 Udang:         ${Sudang}
@@ -54,9 +56,11 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
 🐒 Monyet:       ${Smonyet}
 🐗 Babi Hutan: ${Sbabihutan}
 🐖 Babi:             ${Sbabi}
-🐔 Ayam:           ${Sayam}\n⛊━─┈────────┈─━⛊\n⛊━─┈────────┈─━⛊
+🐔 Ayam:           ${Sayam}
+⛊━─┈────────┈─━⛊
+⛊━─┈────────┈─━⛊
 🧪 *Contoh penggunaan :*
-#pasar jual ayam
+.pasar jual ayam
 `.trim()
     try {
         if (/pasar|toko/i.test(command)) {
@@ -245,7 +249,7 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
                         if (global.db.data.users[m.sender].gurita >= count * 1) {
                             global.db.data.users[m.sender].money += Skepiting * count
                             global.db.data.users[m.sender].gurita -= count * 1
-                            conn.reply(m.chat, `Sukses Menjual ${count} Gurita Dengan Harga ${Sgurita * count} Money `.trim(), m)
+                            conn.reply(m.chat, `Sukses Menjual ${count} Gurita Dengan Harga ${Sgurita * count} Money`.trim(), m)
                         } else conn.reply(m.chat, `Gurita Kamu Tidak Cukup`.trim(), m)
                         break
                         case 'buntal':
@@ -309,7 +313,7 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
                 }
                 break
             default:
-                return conn.sendButton(m.chat, Kchat, wm, [['Kolam', '#kolam']], m)
+                return conn.reply(m.chat, Kchat, m)
             }
       /*  } else if (/beli|buy/i.test(command)) {
             const count = args[1] && args[1].length > 0 ? Math.min(99999999, Math.max(parseInt(args[1]), 1)) : !args[1] || args.length < 3 ? 1 : Math.min(1, count)

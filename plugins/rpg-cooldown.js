@@ -3,7 +3,6 @@ import fetch from 'node-fetch'
 import fs from 'fs'
 
 let handler = async (m, { conn, usedPrefix }) => {
-	let imgr = flaaa.getRandom()
 	
 	let { lasthourly, lastberburu, lastbansos, lastadventure, lastfishing, lastwar, lastduel, lastmining, lastdungeon, lastclaim, lastweekly, lastmonthly } = global.db.data.users[m.sender]
 	
@@ -34,11 +33,11 @@ let handler = async (m, { conn, usedPrefix }) => {
     let ayamb = global.db.data.users[m.sender].ayamb
     let sapir = global.db.data.users[m.sender].sapir
     let ssapi = global.db.data.users[m.sender].ssapi
-    let kayu = global.db.data.users[m.sender].kayu
+    let wood = global.db.data.users[m.sender].wood
     let string = global.db.data.users[m.sender].string
     let emas = global.db.data.users[m.sender].emas
     let besi = global.db.data.users[m.sender].iron
-    let batu = global.db.data.users[m.sender].batu
+    let rock = global.db.data.users[m.sender].rock
     let sapi = global.db.data.users[m.sender].sapi
     let ayam = global.db.data.users[m.sender].ayam
     let babi = global.db.data.users[m.sender].babi
@@ -109,7 +108,8 @@ let handler = async (m, { conn, usedPrefix }) => {
 ⚠️ *Warn:* ${warn}
 ⛔ *Banned:* No
 `.trim()
-    await conn.sendButton(m.chat, botdate, str, `${imgr + 'Cooldown'}`, [['KERJA', '.kerja', 'PROFILE', '.profile']], fpay)
+    conn.reply(m.chat, str, m)
+    //await conn.sendButton(m.chat, str, wm2, null, [[`Inventory`, `.inv`, `Profile`, `.profile`]], m)
 }
 handler.help = ['cd','cooldown']
 handler.tags = ['rpg']
@@ -119,3 +119,4 @@ export default handler
 
 const more = String.fromCharCode(8206)
 const readMore = more.repeat(4201)
+

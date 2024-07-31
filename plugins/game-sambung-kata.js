@@ -1,32 +1,35 @@
 import fetch from 'node-fetch'
 
-let handler = async (m, { conn, text }) => {
+let handler = async (m, { conn, command, text }) => {
+let imgr = flaaa
     if (/help/.test(text)) return m.reply(`
 ┌「 *Sambung Kata* 」
-├ Sambung Kata Adalah
-│ Permainan Yang Dimana Setiap
-│ Pemainnya Diharuskan Membuat
-│ Kata Dari Akhir Kata Yang
-│ Berasal Dari Kata Sebelumnya.
+├ Sambung Kata adalah
+│ permainan yang dimana setiap
+│ pemainnya diharuskan membuat
+│ kata dari akhir kata yang
+│ berasal dari kata sebelumnya.
 └────
 ┌「 *Peraturan* 」
-├ Jawaban Kata Tidak Mengandung
-│ Spasi Dan Imbuhan (Me-, -An, Dll).
+├ Jawaban kata tidak mengandung
+│ spasi dan imbuhan (me-, -an, dll).
 ├ .skata
-│ Untuk Memulai
-├ Ketik *nyerah*
-│ Untuk Menyerah
-├ Berhasil Menjawab
-│ Mendapatkan 100 Xp
+│ untuk memulai
+├ ketik *nyerah*
+│ untuk menyerah
+├ berhasil menjawab
+│ mendapatkan 100 XP
 └────`.trim())
     conn.skata = conn.skata ? conn.skata : {}
     let id = m.chat
-    let res = await fetch('https://restapi.frteam.xyz/sambungkata?&apikey=Hrbot')
+    if (!text) return m.reply("input kata awal")
+    let res = await fetch('https://api.lolhuman.xyz/api/sambungkata?apikey=' + global.lolkey + '&text=' + text)
     let json = await res.json()
-    if (id in conn.skata) return await conn.send1Button(m.chat, `^ soal ini belum terjawab!`, wm, '𝗡𝗬𝗘𝗥𝗔𝗛', 'nyerah', conn.skata[id][0])
-    let kata = json.kata
+    if (id in conn.skata) return conn.reply(m.chat, `^ soal ini belum terjawab!`, conn.skata[id][0])
+    let kata = json.result
     conn.skata[id] = [
-        await conn.reply(m.chat, 'Mulai : *' + kata.toUpperCase() + '*\n\n*' + conn.filter(kata.toUpperCase()) + '... ?*\n\n*Balas Pesan Ini Untuk Menjawab*', m),
+        await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, '*Mulai dari kata:* ' + kata.toUpperCase() + '\n\n*Awalan:* ' + (kata.toUpperCase().slice(-1)).toUpperCase() + '... ?\n\n*balas pesan ini untuk menjawab!*', imgr + command, '', m),
+        //await conn.sendFile(m.chat, imgr + command, '', '*Mulai dari kata:* ' + kata.toUpperCase() + '\n\n*Awalan:* ' + (kata.toUpperCase().slice(-1)).toUpperCase() + '... ?\n\n*balas pesan ini untuk menjawab!*', m),
         kata.toLowerCase(),
         []
     ]

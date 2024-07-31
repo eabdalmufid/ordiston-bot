@@ -1,9 +1,10 @@
 let buatall = 1
-let handler = async (m, { conn, args, usedPrefix, DevMode }) => {
-let imgr = flaaa.getRandom()
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+let imgr = flaaa
     conn.casino = conn.casino ? conn.casino : {}
-    if (m.chat in conn.casino) return m.reply ('Masih ada yang melakukan casino disini, tunggu sampai selesai!!')
+    if (m.chat in conn.casino) return m.reply ("Masih ada yang melakukan casino disini, tunggu sampai selesai!!")
     else conn.casino[m.chat] = true
+    if (args.length < 1) return conn.reply(m.chat, usedPrefix + command + " <jumlah>\n" + usedPrefix + command + " 1000", m)
     try {
         let randomaku = `${Math.floor(Math.random() * 101)}`.trim()
         let randomkamu = `${Math.floor(Math.random() * 81)}`.trim() //hehe Biar Susah Menang :v
@@ -12,39 +13,32 @@ let imgr = flaaa.getRandom()
         let count = args[0]
         count = count ? /all/i.test(count) ? Math.floor(global.db.data.users[m.sender].exp / buatall) : parseInt(count) : args[0] ? parseInt(args[0]) : 1
         count = Math.max(1, count)
-        if (args.length < 1) return conn.reply(m.chat, usedPrefix + 'casino <jumlah>\n ' + usedPrefix + 'casino 1000', m)
         if (global.db.data.users[m.sender].exp >= count * 1) {
             global.db.data.users[m.sender].exp -= count * 1
             if (Aku > Kamu) {
-    let caption = `                💰 *C A S I N O* 💰\n\n${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${nomorbot.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n❌ *LOSE* ❌\nKamu kehilangan ${count} Uang(xp)`.trim()
-    conn.sendButton(m.chat, bottime, caption, imgr + 'LOSE', [['Try Again ' + args[0], '/casino ' + args[0]]], m, { mentions: conn.parseMention(caption) })
+    let caption = `${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${conn.user.jid.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n❌ *LOSE* ❌\nKamu kehilangan ${count} Uang(xp)`.trim()
+    conn.sendFthumb(m.chat, `💰 C A S I N O 💰`, caption, imgr + 'LOSER', '', m, { mentions: conn.parseMention(caption) })
+    //conn.sendMessage(m.chat, { image: { url: imgr + "LOSER" }, caption: caption, mentions: conn.parseMention(caption) }, { quoted: fliveLocc })
     } else if (Aku < Kamu) {
-    let caption = `                💰 *C A S I N O* 💰\n\n${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${nomorbot.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n🎉 *WIN* 🎉\nKamu mendapatkan ${count * 2} Uang(xp)`.trim()
-    conn.sendButton(m.chat, bottime, caption, imgr + 'WIN', [['Try Again ' + args[0], '/casino ' + args[0]]], m, { mentions: conn.parseMention(caption) })
+    let caption = `${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${conn.user.jid.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n🎉 *WIN* 🎉\nKamu mendapatkan ${count * 2} Uang(xp)`.trim()
+    conn.sendFthumb(m.chat, `💰 C A S I N O 💰`, caption, imgr + 'WINNER', '', m, { mentions: conn.parseMention(caption) })
+    //conn.sendMessage(m.chat, { image: { url: imgr + "WINNER" }, caption: caption, mentions: conn.parseMention(caption) }, { quoted: fliveLocc })
     } else {
-    let caption = `                💰 *C A S I N O* 💰\n\n${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${nomorbot.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n🔖*DRAW* 🔖\nKamu mendapatkan ${count * 1} Uang(xp)`.trim()
-    conn.sendButton(m.chat, bottime, caption, imgr + 'DRAW', [['Try Again ' + args[0], '/casino ' + args[0]]], m, { mentions: conn.parseMention(caption) })
+    let caption = `${htjava} *@${m.sender.split("@")[0]}* - [USER]\n┗┅⭑ ${Kamu} Point\n${htjava} *@${conn.user.jid.split("@")[0]}* - [BOT]\n┗┅⭑ ${Aku} Point\n\n🔖*DRAW* 🔖\nKamu mendapatkan ${count * 1} Uang(xp)`.trim()
+    conn.sendFthumb(m.chat, `💰 C A S I N O 💰`, caption, imgr + 'DRAW', '', m, { mentions: conn.parseMention(caption) })
+    //conn.sendMessage(m.chat, { image: { url: imgr + "DRAW" }, caption: caption, mentions: conn.parseMention(caption) }, { quoted: fliveLocc })
             }
         } else conn.reply(m.chat, `Uang(xp) kamu tidak mencukupi untuk Casino silahkan *.claim* terlebih dahulu!`.trim(), m)
     } catch (e) {
         console.log(e)
-        m.reply('Error!!')
-        if (DevMode) {
-            for (let jid of global.owner.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').filter(v => v != conn.user.jid)) {
-            conn.reply(jid, 'casino.js error\nNo: *' + m.sender.split`@`[0] + '*\nCommand: *' + m.text + '*\n\n*' + e + '*', m)
-                
-            }
-        }
+        m.reply("Error!!")
     } finally {
         delete conn.casino[m.chat]
     }
 }
-    
-handler.help = ['casino <jumlah>']
-handler.tags = ['rpg']
+handler.help = ["casino <jumlah>"]
+handler.tags = ["rpg"]
 handler.command = /^(casino|csn)$/i
-
-handler.group = true
 export default handler 
 
 function pickRandom(list) {

@@ -1,13 +1,25 @@
-let handler = async (m) => m.reply(`
-*Pertanyaan:* ${m.text}
-*Jawaban:* ${['Ya', 'Mungkin iya', 'Mungkin', 'Mungkin tidak', 'Tidak', 'Tidak mungkin'].getRandom()}
-  `.trim(), null, m.mentionedJid ? {
-  mentions: m.mentionedJid
-} : {})
+let handler = async (m, { conn, text, args, command }) => {
+  if (!args[0]) throw `Gunakan contoh .${command} halo`;
 
-handler.help = ['apakah <teks>?']
-handler.tags = ['kerang', 'fun']
-handler.customPrefix = /(\?$)/
-handler.command = /^apakah$/i
+  const answers = ['Ya', 'Mungkin iya', 'Mungkin', 'Mungkin tidak', 'Tidak', 'Tidak mungkin'];
+  const answer = pickRandom(answers);
 
-export default handler
+  const replyText = `
+🔮 *Pertanyaan:* ${args.join(' ')}
+💬 *Jawaban:* ${answer} ${answer === 'Ya' ? '👍' : '👎'}
+`.trim();
+
+  await conn.reply(m.chat, replyText, m, m.mentionedJid ? {
+    mentions: conn.parseMention(m.text)
+  } : {});
+}
+
+handler.help = ['apakah'].map(v => v + ' <teks>');
+handler.tags = ['kerang', 'fun'];
+handler.command = /^apakah$/i;
+
+export default handler;
+
+function pickRandom(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}

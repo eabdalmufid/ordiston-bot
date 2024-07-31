@@ -52,8 +52,8 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
   let monsterName = monster.toUpperCase()
 
   if (new Date - global.db.data.users[m.sender].lasthunt > 1200000) {
-    let coins = parseInt(Math.floor(Math.random() * 10000))
-    let exp = parseInt(Math.floor(Math.random() * 1000))
+    let coins = parseInt(Math.floor(Math.random() * 100000))
+    let exp = parseInt(Math.floor(Math.random() * 10000))
     let _healing = `${Math.floor(Math.random() * 100)}`.trim()
     let healing = (_healing * 1)
     player.health -= healing
@@ -70,7 +70,7 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
       }
       }
       player.health = 100
-      await conn.sendButton(m.chat, msg, wm, null, [['Menu', `${usedPrefix}menu`],['Owner', `${usedPrefix}owner`]], m, { mentions: conn.parseMention(msg) })
+      await conn.reply(m.chat, msg, m, { mentions: conn.parseMention(msg) })
       return
     }
 
@@ -86,7 +86,7 @@ ${new Intl.NumberFormat('en-US').format(exp)} XP
 Berkurang -${healing} Health, Tersisa ${player.health} Health
 
 +1 Tiketcoin`
-    await conn.sendButton(m.chat, pesan, wm, null, [['Menu', `${usedPrefix}menu`],['Owner', `${usedPrefix}owner`]], m, { mentions: conn.parseMention(pesan) })
+    await conn.reply(m.chat, pesan, m, { mentions: conn.parseMention(pesan) })
   } else throw `Tunggu ${timers} Untuk Berburu Lagi`
 }
 
@@ -104,5 +104,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, , m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

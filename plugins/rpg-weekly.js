@@ -1,11 +1,10 @@
 const rewards = {
-  exp: 15000,
-  money: 35999,
+  exp: 14999,
+  money: 10999,
   potion: 9,
 }
 const cooldown = 604800000
 let handler = async (m) => {
-  let imgr = flaaa.getRandom
   let user = global.db.data.users[m.sender]
   if (new Date - user.lastweekly < cooldown) throw `You have already claimed this daily claim!, wait for *${((user.lastweekly + cooldown) - new Date()).toTimeString()}*`
   let text = ''
@@ -14,7 +13,7 @@ let handler = async (m) => {
     user[reward] += rewards[reward]
     text += `*+${rewards[reward]}* ${global.rpg.emoticon(reward)}${reward}\n`
   }
-  conn.sendButton(m.chat,`${htki} WEEKLY ${htka}`, text.trim(), `${imgr + 'Weekly'}`, [['Inventory', '.inv'], ['Monthly', '.monthly']],m)
+  conn.reply(m.chat,`${htki} WEEKLY ${htka}` + `\n` + text.trim(), m)
   user.lastweekly = new Date * 1
 }
 handler.help = ['weekly']

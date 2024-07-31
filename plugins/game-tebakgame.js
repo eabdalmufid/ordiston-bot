@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 let timeout = 120000
 let poin = 4999
 let handler = async (m, { conn, command, usedPrefix }) => {
-let imgr = flaaa.getRandom()
+let imgr = flaaa
 
     conn.tebakgame = conn.tebakgame ? conn.tebakgame : {}
     let id = m.chat
@@ -12,14 +12,14 @@ let imgr = flaaa.getRandom()
     }
     let src = await (await fetch('https://raw.githubusercontent.com/qisyana/scrape/main/tebakgame.json')).json()
     let json = src[Math.floor(Math.random() * src.length)]
-  let caption = `
-Logo apakah ini?
+  let caption = `Logo apakah ini?
 
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik ${usedPrefix}hgame untuk bantuan
 Bonus: ${poin} XP
     `.trim()
     conn.tebakgame[id] = [
+        //await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, caption + '\n\n' + author, json.img, '', m),
         await conn.sendButton(m.chat, caption, author, json.img, buttons, m),
         json, poin,
         setTimeout(() => {

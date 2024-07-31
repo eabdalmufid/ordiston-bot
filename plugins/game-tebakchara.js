@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 let timeout = 120000
 let poin = 4999
-let handler = async (m, { conn, usedPrefix }) => {
+let handler = async (m, { conn, command, usedPrefix }) => {
     conn.tebakchara = conn.tebakchara ? conn.tebakchara : {}
     let id = m.chat
     if (id in conn.tebakchara) {
@@ -19,6 +19,7 @@ Ketik ${usedPrefix}hcha untuk hint
 Bonus: ${poin} XP
     `.trim()
     conn.tebakchara[id] = [
+        //await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, caption + '\n\n' + author, `${json.images.jpg.image_url}`, '', m),
         await conn.sendButton(m.chat, caption, author, `${json.images.jpg.image_url}`, buttons, m),
         json, poin,
         setTimeout(() => {

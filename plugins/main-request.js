@@ -10,6 +10,6 @@ let handler = async (m, { conn, text, command }) => {
 }
 handler.help = ['request'].map(v => v + ' [teks]')
 handler.tags = ['main']
-handler.command = /^req(uest?)?$/i
+handler.command = /^req(uest?)?$/i;
 
 export default handler

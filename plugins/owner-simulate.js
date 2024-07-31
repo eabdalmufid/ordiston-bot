@@ -1,46 +1,48 @@
-let handler = async (m, { conn, args: [event], text }) => {
-    if (!event) throw `List Event: welcome, bye, delete, promote, demote`
+let handler = async (m, { conn, usedPrefix, command, args: [event], text }) => {
+    if (!event) return await conn.sendButton(m.chat, `contoh:
+${usedPrefix + command} welcome @user
+${usedPrefix + command} bye @user
+${usedPrefix + command} promote @user
+${usedPrefix + command} demote @user`.trim(), wm, null, [['Welcome', '#simulate welcome'], ['Bye', '#simulate bye']])
     let mentions = text.replace(event, '').trimStart()
     let who = mentions ? conn.parseMention(mentions) : []
-    let participants = who.length ? who : [m.sender]
-    let action = false
-    m.reply(`Simulating ${event}...`)
+    let part = who.length ? who : [m.sender]
+    let act = false
+    m.reply(`*${htjava} Simulating ${event}...*`)
     switch (event.toLowerCase()) {
         case 'add':
         case 'invite':
         case 'welcome':
-            action = 'add'
+            act = 'add'
             break
         case 'bye':
         case 'kick':
         case 'leave':
         case 'remove':
-            action = 'remove'
+            act = 'remove'
             break
         case 'promote':
-            action = 'promote'
+            act = 'promote'
             break
         case 'demote':
-            action = 'demote'
+            act = 'demote'
             break
 /*        case 'delete':
             deleted = m
             break
 */
         default:
-            throw `List Event: welcome, bye, delete, promote, demote`
+            throw eror
     }
-    if (action) return conn.participantsUpdate({
-        jid: m.chat,
-        participants,
-        action
+    if (act) return conn.participantsUpdate({
+        id: m.chat,
+        participants: part,
+        action: act
     })
-    return conn.onDelete(m)
+//    return conn.onDelete(m)
 }
 handler.help = ['simulate <event> [@mention]']
 handler.tags = ['owner']
+
 handler.command = /^simulate$/i
-
-handler.owner = true
-
 export default handler

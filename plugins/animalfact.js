@@ -20,7 +20,7 @@ contoh:
 └────
 `.trim();
   let res = await fetch(
-    API("https://some-random-api.ml", "/animal/" + text, {})
+    API("https://some-random-api.com", "/animal/" + text, {})
   );
   if (!res.ok) throw `${res.status} ${res.statusText}`;
   let json = await res.json();

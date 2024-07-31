@@ -1,6 +1,14 @@
 import { tmpdir } from 'os'
-import { join } from 'path'
-import fs from 'fs'
+import path, { join } from 'path'
+import {
+  readdirSync,
+  statSync,
+  unlinkSync,
+  existsSync,
+  readFileSync,
+  watch,
+  renameSync
+} from 'fs'
 let handler = async (m, { args, text, usedPrefix, command }) => {
 	let info = `${usedPrefix + command} <old name> | <new name>
 
@@ -22,14 +30,12 @@ let to = args[2]
 let ar = Object.keys(plugins)
     let ar1 = ar.map(v => v.replace('.js', ''))
     if (!ar1.includes(args[0])) return m.reply(`*🗃️ NOT FOUND!*\n==================================\n\n${ar1.map(v => ' ' + v).join`\n`}`)
-await fs.renameSync(`./plugins/${from}.js`, `./plugins/${to}.js`)
+await renameSync(`./plugins/${from}.js`, `./plugins/${to}.js`)
 conn.reply(m.chat, `Succes changes "plugins/${from}.js" to "plugins/${to}.js"`, m)
     
 }
 handler.help = ['rf','renamefile'].map(_=> _ + " <old name> | <new name>")
 handler.tags = ['owner']
 handler.command = /^(r(ename(file)?|f))$/i
-
-handler.mods = true
-
+handler.owner = true
 export default handler

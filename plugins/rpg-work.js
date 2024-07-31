@@ -1,99 +1,95 @@
-//ketika napsu ku jadikan bahan funngsi :'v
-// heh gw gabut ajg :'v
-
-let handler = async (m, { conn, usedPrefix }) => { 
-    try { 
-        let __timers = (new Date - global.db.data.users[m.sender].lastadventure)
-        let _timers = (300000 - __timers) 
-        let timers = clockString(_timers)
-        if (global.db.data.users[m.sender].healt > 79) {
-            if (new Date - global.db.data.users[m.sender].lastadventure > 300000) {
-            let armor = global.db.data.users[m.sender].armor
-            let rubah = global.db.data.users[m.sender].rubah
-            let kuda = global.db.data.users[m.sender].kuda
-            let kucing = global.db.data.users[m.sender].kucing
-            let anjing = global.db.data.users[m.sender].anjing
-            let ____health = `${Math.floor(Math.random() * 101)}`.trim()
-            let ___health = (____health * 1)
-            let kucingnya = (kucing == 0? 0 : '' || kucing == 1 ? 5 : '' || kucing == 2 ? 10 : '' || kucing == 3 ? 15 : '' || kucing == 4 ? 21 : ''  || kucing == 5 ? 30 : '')
-            let armornya = (armor == 0 ? 0 : '' || armor == 1 ? 5 : '' || armor == 2 ? 10 : '' || armor == 3 ? 15 : '' || armor == 4 ? 21 : '' || armor == 5 ? 30 : '')
-            let __health = (___health > 60 ? ___health - kucingnya - armornya : ___health)
-            let healt = (kucing == 0 && armor == 0 ? pickRandom(['100', '99', '98', '97', '96', '95', '94', '93', '92', '91', '90']) : kucing > 0 && armor > 0 ? __health : ___health)
-            let exp = (Math.floor(Math.random() * 400) + (kuda * 70))
-            let uang = (Math.floor(Math.random() * 400) + (anjing * 70))
-            let _potion = `${Math.floor(Math.random() * 2)}`.trim()
-            let potion = (_potion * 1)
-            let _diamond = (rubah == 0 ? pickRandom(['0', '1', '0', '1', '0', '1', '0']) : '' || rubah == 1 ? pickRandom(['0', '1', '0', '1']) : '' || rubah == 2 ? pickRandom(['0', '1', '0', '1', '2']) : '' || rubah == 3 ? pickRandom(['0', '1', '0', '2', '2', '0']) : '' || rubah == 4 ? pickRandom(['0', '1', '1', '2', '1', '1', '0']) : '' || rubah == 5 ? pickRandom(['0', '0', '1', '2', '2', '1', '1', '0']) : '' )
-            let diamond = (_diamond * 1)
-            let _common = `${Math.floor(Math.random() * 3)}`.trim()
-            let common = (_common * 1)
-            let _uncommon = `${Math.floor(Math.random() * 2)}`.trim()
-            let uncommon = (_uncommon * 1) 
-            let _mythic = `${pickRandom(['1', '0', '0', '1'])}`
-            let mythic = (_mythic * 1)
-            let _legendary = `${pickRandom(['1', '0', '0', '0'])}`
-            let sampah = `${Math.floor(Math.random() * 300)}`.trim()
-            let legendary = (_legendary * 1)
-            let _kayu = `${Math.floor(Math.random() * 3)}`.trim()
-            let kayu = (_kayu * 1)
-            let _batu = `${Math.floor(Math.random() * 2)}`.trim()
-            let batu = (_batu * 1)
-            let _string = `${Math.floor(Math.random() * 2)}`.trim()
-            let string = (_string * 1)
-            let _iron = `${Math.floor(Math.random() * 2)}`.trim()
-            let iron = (_iron * 1)
-            let prefix = usedPrefix
-            let str = `
-${rpg.emoticon('healt')} Nyawa mu berkurang -${healt * 1} karena Kamu telah berpetualang sampai ${pickRandom(['🇯🇵 Jepang', '🇰🇷 Korea', '🇮🇳 India', '🇺🇲 Amerika', '🇵🇸 Palestin', '🇮🇶 Iraq', '🇸🇦 Arab', '🇵🇰 Pakistan', '🇩🇪 German', '🇫🇮 Finlandia', 'Ke bawa dunia mimpi 😱', 'Ujung dunia 🌏', 'Mars 👽', 'Bulan 🌚', 'Pluto 😱', 'Matahari 🌞', 'Hatinya dia ♥️', '...'])} dan mendapatkan
-${rpg.emoticon('exp')} *exp:* ${exp} 
-${rpg.emoticon('money')} *uang:* ${uang}
-${rpg.emoticon('sampah')} *sampah:* ${sampah}${potion == 0 ? '' : `\n*${rpg.emoticon('potion')}Potion:* ` + potion + ''}${iron == 0 ? '' : `\n*${rpg.emoticon('iron')}Iron:* ` + iron + ''}${kayu == 0 ? '' : `\n*${rpg.emoticon('kayu')}Kayu:* ` + kayu + ''}${batu == 0 ? '' : `\n*${rpg.emoticon('batu')}Batu:* ` + batu + ''}${string == 0 ? '' : `\n*${rpg.emoticon('string')}String:* ` + string + ''}${diamond == 0 ? '' : `\n*${rpg.emoticon('diamond')}diamond:* ` + diamond + ''}${common == 0 ? '' : `\n*${rpg.emoticon('common')}common crate:* ` + common + ''}${uncommon == 0 ? '' : `\n*${rpg.emoticon('uncommon')}uncommon crate:* ` + uncommon + ''}
-`.trim()
-            conn.sendButton(m.chat, str, wm, null, [['menu', usedPrefix + 'menu', 'inventory', usedPrefix + 'inv']], m)
-            if (mythic > 0) {
-                   global.db.data.users[m.sender].mythic += mythic * 1
-                   conn.sendButton(m.chat, '*Selamat anda mendapatkan item Rare yaitu*\n' + mythic + `${rpg.emoticon('mythic')}Mythic Crate`, wm, null, [['menu', usedPrefix + 'menu', 'inventory', usedPrefix + 'inv']], m)
-            }
-            if (legendary > 0) {
-                global.db.data.users[m.sender].legendary += legendary * 1
-                conn.sendButton(m.chat, '*Selamat anda mendapatkan item Epic yaitu*\n' + legendary + `${rpg.emoticon('legendary')}Legendary Crate`, wm, null, [['menu', usedPrefix + 'menu', 'inventory', usedPrefix + 'inv']], m)
-            }
-            global.db.data.users[m.sender].healt -= healt * 1
-            global.db.data.users[m.sender].exp += exp * 1
-            global.db.data.users[m.sender].money += uang * 1
-            global.db.data.users[m.sender].potion += potion * 1
-            global.db.data.users[m.sender].diamond += diamond * 1
-            global.db.data.users[m.sender].common += common * 1 
-            global.db.data.users[m.sender].uncommon += uncommon * 1
-            global.db.data.users[m.sender].sampah += sampah * 1
-            global.db.data.users[m.sender].iron += iron * 1
-            global.db.data.users[m.sender].batu += batu * 1
-            global.db.data.users[m.sender].kayu += kayu * 1
-            global.db.data.users[m.sender].string += string * 1
-            global.db.data.users[m.sender].lastadventure = new Date * 1
-            } else conn.sendButton(m.chat, `Anda sudah bekerja keras hari ini, silahkan menunggu sampai ${timers}`, wm, null, [['menu', usedPrefix + 'menu']], m)
-        } else conn.sendButton(m.chat, 'Minimal 80 health untuk bisa bercocok tanam, beli obat dulu biar kuat dengan ketik *' + usedPrefix + 'shop buy potion <jumlah>*\ndan ketik *' + usedPrefix + 'use potion <jumlah>*\n\n_Untuk mendapat money dan potion gratis ketik_ *' + usedPrefix + 'claim*', wm, null, [['Healing', usedPrefix + `heal`, 'Beli Potion', usedPrefix + `shop buy potion`]], m)
+let handler = async (m, { conn, usedPrefix }) => {
+    try {
+      const timeToWait = 300000;
+      const currentTime = new Date();
+      const timeSinceLastAdventure = currentTime - global.db.data.users[m.sender].lastadventure;
+      const timeLeft = timeToWait - timeSinceLastAdventure;
+      const timers = clockString(timeLeft);
+  
+      const user = global.db.data.users[m.sender];
+      const { healt, armor, rubah, kuda, kucing, anjing } = user;
+  
+      if (healt <= 79) {
+        return conn.reply(m.chat, `⚠️ *Minimal health harus 80* untuk berpetualang. Beli obat dengan ${usedPrefix}shop buy potion <jumlah> dan gunakan dengan ${usedPrefix}use potion <jumlah>. Untuk mendapatkan money dan potion gratis ketik *${usedPrefix}claim*`, m);
+      }
+  
+      if (timeSinceLastAdventure <= timeToWait) {
+        return conn.reply(m.chat, `⌛ *Anda sudah berpetualang*, silahkan menunggu sampai *${timers}* lagi`, m);
+      }
+  
+      const health = Math.floor(Math.random() * 101);
+      const kucingHealth = [0, 5, 10, 15, 21, 30][kucing] || 30;
+      const armorHealth = [0, 5, 10, 15, 21, 30][armor] || 30;
+      const totalHealth = health > 60 ? health - kucingHealth - armorHealth : health;
+      const exp = Math.floor(Math.random() * 400) + kuda * 70;
+      const money = Math.floor(Math.random() * 400) + anjing * 70;
+      const potion = Math.floor(Math.random() * 5) + 1; // Jumlah potion ditingkatkan menjadi 1 hingga 5
+      const diamond = [pickRandom(['0', '1']), pickRandom(['0', '1']), pickRandom(['0', '1', '2']), pickRandom(['0', '1', '2']), pickRandom(['0', '1', '1', '2', '1', '1', '0']), pickRandom(['0', '0', '1', '2', '2', '1', '1', '0'])][rubah] || 0;
+      const common = Math.floor(Math.random() * 5) + 1; // Jumlah common crate ditingkatkan menjadi 1 hingga 5
+      const uncommon = Math.floor(Math.random() * 3) + 1; // Jumlah uncommon crate ditingkatkan menjadi 1 hingga 3
+      const mythic = pickRandom(['1', '0', '0', '1']);
+      const legendary = pickRandom(['1', '0', '0', '0']);
+      const sampah = Math.floor(Math.random() * 300) + 100; // Jumlah sampah ditingkatkan menjadi 100 hingga 399
+      const wood = Math.floor(Math.random() * 3) + 1; // Jumlah wood ditingkatkan menjadi 1 hingga 3
+      const rock = Math.floor(Math.random() * 2) + 1; // Jumlah rock ditingkatkan menjadi 1 hingga 2
+      const string = Math.floor(Math.random() * 2) + 1; // Jumlah tali ditingkatkan menjadi 1 hingga 2
+      const iron = Math.floor(Math.random() * 2) + 1; // Jumlah iron ditingkatkan menjadi 1 hingga 2
+  
+      user.healt -= health;
+      user.exp += exp;
+      user.money += money;
+      user.potion += potion;
+      user.diamond += diamond;
+      user.common += common;
+      user.uncommon += uncommon;
+      user.sampah += sampah;
+      user.iron += iron;
+      user.rock += rock;
+      user.wood += wood;
+      user.string += string;
+      user.lastadventure = currentTime;
+  
+      const str = `
+  *${rpg.emoticon('healt')} Nyawa berkurang -${health}* karena Kamu berpetualang sampai *${pickRandom(['🌏 Ujung dunia', '🌌 Luar angkasa', '🗺️ Dunia mimpi', '🚀 Mars', '🌚 Bulan', '🪐 Pluto', '🌞 Matahari', '❤️ Hatinya dia', '...'])}* dan mendapatkan
+  *${rpg.emoticon('exp')} Exp:* ${exp}
+  *${rpg.emoticon('money')} Uang:* ${money}
+  *${rpg.emoticon('sampah')} Sampah:* ${sampah}${potion === 0 ? '' : `\n*${rpg.emoticon('potion')} Potion:* ${potion}`}${iron === 0 ? '' : `\n*${rpg.emoticon('iron')} Iron:* ${iron}`}${wood === 0 ? '' : `\n*${rpg.emoticon('wood')} Wood:* ${wood}`}${rock === 0 ? '' : `\n*${rpg.emoticon('rock')} Rock:* ${rock}`}${string === 0 ? '' : `\n*${rpg.emoticon('string')} Tali:* ${string}`}${diamond === 0 ? '' : `\n*${rpg.emoticon('diamond')} Diamond:* ${diamond}`}${common === 0 ? '' : `\n*${rpg.emoticon('common')} Common Crate:* ${common}`}${uncommon === 0 ? '' : `\n*${rpg.emoticon('uncommon')} Uncommon Crate:* ${uncommon}`}`;
+  
+      conn.reply(m.chat, str, m);
+  
+      if (mythic > 0) {
+        user.mythic += mythic;
+        conn.reply(m.chat, `🎉 *Selamat!*\nAnda mendapatkan item *Rare* yaitu *${mythic}* ${rpg.emoticon('mythic')} Mythic Crate`, m);
+      }
+  
+      if (legendary > 0) {
+        user.legendary += legendary;
+        conn.reply(m.chat, `🎉 *Selamat!*\nAnda mendapatkan item *Epic* yaitu *${legendary}* ${rpg.emoticon('legendary')} Legendary Crate`, m);
+      }
     } catch (e) {
-        console.log(e)
-        throw eror
+      console.log(e);
+      throw e;
     }
-}
-handler.help = ['petualang', 'work']
-handler.tags = ['rpg']
-handler.command = /^(petualang|work)$/i
-
-handler.fail = null
-handler.register = false
-handler.group = true
-export default handler
-
-function pickRandom(list) {
-    return list[Math.floor(Math.random() * list.length)]
-}
+  };
+  
+  handler.help = ['petualang', 'work'];
+  handler.tags = ['rpg'];
+  handler.command = /^(petualang|work)$/i;
+  
+  handler.fail = null;
+  handler.register = false;
+  handler.group = true;
+  export default handler;
+  
+  function pickRandom(list) {
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000);
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24;
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
+    console.log({ ms, d, h, m, s })
+    return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

@@ -13,7 +13,7 @@ conn, usedPrefix, text, participants, groupMetadata
     let a = ps.getRandom()
     
     if (user.stamina < 20) return m.reply(`Stamina anda tidak cukup\nharap isi stamina anda dengan *${usedPrefix}eat8`)
-    if (user.lastngocok > 10800000) throw m.reply(`Kamu masih kelelahan\nHarap tunggu ${timers} lagi`)
+    if (user.lastngocok > 10800000) throw `Kamu masih kelelahan\nHarap tunggu ${timers} lagi`
     
     
     let rndm1 = `${Math.floor(Math.random() * 5)}`
@@ -113,43 +113,34 @@ user.diamond += hmsil1
 		user.stamina -= 20
 	
 setTimeout(() => {
-    conn.sendButton(m.chat, hsl, wm, null, [['Inventory', '/inv']], m, { mentions: conn.parseMention(hsl) })
+    conn.reply(m.chat, hsl,  m, { mentions: conn.parseMention(hsl) })
                      }, 27000) 
                
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln4, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln4, null)
                       }, 25000)
                 
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln3, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln3, null)
                      }, 20000) 
                         
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln2, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln2, null)
                      }, 15000) 
                     
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, jln, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, jln, null)
                      }, 10000) 
                      
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, `🔍 ${pengocok} Mencari Area ngocok.....`, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, `🔍 ${pengocok} Mencari Area ngocok.....`, null)
                      }, 0) 
   user.lastngocok = new Date * 1
 }
 handler.help = ['ngocok']
 handler.tags = ['rpg']
 handler.command = /^(ngocok|mengocok)$/i
+handler.premium = true
 handler.group = true
 export default handler
 
@@ -158,5 +149,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

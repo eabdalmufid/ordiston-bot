@@ -1,135 +1,160 @@
+const jobs = {
+    ojek: [{ name: 'Ojek', task: '🛵 Mengantarkan penumpang', difficulty: pickRandom(['Noob', 'Easy', 'Normal']), money: randomMoney(500000, 1), exp: 15 }],
+    pedagang: [{ name: 'Pedagang', task: '🛒 Mencari pembeli', difficulty: pickRandom(['Noob', 'Easy', 'Normal']), money: randomMoney(500000, 1), exp: 25 }],
+    dokter: [{ name: 'Dokter', task: '💉 Merawat pasien', difficulty: pickRandom(['Easy', 'Normal', 'Hard']), money: randomMoney(500000, 1), exp: 40 }],
+    petani: [{ name: 'Petani', task: '🌾 Menanam dan memanen tanaman', difficulty: pickRandom(['Noob', 'Easy', 'Normal']), money: randomMoney(500000, 1), exp: 30 }],
+    montir: [{ name: 'Montir', task: '🔧 Memperbaiki kendaraan', difficulty: pickRandom(['Easy', 'Normal', 'Hard']), money: randomMoney(500000, 1), exp: 20 }],
+    kuli: [{ name: 'Kuli', task: '🏋️ Membantu proyek konstruksi', difficulty: 'Extreme', money: randomMoney(500000, 1), exp: 50 }],
+    gamer: [{ name: 'Gamer', task: '🎮 Main game dan streaming', difficulty: pickRandom(['Noob', 'Easy', 'Normal', 'Hard']), money: randomMoney(500000, 1), exp: 10 }],
+    teacher: [{ name: 'Teacher', task: '👩‍🏫 Mengajar dan memberi pembelajaran', difficulty: pickRandom(['Noob', 'Easy', 'Normal', 'Hard']), money: randomMoney(500000, 1), exp: 35 }],
+    designer: [{ name: 'Graphic Designer', task: '🎨 Membuat desain grafis', difficulty: pickRandom(['Easy', 'Normal', 'Hard']), money: randomMoney(500000, 1), exp: 28 }],
+};
 
-let handler = async (m, {conn, command, args, usedPrefix}) => {
-let type = (args[0] || '').toLowerCase()
-let users = global.db.data.users[m.sender]
-let time = global.db.data.users[m.sender].lastjb + 300000
-//let __timers = (new Date - global.db.data.users[m.sender].lastkerja)
-   // let _timers = (0 - __timers)
-   // let timers = clockString(_timers) 
-    //JANGAN DI OTAK ATIK
-//PEMBATAS
-let penumpan = ['mas mas','bapak bapak','cewe sma','bocil epep','emak emak']
-let penumpang = penumpan[Math.floor(Math.random() * penumpan.length)]
-let daganga = ['wortel','sawi','selada','tomat','seledri','cabai','daging','ikan','ayam']
-let dagangan = daganga[Math.floor(Math.random() * daganga.length)]
-let pasie = ['sakit kepala','cedera','luka bakar','patah tulang']
-let pasien = pasie[Math.floor(Math.random() * pasie.length)]
-let pane = ['Wortel','Kubis','stowbery','teh','padi','jeruk','pisang','semangka','durian','rambutan']
-let panen = pane[Math.floor(Math.random() * pane.length)]
-let bengke = ['mobil','motor','becak','bajai','bus','angkot','becak','sepeda']
-let bengkel = bengke[Math.floor(Math.random() * bengke.length)]
-let ruma = ['Membangun Rumah','Membangun Gedung','Memperbaiki Rumah','Memperbaiki Gedung','Membangun Fasilitas Umum','Memperbaiki Fasilitas Umum']
-let rumah = ruma[Math.floor(Math.random() * ruma.length)]
+const taskInformation = {
+    '🌾 Menanam dan memanen tanaman': [
+        'Telah menanam jagung sebanyak 100 batang.',
+        'Berhasil memanen 50 kg tomat dengan hasil bagus.',
+        'Menanggulangi hama dan penyakit pada tanaman dengan sukses.',
+        'Menciptakan varietas baru tanaman yang unggul.',
+        'Mengikuti pelatihan pertanian terkemuka untuk meningkatkan keterampilan.'
+    ],
+    '🛒 Mencari pembeli': [
+        'Mendapatkan pelanggan setia yang selalu membeli produk.',
+        'Mengadakan diskon besar-besaran untuk menarik pembeli.',
+        'Mendapat penawaran untuk bekerja sama dengan toko besar.',
+        'Mengembangkan strategi pemasaran yang efektif untuk meningkatkan penjualan.',
+        'Mendapatkan testimoni positif dari banyak pelanggan.'
+    ],
+    '💉 Merawat pasien': [
+        'Menyembuhkan penyakit langka yang tidak bisa disembuhkan sebelumnya.',
+        'Menyelamatkan nyawa seorang pasien dalam kondisi kritis.',
+        'Dapat diagnosis yang tepat dan memberikan terapi yang efektif.',
+        'Menjadi bagian dari tim medis yang berhasil melakukan operasi sulit.',
+        'Menjadi pembicara utama dalam konferensi medis internasional.'
+    ],
+    '🔧 Memperbaiki kendaraan': [
+        'Berhasil memperbaiki mobil mewah milik selebriti terkenal.',
+        'Menyelesaikan perbaikan motor dalam waktu singkat.',
+        'Dapat menemukan dan mengatasi masalah yang rumit pada kendaraan.',
+        'Mengembangkan prototipe baru untuk kendaraan yang lebih efisien.',
+        'Memperoleh sertifikat dari produsen kendaraan terkemuka untuk keahliannya.'
+    ],
+    '🛵 Mengantarkan penumpang': [
+        'Menyelesaikan banyak perjalanan dalam waktu singkat.',
+        'Membawa penumpang ke tujuan dengan aman dan tepat waktu.',
+        'Mendapat review positif dari banyak penumpang.',
+        'Menghadapi situasi darurat dengan tenang dan penuh tanggung jawab.',
+        'Memiliki rute pilihan yang efisien untuk menghindari kemacetan.'
+    ],
+    '🏋️ Membantu proyek konstruksi': [
+        'Berpartisipasi dalam proyek konstruksi terbesar di kota.',
+        'Menyelesaikan pekerjaan berat dengan kecepatan tinggi.',
+        'Bekerja dengan tim yang solid untuk mencapai target proyek.',
+        'Menghadapi tantangan fisik dalam kondisi cuaca ekstrem.',
+        'Menemukan solusi inovatif untuk efisiensi konstruksi.'
+    ],
+    '🎮 Main game dan streaming': [
+        'Mencapai prestasi tertinggi di dalam game populer.',
+        'Mendapatkan banyak penonton dan donasi saat streaming.',
+        'Menjadi pemain profesional dan berkompetisi di turnamen besar.',
+        'Menciptakan komunitas gamer yang aktif dan positif.',
+        'Mengumpulkan sponsor untuk mendukung karier sebagai gamer.'
+    ],
+    '👩‍🏫 Mengajar dan memberi pembelajaran': [
+        'Meningkatkan hasil belajar siswa secara signifikan.',
+        'Mendapatkan penghargaan sebagai guru terbaik di sekolah.',
+        'Menjadi sumber inspirasi bagi murid-muridnya dan memotivasi mereka untuk sukses.',
+        'Mengembangkan program pembelajaran inovatif yang disukai siswa.',
+        'Mengadakan seminar edukatif untuk meningkatkan kualitas pendidikan.'
+    ],
+    '🎨 Membuat desain grafis': [
+        'Menghasilkan desain logo yang menarik untuk perusahaan ternama.',
+        'Membuat ilustrasi digital untuk buku anak-anak yang mendapat banyak pujian.',
+        'Mendesain kampanye iklan yang sukses dan mendapat banyak perhatian.',
+        'Berpartisipasi dalam proyek animasi yang mendapatkan penghargaan.',
+        'Menjalin kerja sama dengan selebriti untuk menciptakan konten visual.'
+    ],
+};
 
-let pppecat = ['Ruko Kebakaran','LO NGOCOK DIDEPAN UMUM','Males Malesan','Ngew istrinya yg punya ruko']
-let alasanpecat = pppecat[Math.floor(Math.random() * pppecat.length)]
-let ddppecat = ['Bakar Pasien','Jual Organ Dalem ke Lapak ilegal','serinv telat']
-let alasanpasien = ddppecat[Math.floor(Math.random() * ddppecat.length)]
-//Uang
-let uangm = Math.floor(Math.random() * 10) + 4000
-let duit = Math.floor(Math.random() * 20) + 2500
-let duitm = Math.floor(Math.random() * 50) + 9500
-let duitd = Math.floor(Math.random() * 62) + 5200
-let duitr = Math.floor(Math.random() * 20) + 4200
-let duitk = Math.floor(Math.random() * 70) + 7800
-//ANJAY
-let _pecat= `${pickRandom(['1', '1', '1', '1'])}`
-            let pecat = (_pecat * 1)
-            let ppecat = `KAMU KENA PECAT KARNA KAMU ${alasanpecat}`
-let _dpecat = `${pickRandom(['1', '0', '0', '1'])}`
-            let dpecat = (_dpecat * 1)
-            let dppecat = `KAMU DI PECAT KARNA ${alasanpasien}`
-//GAK RAPIH G GANTENG
-const sections = [
-    {
-	title: '🌟 List Kerjaan',
-	rows: [
-{title: "🛵 Ojek", rowId: usedPrefix + command + ' ojek'},
-{title: "🥗 Pedagang", rowId: usedPrefix + command + ' pedagang'},
-{title: "🏥 ️Dokter", rowId: usedPrefix + command + ' dokter'},
-{title: "🌾 Petani", rowId: usedPrefix + command + ' petani'},
-{title: "🧰 Montir", rowId: usedPrefix + command + ' montir'},
-{title: "⚒️ Kuli", rowId: usedPrefix + command + ' kuli'}
-	]
+let handler = async (m, { conn, command, args, usedPrefix }) => {
+    let type = (args[0] || '').toLowerCase();
+    let user = global.db.data.users[m.sender];
+    let timeNow = Date.now();
+    let cooldown = 86400000; // 24 hours in milliseconds
+
+    conn.lastWorkTime = conn.lastWorkTime ? conn.lastWorkTime : {};
+
+    if (/kerja|work/i.test(command)) {
+        const jobFields = Object.keys(jobs).map((field, index) => `*${index + 1}.* ${field}`).join('\n');
+        if (!type) throw `ℹ️ Pilih bidang pekerjaan yang sesuai:\n${jobFields}\n\nContoh: ketik *${usedPrefix + command} petani* untuk bekerja pertanian`;
+
+        let jobData = jobs[type]?.[Math.floor(Math.random() * jobs[type]?.length)];
+        if (!jobData) throw '😅 Pekerjaan tidak ditemukan. Silakan pilih bidang pekerjaan yang sesuai dari daftar berikut:\n' + jobFields + `\nKetik: *${usedPrefix + command}petani*`;
+
+        const penaltyChance = Math.random() < 0.5; // 50% chance of getting penalized
+
+        if (timeNow - conn.lastWorkTime[m.sender] < cooldown) {
+            let remainingTime = cooldown - (timeNow - conn.lastWorkTime[m.sender]);
+            throw `😴 Kamu sudah bekerja, saatnya istirahat selama\n${clockString(remainingTime)}`;
+        }
+
+        const earnedMoney = jobData.money * (jobData.difficulty === 'Extreme' ? 3 : jobData.difficulty === 'Hard' ? 2 : 1) * 2;
+        const earnedExp = jobData.exp * 2;
+        user.money = (user.money || 0) + earnedMoney;
+        user.exp = (user.exp || 0) + earnedExp;
+        conn.lastWorkTime[m.sender] = timeNow;
+
+        const taskInfo = pickRandom(taskInformation[jobData.task]);
+        const randomMessage = pickRandom([
+            `👷 Kamu ${jobData.name} dan sedang ${jobData.task}\nTingkat Kesulitan: ${jobData.difficulty}\n\n💰 Mendapatkan uang senilai *${formatRupiah(earnedMoney)}*\n🔼 Dapatkan *${earnedExp}* EXP\nℹ️ Info Tambahan: ${taskInfo}`,
+            `🔧 Sebagai ${jobData.name}, tugasmu adalah ${jobData.task}\nTingkat Kesulitan: ${jobData.difficulty}\n\n💰 Mendapatkan uang senilai *${formatRupiah(earnedMoney)}*\n🔼 Dapatkan *${earnedExp}* EXP\nℹ️ Info Tambahan: ${taskInfo}`,
+            `🚜 Sebagai seorang ${jobData.name}, tugasmu adalah ${jobData.task}\nTingkat Kesulitan: ${jobData.difficulty}\n\n💰 Mendapatkan uang senilai *${formatRupiah(earnedMoney)}*\n🔼 Dapatkan *${earnedExp}* EXP\nℹ️ Info Tambahan: ${taskInfo}`,
+        ]);
+
+        m.reply(randomMessage);
+
+        if (penaltyChance && jobData.penalty) {
+            user[type] -= 1;
+            m.reply(jobData.penalty);
+        }
+
+        setTimeout(() => {
+            m.reply("Waktumu untuk bekerja sudah tiba! Kamu bisa bekerja lagi sekarang.");
+        }, cooldown);
     }
-]
-
-const listMessage = {
-  text: `Silahkan pilih pekerjaan yang kamu suka di list berikut...`,
-  footer: global.bottime,
-  title: `     ❏───「 ${command} 」───❏`,
-  buttonText: `PILIH PEKERJAAN️`,
-  sections
 }
-//PEMBATAS\\
-if (/kerjadulu|kerja|work/i.test(command)) {
-switch(type) {
-	case 'ojek':
-	if (global.db.data.users[m.sender].ojek == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja\nSaatnya istirahat selama ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += uangm
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`Kamu Sudah Mengantarkan *${penumpang}* 🚗\nDan mendapatkan uang senilai *Rp ${uangm} 💹*`)
-break
-     case 'pedagang':
-     if (global.db.data.users[m.sender].pedagang == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja,Saatnya istirahat selama\n🕜 ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += duit
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`Ada pembeli yg membeli *${dagangan}* 🛒\nDan mendapatkan uang senilai *Rp ${duit} 💹*`)
-	if (pecat > 1 ) {
-                   global.db.data.users[m.sender].pedagang -= pecat * 1
-                   m.reply(ppecat)
-            }
-break
-      case 'dokter':
- if (global.db.data.users[m.sender].dokter == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja,Saatnya istirahat selama\n🕜 ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += duitm
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`Kamu menyembuhkan pasien *${pasien}* 💉\nDan mendapatkan uang senilai *Rp ${duitm}* 💹`)
-break
-       case 'petani':
-if (global.db.data.users[m.sender].petani == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja,Saatnya istirahat selama\n🕜 ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += uangm
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`${panen} Sudah Panen !🌽 Dan menjualnya 🧺\nDan mendapatkan uang senilai Rp *${duitd} 💹*`)
-break
-     case 'montir':
- if (global.db.data.users[m.sender].montir == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja,Saatnya istirahat selama\n🕜 ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += duitr
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`Kamu Baru saja mendapatkan pelanggan dan memperbaiki *${bengkel} 🔧*\nDan kamu mendapatkan uang senilai *Rp ${duitr}* 💹`)
-break
-      case 'kuli':
- if (global.db.data.users[m.sender].kuli == false) throw 'ini bukan tugas kamu atau kamu pengangguran!'
-if (new Date - global.db.data.users[m.sender].lastkerja < 300000)  throw `Kamu sudah bekerja,Saatnya istirahat selama\n🕜 ${clockString(time - new Date())}`
-	global.db.data.users[m.sender].atm += duitk
-global.db.data.users[m.sender].lastkerja = new Date * 1
-	m.reply(`Kamu baru saja selesai ${rumah} 🔨\nDan mendapatkan uang senilai *Rp ${duitk} 💹*`)
-break
-default:
-                        return conn.sendMessage(m.chat, listMessage, {quoted: m})
-                }
-                }
-                
-                }
-///AKSJDDJ
-handler.help = ['kerja','work']
-handler.tags = ['rpg']
-handler.command = /^kerja$/i 
 
-export default handler
-//JANGAN DIUBAH YA YG DIBAWAH
+// Export handler
+handler.help = ['kerja', 'work'];
+handler.tags = ['rpg'];
+handler.command = /^kerja$/i;
+handler.limit = true
+export default handler;
+
+// Helper functions (unchanged)
 function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
 }
+
+function randomMoney(max, min) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000);
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24;
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60;
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60;
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+}
+
+function formatRupiah(number) {
+  const formatter = new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+    minimumFractionDigits: 0,
+  });
+
+  return formatter.format(number);
 }

@@ -11,9 +11,9 @@ let handler = async (m, { conn, usedPrefix, text }) => {
 	global.db.data.users[m.sender].exp += kalengnye * 1
 	global.db.data.users[m.sender].kardus += kardusnye * 1
 	global.db.data.users[m.sender].lastmulung = new Date * 1
-  m.reply(`Selamat kamu mendapatkan : \n💰+${botolnye} Money\📦n+${kardusnye} Kardus\n✨+${kalengnye} Exp`)
+  m.reply(`Selamat kamu mendapatkan : \n💰 +${botolnye} Money\n📦 +${kardusnye} Kardus\n✨ +${kalengnye} Exp`)
   setTimeout(() => {
-					conn.reply(m.chat, `Yuk waktunya Maling lagi 👋…`, m)
+					conn.reply(m.chat, `Yuk waktunya Maling lagi 👋`, m)
 					}, timeout)
 }
 handler.help = ['maling']

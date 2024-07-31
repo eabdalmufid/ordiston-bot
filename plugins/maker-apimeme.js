@@ -1008,7 +1008,7 @@ Zorg
 Zuckerberg
 Zura-Janai-Katsura-Da`
 let res = `https://apimeme.com/meme?meme=${thm}&top=${text1}&bottom=${text2}`
-conn.sendButton(m.chat, `Random *${command}*`, author, res, [['🔄 Next 🔄', '.mim ' + text1 + '|' + text2]], m, { quoted: fpay })
+conn.sendButton(m.chat, `Random *${command}*`, author, res, [['🔄 Sticker 🔄', '.s']], m, { quoted: fakes })
 
 }
 handler.command = /^(makerapimeme)$/i

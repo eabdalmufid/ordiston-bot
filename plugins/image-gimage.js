@@ -1,199 +1,111 @@
-import fetch from 'node-fetch'
-import uploadFile from '../lib/uploadFile.js'
-import uploadImage from '../lib/uploadImage.js'
-import { sticker } from '../lib/sticker.js'
-import fs from "fs"
-import { googleImage } from '@bochilteam/scraper'
+import fetch from "node-fetch"
+import axios from "axios"
+import cheerio from "cheerio"
+import {
+    googleImage
+} from "@bochilteam/scraper"
+import {
+    readFileSync
+} from "fs"
+const dylux = await (await import("api-dylux")).default
+import got from "got"
 
-let handler = async(m, { conn, groupMetadata, usedPrefix, text, args, command }) => {
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-let pp = await conn.profilePictureUrl(who).catch(_ => hwaifu.getRandom())
-let name = await conn.getName(who)
-if (!text) return m.reply(`Example : ${usedPrefix + command} query`)
-try {
-if (command == 'image') {
-let caption = `*Hasil pencarian* ${text}\n\n*Note:* Lolhuman`
-let url = `https://api.lolhuman.xyz/api/gimage?apikey=${global.lolkey}&query=${text}`
-await conn.sendButton(m.chat, caption, wm, url, [
-      ['IMG 1', usedPrefix + 'image1 ' + text],
-      ['IMG 2', usedPrefix + 'image2 ' + text],
-      ['IMG 3', usedPrefix + 'image3 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
+let handler = async (m, {
+    conn,
+    args,
+    usedPrefix,
+    text,
+    command
+}) => {
+
+    let lister = [
+        "v1",
+        "v2",
+        "v3",
+        "v4"
+    ]
+
+    let [feature, inputs, inputs_, inputs__, inputs___] = text.split("|")
+    if (!lister.includes(feature.toLowerCase())) return m.reply("*Example:*\n.image search|vpn\n\n*Pilih type yg ada*\n" + lister.map((v, index) => "  ○ " + v.toUpperCase()).join("\n"))
+
+    if (lister.includes(feature.toLowerCase())) {
+
+        if (feature == "v1") {
+            if (!inputs) return m.reply("Input query link\nExample: .image search|jokowi")
+            await m.reply(wait)
+            try {
+                let res = await GoogleImage(inputs)
+                let teks = "🔍 *[ RESULT ]*"
+                await conn.sendFile(m.chat, res.getRandom() || logo, "", teks, m)
+            } catch (e) {
+                await m.reply(eror)
+            }
+        }
+
+        if (feature == "v2") {
+            if (!inputs) return m.reply("Input query link\nExample: .image search|jokowi")
+            await m.reply(wait)
+            try {
+                let res = await googleImage(inputs)
+                let teks = "🔍 *[ RESULT ]*"
+                await conn.sendFile(m.chat, res.getRandom() || logo, "", teks, m)
+            } catch (e) {
+                await m.reply(eror)
+            }
+        }
+
+        if (feature == "v3") {
+            if (!inputs) return m.reply("Input query link\nExample: .image search|jokowi")
+            await m.reply(wait)
+            try {
+                let res = await dylux.googleImage(inputs)
+                let teks = "🔍 *[ RESULT ]*"
+                await conn.sendFile(m.chat, res.getRandom() || logo, "", teks, m)
+            } catch (e) {
+                await m.reply(eror)
+            }
+        }
+
+        if (feature == "v4") {
+            if (!inputs) return m.reply("Input query link\nExample: .image search|jokowi")
+            await m.reply(wait)
+            try {
+                let res = await (await fetch(`https://api.lolhuman.xyz/api/gimage2?apikey=${lolkey}&query=${inputs}`)).json()
+                let teks = "🔍 *[ RESULT ]*"
+                await conn.sendFile(m.chat, ((res.result).getRandom()) || logo, "", teks, m)
+            } catch (e) {
+                await m.reply(eror)
+            }
+        }
+
+
+
     }
-
-if (command == 'image1') {
-let caption = `*Hasil pencarian* ${text}\n\n*Note:* Lolhuman`
-let url = `https://api.lolhuman.xyz/api/gimage2?apikey=${global.lolkey}&query=${text}`
-let js = await fetch(url)
-let jp = await js.json()
-let x = jp.result
-await conn.sendButton(m.chat, caption, wm, x.getRandom(), [
-      ['IMG 2', usedPrefix + 'image2 ' + text],
-      ['IMG 3', usedPrefix + 'image3 ' + text],
-      ['IMG 4', usedPrefix + 'image4 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
-    }
-    
-if (command == 'image2') {
-let caption = `*Hasil pencarian* ${text}\n\n*Note:* bx-hunter`
-let url = `https://bx-hunter.herokuapp.com/api/googleimage?query=${text}&apikey=W46QBtQGOhiqfiClaxHqyAaIR`
-let js = await fetch(url)
-let jp = await js.json()
-let x = jp.result
-await conn.sendButton(m.chat, caption, wm, x.getRandom(), [
-      ['IMG 3', usedPrefix + 'image1 ' + text],
-      ['IMG 4', usedPrefix + 'image4 ' + text],
-      ['IMG 5', usedPrefix + 'image5 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
-    }
-
-if (command == 'image3') {
-let url = `https://api-xcoders.xyz/api/search/image?query=${text}&apikey=${global.xckey}`
-let js = await fetch(url)
-let jsons = await js.json()
-let caption = `*⎔┉━「 ${jsons.result[0].title} 」━┉⎔*\n`
-
-        await conn.sendButton(m.chat, caption, wm, jsons.result[0].url, [
-      ['IMG 3', usedPrefix + 'image1 ' + text],
-      ['IMG 4', usedPrefix + 'image4 ' + text],
-      ['IMG 5', usedPrefix + 'image5 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
-    }
-
-if (command == 'image4') {
-let caption = `*Hasil pencarian* ${text}\n*Note:* xcoders`
-let url = `https://api-xcoders.xyz/api/search/image2?query=${text}&apikey=${global.xckey}`
-let js = await fetch(url)
-let jp = await js.json()
-await conn.sendButton(m.chat, caption, wm, jp.result[0].url, [
-      ['IMG 5', usedPrefix + 'image1 ' + text],
-      ['IMG 6', usedPrefix + 'image6 ' + text],
-      ['IMG ', usedPrefix + 'image ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
-    }
-
-if (command == 'image5') {
-let caption = `*Hasil pencarian* ${text}\n\n*Note:* nzcha`
-let url = `https://nzcha-apii.herokuapp.com/googleimage?q=${text}`
-let js = await fetch(url)
-let jp = await js.json()
-let x = jp.result
-await conn.sendButton(m.chat, caption, wm, x.getRandom(), [
-      ['IMG 6', usedPrefix + 'image6 ' + text],
-      ['IMG ', usedPrefix + 'image ' + text],
-      ['IMG 1', usedPrefix + 'image1 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
-    }
-
-if (command == 'image6') {
-    const res = await googleImage(text)
-    await conn.sendButton(m.chat, `
-*── 「 GOOGLE IMAGE 」 ──*
-
-Result from *${text}*
-`.trim(), wm, res.getRandom(), [
-      ['IMG 6', usedPrefix + 'image6 ' + text],
-      ['IMG ', usedPrefix + 'image ' + text],
-      ['IMG 1', usedPrefix + 'image1 ' + text]
-    ], m, {
-            fileLength: fsizedoc,
-            seconds: fsizedoc,
-            jpegThumbnail: Buffer.alloc(0), contextInfo: {
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: sgc
-     }}
-  })
 }
-} catch {
-throw eror
-}
-
-}
-handler.command = handler.help = ['image', 'image1', 'image2', 'image3', 'image4', 'image5', 'image6']
-handler.tags = ['random']
-
+handler.help = ["image"]
+handler.tags = ["internet"]
+handler.command = /^(g?image)$/i
 export default handler
+
+/* New Line */
+async function GoogleImage(query) {
+    const data = await got(`https://www.google.com/search?q=${query}&tbm=isch`, {
+        headers: {
+            accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+            "accept-encoding": "gzip, deflate, br",
+            "accept-language": "en-US,en;q=0.9,id;q=0.8",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36",
+        },
+    }).text();
+
+    const $ = cheerio.load(data);
+    const pattern =
+        /\[1,\[0,"(?<id>[\d\w\-_]+)",\["https?:\/\/(?:[^"]+)",\d+,\d+\]\s?,\["(?<url>https?:\/\/(?:[^"]+))",\d+,\d+\]/gm;
+    const matches = $.html().matchAll(pattern);
+    const decodeUrl = (url) => decodeURIComponent(JSON.parse(`"${url}"`));
+    return [...matches]
+        .map(({
+            groups
+        }) => decodeUrl(groups?.url))
+        .filter((v) => /.*\.jpe?g|png$/gi.test(v));
+}

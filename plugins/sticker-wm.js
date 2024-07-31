@@ -1,28 +1,38 @@
-import { addExif } from '../lib/sticker.js'
+import { addExif, sticker } from '../lib/sticker.js'
+import uploadFile from '../lib/uploadFile.js'
+import uploadImage from '../lib/uploadImage.js'
+import { webp2png } from '../lib/webp2mp4.js'
 
 
-let handler = async (m, { conn, text }) => {
-  if (!m.quoted) throw 'Quoted the sticker!'
+let handler = async (m, { conn, text, usedPrefix, command }) => {
   let stiker = false
   try {
-    let [packname, ...author] = text.split('|')
+    let [packname, ...author] = text.split`|`
     author = (author || []).join('|')
+    let q = m.quoted ? m.quoted : m
     let mime = m.quoted.mimetype || ''
-    if (!/webp/.test(mime)) throw 'Reply sticker!'
-    let img = await m.quoted.download()
-    if (!img) throw 'Reply a sticker!'
-    stiker = await addExif(img, packname || '', author || '')
-  } catch (e) {
-    console.error(e)
-    if (Buffer.isBuffer(e)) stiker = e
+    if (/webp/.test(mime)) {
+      let img = await m.quoted.download()
+      if (!img) throw 'Reply a sticker!'
+      stiker = await addExif(img, packname || '', author || '')
+    } else if (/image/.test(mime)) {
+      let imge = await m.quoted.download()
+      let outi = await uploadImage(imge)
+      stiker = await sticker(outi, packname || '', author || '')
+    } else if (/video/.test(mime)) {
+      if ((q.msg || q).seconds > 11) return m.reply('maks 10 detik!')
+      let imgo = await m.quoted.download()
+      let outu = await uploadImage(imgo)
+      stiker = await sticker( outu, packname || '', author || '')
+    }
   } finally {
-    if (stiker) conn.sendFile(m.chat, stiker, 'wm.webp', '', m, false, { asSticker: true })
-    else throw 'Conversion failed'
+    if (stiker) await conn.sendFile(m.chat, stiker, 'stiker.webp', '', m, false, { asSticker: true })
+    else throw `Balas stiker dengan perintah *${usedPrefix + command} <teks>|<teks>*`
   }
 }
 handler.help = ['wm <packname>|<author>']
 handler.tags = ['sticker']
-handler.command = /^wm$/i
-handler.premium = true
+handler.command = /^(s(ti(ck(erwn|wm)|k(er)?wm)|wm)|colong|wm)$/i
 
+handler.premium = true
 export default handler

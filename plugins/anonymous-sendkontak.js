@@ -6,15 +6,17 @@ async function handler(m, { command, conn, text }) {
 	let room = Object.values(this.anonymous).find(room => room.check(who))
 	if (!room) throw 'kamu tidak berada di anonymous chat'
 	let other = room.other(who)
-  var name
-  if (text) name = text
-  else name = conn.getName(m.sender)
+	var name
+	if (text) name = text
+	else name = conn.getName(m.sender)
 	var number = who.split('@')[0]
-	let tks = `➔ Nomor: ${m.sender.split`@`[0]}
-➔ Nama: ${name}`
-    this.reply(m.chat, 'Menggirimkan Kontak...')
-	if (other) this.reply(other, `Partner mengirimkan kontak kepadamu`)
-	if (other) this.sendHydrated(other, `${htki} ᴀɴᴏɴʏᴍᴏᴜs ᴄʜᴀᴛs ${htka}`, tks, await conn.profilePictureUrl(m.sender, 'image').catch(_ => './src/avatar_contact.png'), `https://wa.me/${m.sender.split`@`[0]}`, '💬CHAT', null,null, [['DELETE TEMAN', '.leave'],[null,null],[null,null]], 0,  { mentionedJid: [m.sender]})
+	var menu = `       ᴀɴᴏɴʏᴍᴏᴜs ᴄʜᴀᴛs 
+➔ Nomor: ${m.sender.split`@`[0]}
+➔ Nama: ${name}
+`
+	this.reply(m.chat, 'Menggirimkan Kontak...')
+    if (other) this.reply(other, 'Partner mengirimkan kontak kepadamu', m)
+	if (other) this.sendMessage(other, { image: { url: await conn.profilePictureUrl(m.sender, 'image').catch(_ => './src/avatar_contact.png') }, caption: menu }, { quoted: m, ephemeralExpiration: ephemeral })
 }
 handler.help = ['sendkontak']
 handler.tags = 'anonymous'

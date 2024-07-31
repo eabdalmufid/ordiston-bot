@@ -1,14 +1,13 @@
 let handler = async (m, { conn }) => {
-    let imgr = flaaa.getRandom()
     conn.tebaklogo = conn.tebaklogo ? conn.tebaklogo : {}
     let id = m.chat
     if (!(id in conn.tebaklogo)) throw false
     let json = conn.tebaklogo[id][1]
-    conn.sendButton(m.chat, bottime, '```' + json.hasil.data.jawaban.replace(/[AIUEOaiueo]/ig, '_') + '```', `${imgr + 'Bantuan'}`, [
-        ['NYERAH', 'menyerah']
+    conn.sendButton(m.chat, '```' + json.hasil.data.jawaban.replace(/[AIUEOaiueo]/ig, '_') + '```', author, null, [
+        ['Nyerah', 'menyerah']
     ], m)
 }
-handler.command = /^hani$/i
+handler.command = /^hlog$/i
 
 handler.limit = true
 

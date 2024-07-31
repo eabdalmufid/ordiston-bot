@@ -32,8 +32,6 @@ Anda telah membuka *Common crate* dan mendapatkan:${cm > 0 ? `\nMoney: ${cm}` : 
                         global.db.data.users[m.sender].money += cm * 1
                         global.db.data.users[m.sender].exp += ce * 1
                         global.db.data.users[m.sender].potion += cp * 1
-                        global.db.data.users[m.sender].uncommon += cu * 1
-                        global.db.data.users[m.sender].common += cc * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hcom, m)
                     } else conn.reply(m.chat, 'Common crate anda tidak cukup', m)
@@ -62,8 +60,6 @@ Anda telah membuka *Common crate* dan mendapatkan:${cm1 > 0 ? `\nMoney: ${cm1}` 
                         global.db.data.users[m.sender].money += cm1 * 1
                         global.db.data.users[m.sender].exp += ce1 * 1
                         global.db.data.users[m.sender].potion += cp1 * 1
-                        global.db.data.users[m.sender].uncommon += cu1 * 1
-                        global.db.data.users[m.sender].common += cc1 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hcom1, m)
                     } else conn.reply(m.chat, 'Common crate anda tidak cukup', m)
@@ -92,8 +88,6 @@ Anda telah membuka *Common crate* dan mendapatkan:${cm2 > 0 ? `\nMoney: ${cm2}` 
                         global.db.data.users[m.sender].money += cm2 * 1
                         global.db.data.users[m.sender].exp += ce2 * 1
                         global.db.data.users[m.sender].potion += cp2 * 1
-                        global.db.data.users[m.sender].uncommon += cu2 * 1
-                        global.db.data.users[m.sender].common += cc2 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hcom2, m)
                     } else conn.reply(m.chat, 'Common crate anda tidak cukup', m)
@@ -122,8 +116,6 @@ Anda telah membuka *Common crate* dan mendapatkan:${cm3 > 0 ? `\nMoney: ${cm3}` 
                         global.db.data.users[m.sender].money += cm3 * 1
                         global.db.data.users[m.sender].exp += ce3 * 1
                         global.db.data.users[m.sender].potion += cp3 * 1
-                        global.db.data.users[m.sender].uncommon += cu3 * 1
-                        global.db.data.users[m.sender].common += cc3 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hcom3, m)
                     } else conn.reply(m.chat, 'Common crate anda tidak cukup', m)
@@ -165,7 +157,6 @@ Anda telah membuka *Uncommon crate* dan mendapatkan:${um > 0 ? `\nMoney: ${um}` 
                         global.db.data.users[m.sender].exp += ue * 1
                         global.db.data.users[m.sender].potion += up * 1
                         global.db.data.users[m.sender].common += uc * 1
-                        global.db.data.users[m.sender].uncommon += uu * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hun, m)
                         if (umc > 0) {
@@ -204,7 +195,6 @@ Anda telah membuka *Uncommon crate* dan mendapatkan:${um1 > 0 ? `\nMoney: ${um1}
                         global.db.data.users[m.sender].exp += ue1 * 1
                         global.db.data.users[m.sender].potion += up1 * 1
                         global.db.data.users[m.sender].common += uc1 * 1
-                        global.db.data.users[m.sender].uncommon += uu1 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hun1, m)
                         if (umc1 > 0) {
@@ -243,7 +233,6 @@ Anda telah membuka *Uncommon crate* dan mendapatkan:${um2 > 0 ? `\nMoney: ${um2}
                         global.db.data.users[m.sender].exp += ue2 * 1
                         global.db.data.users[m.sender].potion += up2 * 1
                         global.db.data.users[m.sender].common += uc2 * 1
-                        global.db.data.users[m.sender].uncommon += uu2 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hun2, m)
                         if (umc2 > 0) {
@@ -282,7 +271,6 @@ Anda telah membuka *Uncommon crate* dan mendapatkan:${um3 > 0 ? `\nMoney: ${um3}
                         global.db.data.users[m.sender].exp += ue3 * 1
                         global.db.data.users[m.sender].potion += up3 * 1
                         global.db.data.users[m.sender].common += uc3 * 1
-                        global.db.data.users[m.sender].uncommon += uu3 * 1
                         global.db.data.users[m.sender].lastopen = new Date * 1
                         conn.reply(m.chat, Hun3, m)
                         if (umc3 > 0) {
@@ -1171,9 +1159,10 @@ function pickRandom(list) {
 }
 
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

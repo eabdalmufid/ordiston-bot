@@ -1,33 +1,297 @@
-import { tiktokdl, tiktokdlv2, tiktokdlv3 } from '@bochilteam/scraper'
+/*import axios from "axios"
+import fetch from "node-fetch"
+import cheerio from "cheerio"
+import got from "got"
+import fg from "api-dylux"
+import { fetchVideo } from "@prevter/tiktok-scraper"
+import { Tiktok } from "@xct007/tiktok-scraper"
 
-let handler = async (m, { conn, args, usedPrefix, command }) => {
-if (!args[0]) throw `Use example ${usedPrefix}${command} https://www.tiktok.com/@omagadsus/video/7025456384175017243`
-    const { author: { nickname }, video, description } = await tiktokdl(args[0])
-    .catch(async _ => await tiktokdlv2(args[0]))
-        .catch(async _ => await tiktokdlv3(args[0]))
-    const url = video.no_watermark || video.no_watermark2 || video.no_watermark_raw
-    if (!url) throw 'Can\'t download video!'
-    conn.sendFile(m.chat, url, 'tiktok.mp4', 
-`              *「 🇹 ᴛ ɪ ᴋ ᴛ ᴏ ᴋ 」*
-                ████████▀▀▀████
-                ████████────▀██
-                ████████──█▄──█
-                ███▀▀▀██──█████
-                █▀──▄▄██──█████
-                █──█████──█████
-                █▄──▀▀▀──▄█████
-                ███▄▄▄▄▄███████
-────── ⇆ㅤ◁ㅤ ❚❚ㅤ ▷ㅤ↻ ──────
-*Nickname:* ${nickname}
-*Description:* ${description}
+let handler = async (m, {
+    command,
+    usedPrefix,
+    conn,
+    text,
+    args
+}) => {
 
-*© ORDISTON*
-`.trim(), m)
+    let lister = [
+        "v1",
+        "v2",
+        "v3",
+        "v4",
+        "v5"
+    ]
+let spas = "                "
+    let [inputs, feature, inputs_, inputs__, inputs___] = text.split(" ")
+    feature = feature || lister.getRandom()
+    let exam = "*Example:*\n" + usedPrefix + command + " link version\n\n*Pilih type yg ada*\n" + lister.map((v, index) => "  ○ " + v.toUpperCase()).join("\n")
+    if (!lister.includes(feature.toLowerCase())) return m.reply(exam)
+    
+    if (lister.includes(feature)) {
+        
+        if (feature == "v1") {
+            if (!inputs) return m.reply(`*Input tiktok link*\n\n${exam}`)
+            m.reply(wait)
+                try {
+                let Scrap = await Tiktokdl(inputs)
+                let S = Scrap.result
+                let ScrapCap = `${spas}*「 T I K T O K 」*
+
+*📛 Author:* ${S.author.nickname}
+*📒 Title:* ${S.desc}
+\n${spas}*[ ${feature.toUpperCase()} ]*`
+                await conn.sendFile(m.chat, S.download.nowm, "", ScrapCap, m)
+            } catch (e) {
+                throw eror
+            }
+        }
+        if (feature == "v2") {
+            if (!inputs) return m.reply(`*Input tiktok link*\n\n${exam}`)
+            m.reply(wait)
+                try {
+                const god = await axios.get("https://godownloader.com/api/tiktok-no-watermark-free?url=" + inputs + "&key=godownloader.com")
+                let GoCap = `${spas}*[ T I K T O K ]*
+
+*Desc:* ${god.data.desc}
+\n${spas}*[ ${feature.toUpperCase()} ]*`
+                await conn.sendFile(m.chat, god.data.video_no_watermark, "", GoCap, m)
+            } catch (e) {
+                throw eror
+            }
+        }
+        if (feature == "v3") {
+            if (!inputs) return m.reply(`*Input tiktok link*\n\n${exam}`)
+            m.reply(wait)
+                try {
+                let Fg = await fg.tiktok(inputs)
+    let FgCap = `${spas}*[ T I K T O K ]*
+
+*Nickname:* ${Fg.nickname}
+*Unique ID:* ${Fg.unique_id}
+*Download Count:* ${Fg.download_count}
+*Duration:* ${Fg.duration}
+*Description:* ${Fg.description}\n${spas}*[ ${feature.toUpperCase()} ]*`
+                await conn.sendFile(m.chat, Fg.play || Fg.hdplay , "", FgCap, m)
+            } catch (e) {
+                throw eror
+            }
+        }
+        if (feature == "v4") {
+            if (!inputs) return m.reply(`*Input tiktok link*\n\n${exam}`)
+            m.reply(wait)
+                try {
+                const video = await fetchVideo(inputs);
+                const buffer = await video.download({
+  progress: (p) => {
+    console.log(`Downloaded ${p.progress}% (${p.downloaded}/${p.total} bytes)`);
+  },
+});
+    let PrevCap = `${spas}*[ T I K T O K ]*
+
+${getVideoInfo(video)}
+\n${spas}*[ ${feature.toUpperCase()} ]*`
+                await conn.sendFile(m.chat, buffer || giflogo , "", PrevCap, m)
+            } catch (e) {
+                throw eror
+            }
+        }
+        if (feature == "v5") {
+            if (!inputs) return m.reply(`*Input tiktok link*\n\n${exam}`)
+            m.reply(wait)
+                try {
+                const videoX = await Tiktok(inputs);
+                
+    let XctCap = `${spas}*[ T I K T O K ]*
+
+${getUserProfileInfo(videoX)}
+\n${spas}*[ ${feature.toUpperCase()} ]*`
+                await conn.sendFile(m.chat, videoX.download.nowm || giflogo , "", XctCap, m)
+            } catch (e) {
+                throw eror
+            }
+        }
+
+    }
 }
-handler.help = ['tiktok', 'tiktok', 'tiktokdl'].map(v => v + ' <url>')
-handler.tags = ['downloader']
-handler.command = /^(tik(tok)?(tok)?(dl)?)$/i
-
+handler.help = ["tiktok"]
+handler.tags = ["downloader"]
+handler.command = /^t(iktok|t(dl)?)$/i
 export default handler
 
-// (function(_0x5daf51,_0x43b17b){function _0x1f5c83(_0x43488c,_0xc26357,_0x2f7b7f,_0x41cd4a){return _0x25ad(_0x43488c- -0x394,_0x2f7b7f);}const _0x4b43e4=_0x5daf51();function _0x27072a(_0x4c33b3,_0x48ac2c,_0x374e18,_0x2fd0d8){return _0x25ad(_0x2fd0d8- -0x6,_0x48ac2c);}while(!![]){try{const _0x352fd1=-parseInt(_0x27072a(0x168,0x13d,0x197,0x170))/(-0x152b*0x1+-0x2b1+0x17dd)*(-parseInt(_0x1f5c83(-0x21a,-0x249,-0x1f0,-0x20c))/(0x3*-0x587+-0x23b7+0x344e))+parseInt(_0x1f5c83(-0x237,-0x269,-0x25d,-0x210))/(-0x1*0x2221+-0x6*0x4a9+0x3e1a)+-parseInt(_0x27072a(0x119,0x158,0x11b,0x134))/(0x1d9f*-0x1+-0x1a72+0x3815)+-parseInt(_0x27072a(0x150,0x157,0x17d,0x16c))/(0x6b*-0x38+0x1399+0x3d4)+-parseInt(_0x1f5c83(-0x266,-0x252,-0x275,-0x28a))/(0x19d6+-0x1477+-0x559)+-parseInt(_0x27072a(0x125,0xe8,0x12f,0x117))/(-0xd87+-0x139*0x7+0x161d)+-parseInt(_0x1f5c83(-0x22e,-0x25b,-0x24a,-0x22b))/(0x21d5+-0x20f0+0x11*-0xd)*(-parseInt(_0x27072a(0x13c,0x15c,0x14e,0x16d))/(-0x1d0c*-0x1+-0x16*0x101+-0xc5*0x9));if(_0x352fd1===_0x43b17b)break;else _0x4b43e4['push'](_0x4b43e4['shift']());}catch(_0x5f24c0){_0x4b43e4['push'](_0x4b43e4['shift']());}}}(_0x11a5,-0x3d3ab+0x6894b*0x1+-0xadd*-0x26));function _0x25ad(_0x1cd87c,_0x15dae6){const _0x37f4e2=_0x11a5();return _0x25ad=function(_0x2a316d,_0x4858aa){_0x2a316d=_0x2a316d-(0x2*0x131e+0x20fe+0xc1*-0x5d);let _0x4dd0c7=_0x37f4e2[_0x2a316d];if(_0x25ad['goZnZr']===undefined){var _0x1f5a6a=function(_0x3a35a5){const _0x558f74='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x4b3b56='',_0x338e52='',_0x3a8d45=_0x4b3b56+_0x1f5a6a;for(let _0x81d363=0xd88+0x1298+0x404*-0x8,_0x5ace01,_0x40fb06,_0x1cf43b=0x16a5+0xbb3+-0x2258;_0x40fb06=_0x3a35a5['charAt'](_0x1cf43b++);~_0x40fb06&&(_0x5ace01=_0x81d363%(-0x2591+-0x5dd+-0x86*-0x53)?_0x5ace01*(-0x2b9+0x14*-0x153+0x1d75)+_0x40fb06:_0x40fb06,_0x81d363++%(0x582*0x4+0x1a4d+-0x3051))?_0x4b3b56+=_0x3a8d45['charCodeAt'](_0x1cf43b+(-0x1bd*-0x4+0x7c2+0xc*-0x139))-(0x53*-0x1+0x33*0xa6+-0x20b5)!==-0x1b55+0x74c*-0x2+0x29ed?String['fromCharCode'](-0x26f8+-0x333+-0x22*-0x145&_0x5ace01>>(-(0x5e4+-0x1*-0x207d+-0x265f)*_0x81d363&-0xc*0x17f+-0xcfe+-0xf7c*-0x2)):_0x81d363:-0x22b6*0x1+-0x8b*-0x42+-0x120){_0x40fb06=_0x558f74['indexOf'](_0x40fb06);}for(let _0x46cd75=-0x3*-0xcdf+0x1df6+-0x4493,_0x4987b4=_0x4b3b56['length'];_0x46cd75<_0x4987b4;_0x46cd75++){_0x338e52+='%'+('00'+_0x4b3b56['charCodeAt'](_0x46cd75)['toString'](0x1dae+-0xa68+-0x1*0x1336))['slice'](-(-0x89*-0x12+0x472+-0xe12));}return decodeURIComponent(_0x338e52);};_0x25ad['tkDliu']=_0x1f5a6a,_0x1cd87c=arguments,_0x25ad['goZnZr']=!![];}const _0x2ed677=_0x37f4e2[0x2557+0xde0+0x1*-0x3337],_0x34fda3=_0x2a316d+_0x2ed677,_0x3fa2b2=_0x1cd87c[_0x34fda3];if(!_0x3fa2b2){const _0x3fae42=function(_0x2704e9){this['nElyER']=_0x2704e9,this['kCGNbt']=[-0x413+-0xbe1*-0x2+-0x13ae,0x313+0x2602+0x329*-0xd,-0x22bc+-0x1b2d*-0x1+-0x285*-0x3],this['WKGniB']=function(){return'newState';},this['dvAxDq']='\x5cw+\x20*\x5c(\x5c)\x20*{\x5cw+\x20*',this['xuDfiY']='[\x27|\x22].+[\x27|\x22];?\x20*}';};_0x3fae42['prototype']['QJlNSb']=function(){const _0x3b98b2=new RegExp(this['dvAxDq']+this['xuDfiY']),_0x2ef6cf=_0x3b98b2['test'](this['WKGniB']['toString']())?--this['kCGNbt'][-0xc*-0x325+-0x194e+0x1*-0xc6d]:--this['kCGNbt'][0x2f*0xc1+0x12bd+-0x362c];return this['Elozhk'](_0x2ef6cf);},_0x3fae42['prototype']['Elozhk']=function(_0x2efbda){if(!Boolean(~_0x2efbda))return _0x2efbda;return this['XNtfCY'](this['nElyER']);},_0x3fae42['prototype']['XNtfCY']=function(_0x49059){for(let _0x115887=-0x1*0x1f0c+-0xe*0x217+0x3c4e,_0x7de309=this['kCGNbt']['length'];_0x115887<_0x7de309;_0x115887++){this['kCGNbt']['push'](Math['round'](Math['random']())),_0x7de309=this['kCGNbt']['length'];}return _0x49059(this['kCGNbt'][0x1a17*0x1+-0xade*0x1+-0x1*0xf39]);},new _0x3fae42(_0x25ad)['QJlNSb'](),_0x4dd0c7=_0x25ad['tkDliu'](_0x4dd0c7),_0x1cd87c[_0x34fda3]=_0x4dd0c7;}else _0x4dd0c7=_0x3fa2b2;return _0x4dd0c7;},_0x25ad(_0x1cd87c,_0x15dae6);}const _0x466278=(function(){function _0x5c712c(_0x5a0818,_0x599699,_0x10d63b,_0x54693e){return _0x25ad(_0x54693e- -0x15,_0x10d63b);}function _0x224330(_0x576626,_0x16c491,_0x3f8403,_0x370247){return _0x25ad(_0x370247- -0x148,_0x576626);}const _0x25874f={'WbTtM':function(_0x1c218d,_0x9948b7){return _0x1c218d(_0x9948b7);},'TxnzG':function(_0x7370de,_0x30d82b){return _0x7370de+_0x30d82b;},'dWLfk':_0x5c712c(0x151,0x180,0x137,0x166)+_0x5c712c(0xf7,0xf9,0x10e,0x116),'JBXZe':function(_0x2e370d,_0x1f649e){return _0x2e370d===_0x1f649e;},'hEIHE':_0x5c712c(0x168,0x123,0x147,0x153),'sQcxT':function(_0x54f2da,_0x3738b9){return _0x54f2da!==_0x3738b9;},'nPUWi':_0x5c712c(0x179,0x17b,0x16b,0x14c),'LGpox':function(_0x36eaa2,_0x484ab8){return _0x36eaa2===_0x484ab8;},'xinHo':_0x5c712c(0x12c,0x11a,0x100,0x124)};let _0xd7acec=!![];return function(_0x42ecb0,_0x24d048){function _0x4cbc1b(_0x214a6e,_0x1b595c,_0x1a5183,_0xe63a3c){return _0x224330(_0x214a6e,_0x1b595c-0xa2,_0x1a5183-0x11d,_0x1b595c-0x2fb);}function _0x9a1bb1(_0x1b942d,_0x85b7d9,_0x4a017f,_0x4e1ef5){return _0x5c712c(_0x1b942d-0x168,_0x85b7d9-0x186,_0x4e1ef5,_0x4a017f- -0x14c);}if(_0x25874f[_0x4cbc1b(0x31c,0x324,0x33a,0x310)](_0x4cbc1b(0x303,0x32b,0x35a,0x356),_0x25874f[_0x4cbc1b(0x312,0x2e5,0x315,0x2c6)])){let _0x44a2e6;try{_0x44a2e6=_0x25874f[_0x9a1bb1(0x8,-0x29,-0x16,-0x37)](_0x2fc3df,_0x25874f[_0x9a1bb1(0x38,0x23,0x9,-0x15)](_0x25874f[_0x9a1bb1(0x23,-0x21,0x9,0x15)](_0x25874f[_0x9a1bb1(0x18,0xd,-0x5,0x2a)],_0x9a1bb1(0x18,-0x1,-0x1a,-0x35)+_0x4cbc1b(0x2f0,0x2ff,0x30c,0x322)+'rn\x20this\x22)('+'\x20)'),');'))();}catch(_0x1dc461){_0x44a2e6=_0x4caf93;}return _0x44a2e6;}else{const _0x34954f=_0xd7acec?function(){function _0x5a80ab(_0x50575d,_0x31d455,_0x2bd6f4,_0x40c142){return _0x4cbc1b(_0x31d455,_0x2bd6f4- -0x455,_0x2bd6f4-0x3a,_0x40c142-0x6d);}function _0x4d23a2(_0x45f5d1,_0x6bca0a,_0x51c142,_0x58e561){return _0x4cbc1b(_0x58e561,_0x6bca0a- -0x36,_0x51c142-0xf9,_0x58e561-0x193);}if(_0x25874f['JBXZe'](_0x25874f['hEIHE'],_0x25874f[_0x5a80ab(-0x14a,-0x12c,-0x12b,-0x142)])){if(_0x24d048){if(_0x25874f[_0x4d23a2(0x2e1,0x2dc,0x2ed,0x2c7)](_0x25874f[_0x5a80ab(-0x165,-0x177,-0x149,-0x11a)],_0x25874f[_0x4d23a2(0x2c2,0x2d6,0x2f1,0x2fe)])){if(_0x455cfb){const _0x5ed9aa=_0x49fa75[_0x4d23a2(0x309,0x2fc,0x309,0x2da)](_0x58148a,arguments);return _0x443373=null,_0x5ed9aa;}}else{const _0x3d1b3a=_0x24d048['apply'](_0x42ecb0,arguments);return _0x24d048=null,_0x3d1b3a;}}}else{const _0x2103f6=_0x10cd9c[_0x5a80ab(-0x138,-0x136,-0x142,-0x12a)+'r'][_0x4d23a2(0x2ee,0x2d4,0x2d2,0x2d3)][_0x5a80ab(-0x14a,-0x111,-0x144,-0x111)](_0x345844),_0x41113a=_0x274160[_0x1bf8d5],_0x1a7c0e=_0x397a29[_0x41113a]||_0x2103f6;_0x2103f6[_0x4d23a2(0x29e,0x2a4,0x2a6,0x271)]=_0x36a478['bind'](_0x5aefbc),_0x2103f6[_0x4d23a2(0x270,0x2a1,0x29e,0x2a9)]=_0x1a7c0e[_0x5a80ab(-0x17f,-0x17e,-0x17e,-0x16f)]['bind'](_0x1a7c0e),_0x468ee6[_0x41113a]=_0x2103f6;}}:function(){};return _0xd7acec=![],_0x34954f;}};}()),_0x40341f=_0x466278(this,function(){const _0x1343be={};_0x1343be[_0x381759(0x126,0x12a,0x13f,0x120)]='(((.+)+)+)'+'+$';const _0x51f36a=_0x1343be;function _0x7d8c40(_0x242507,_0x4686d2,_0x2d2eac,_0xd09a13){return _0x25ad(_0xd09a13-0x217,_0x2d2eac);}function _0x381759(_0x5e4b44,_0x1cd02b,_0x1a0bd7,_0x1cbd7b){return _0x25ad(_0x1cbd7b- -0x47,_0x1a0bd7);}return _0x40341f[_0x381759(0xe8,0xaf,0xeb,0xdd)]()[_0x7d8c40(0x335,0x31d,0x32a,0x33f)](_0x381759(0xbb,0xc2,0x114,0xea)+'+$')[_0x7d8c40(0x33f,0x361,0x33e,0x33b)]()[_0x381759(0x129,0x139,0x13c,0x119)+'r'](_0x40341f)[_0x7d8c40(0x31c,0x36a,0x317,0x33f)](_0x51f36a[_0x7d8c40(0x376,0x37c,0x39c,0x37e)]);});_0x40341f();function _0x1b4f88(_0x59ff52,_0x574369,_0x5f2ed7,_0x23f2fe){return _0x25ad(_0x23f2fe-0x58,_0x574369);}const _0xd7424b=(function(){let _0x1e9429=!![];return function(_0x4dd9b4,_0x335820){const _0x224583=_0x1e9429?function(){if(_0x335820){const _0x4cf974=_0x335820['apply'](_0x4dd9b4,arguments);return _0x335820=null,_0x4cf974;}}:function(){};return _0x1e9429=![],_0x224583;};}()),_0x3aa828=_0xd7424b(this,function(){function _0x3f48a9(_0x2d9e4d,_0x1b394f,_0x423e4d,_0x402577){return _0x25ad(_0x402577-0x20d,_0x1b394f);}const _0x25d803={'VVmnJ':_0x3f48a9(0x38d,0x396,0x365,0x376),'dktoE':'mOnsO','Xrzfm':function(_0x20d8fb,_0x20b598){return _0x20d8fb(_0x20b598);},'lnjYB':function(_0x20e9f5,_0x310acf){return _0x20e9f5+_0x310acf;},'OBZJT':'return\x20(fu'+_0x3f48a9(0x34d,0x318,0x317,0x338),'TEsou':_0x19944c(-0x1ec,-0x203,-0x201,-0x20d)+'ctor(\x22retu'+'rn\x20this\x22)('+'\x20)','gFlVc':_0x19944c(-0x1b9,-0x1f6,-0x1c7,-0x1a0),'NuHbk':_0x19944c(-0x234,-0x1ed,-0x20d,-0x203),'fomAm':'error','tKCcD':'exception','lDygp':_0x3f48a9(0x31e,0x306,0x31d,0x333),'QPNUn':_0x19944c(-0x211,-0x1f7,-0x205,-0x1f0),'dCTXa':function(_0x47e34f,_0x3ee80d){return _0x47e34f<_0x3ee80d;},'NXFCs':function(_0x1498d1,_0x188003){return _0x1498d1!==_0x188003;},'NgIio':'NRrtu'},_0x501707=function(){function _0x4e9770(_0x2cc84f,_0x5c8806,_0x56133d,_0x309a2c){return _0x19944c(_0x2cc84f-0xce,_0x2cc84f,_0x56133d- -0x78,_0x309a2c-0xe1);}function _0x177670(_0x53112b,_0x5b9541,_0x3f7193,_0x352948){return _0x19944c(_0x53112b-0x1f1,_0x5b9541,_0x53112b-0x38a,_0x352948-0x1a7);}if(_0x25d803[_0x177670(0x1be,0x19b,0x1b1,0x1df)]!==_0x25d803[_0x4e9770(-0x2a5,-0x2ad,-0x284,-0x288)]){let _0xc712b8;try{_0xc712b8=_0x25d803['Xrzfm'](Function,_0x25d803[_0x4e9770(-0x256,-0x256,-0x247,-0x275)](_0x25d803[_0x4e9770(-0x24d,-0x268,-0x27e,-0x276)],_0x25d803[_0x177670(0x190,0x19c,0x179,0x19a)])+');')();}catch(_0x4fc3a5){_0xc712b8=window;}return _0xc712b8;}else{const _0x2cc477=_0x4e5d2e[_0x177670(0x1c1,0x1e2,0x1c4,0x193)](_0x53cc82,arguments);return _0x18786d=null,_0x2cc477;}},_0x15a018=_0x501707();function _0x19944c(_0x43d631,_0x349a2e,_0x16802e,_0x4435f7){return _0x25ad(_0x16802e- -0x348,_0x349a2e);}const _0x2a2a74=_0x15a018['console']=_0x15a018[_0x3f48a9(0x357,0x317,0x354,0x339)]||{},_0x344c85=[_0x3f48a9(0x346,0x341,0x375,0x34a),_0x25d803[_0x3f48a9(0x33a,0x378,0x367,0x35a)],_0x25d803[_0x3f48a9(0x38a,0x38d,0x376,0x38a)],_0x25d803[_0x19944c(-0x229,-0x24d,-0x229,-0x21d)],_0x25d803[_0x3f48a9(0x367,0x360,0x34c,0x34c)],_0x25d803[_0x19944c(-0x218,-0x23e,-0x228,-0x213)],_0x25d803[_0x3f48a9(0x372,0x36d,0x336,0x341)]];for(let _0x57e200=0x1409+-0x192f+0x526;_0x25d803[_0x3f48a9(0x33a,0x34f,0x33a,0x368)](_0x57e200,_0x344c85[_0x3f48a9(0x381,0x33d,0x350,0x356)]);_0x57e200++){if(_0x25d803[_0x3f48a9(0x388,0x36c,0x36c,0x360)](_0x25d803['NgIio'],_0x25d803['NgIio'])){if(_0x1a0933){const _0x558470=_0x2c8d5f['apply'](_0x1f5ea8,arguments);return _0x300e2a=null,_0x558470;}}else{const _0x23e280=_0xd7424b[_0x3f48a9(0x34f,0x39a,0x355,0x36d)+'r'][_0x3f48a9(0x369,0x362,0x358,0x364)]['bind'](_0xd7424b),_0x507381=_0x344c85[_0x57e200],_0x209648=_0x2a2a74[_0x507381]||_0x23e280;_0x23e280[_0x3f48a9(0x308,0x329,0x303,0x334)]=_0xd7424b[_0x19944c(-0x20f,-0x1d6,-0x1ea,-0x1bc)](_0xd7424b),_0x23e280['toString']=_0x209648[_0x3f48a9(0x31f,0x33e,0x321,0x331)][_0x19944c(-0x1c5,-0x1e5,-0x1ea,-0x1f3)](_0x209648),_0x2a2a74[_0x507381]=_0x23e280;}}});function _0x11a5(){const _0x1ce996=['lZCWmJu0ntyZoa','yxbWBhK','WQdJGi0QiaOGWQdcOmkGWQa','D2fYBG','ntq5mdG3DMr0zgDY','vxnLWQbLEgfTCgW','zM9Tqw0','Ber5z3a','4Psa4Psa4Psa4Psa4Psa4PsaWQdIH4BJHAtIL4e','D3CUDgLRDg9RlG','y29Tl0bVBwfNyq','Dg9tDhjPBMC','DgLRDg9R','DgfIBgu','x19WCM90B19F','C2vHCMnO','DgLRDg9RlM1Wna','y0HLqNC','BMn0Aw9UkcKG','y29UC29Szq','4PAi4PAi4PAiiaOGWQdcOmkGWQa','ntCXmZiWt3nmEMTN','Bg9HzmkGDMLKzw8','y29TBwfUza','kcGOlISPkYKRkq','EgLUsg8','WQdjQSkG4BslWQdHTjVcOog0J8kG4Bsl','uvbovw4','q2fUj3tcOgrVD24','BM9FD2f0zxjTyq','DhjPBq','44wKWQdINzRINzRJHAtcOokwT+ofPokgU8kG','uengzwq','mtm2nty3nMjjsLHwvW','Aw5MBW','zgT0B0u','Bg9N','zhn1CY92AwrLBW','DeTdy0q','4PAi4Psa4Psa4PAi4PAi4PAi4PAi4PAiiaO','4Psa4Psa4Psa4Psa4Psa4Psa4Psa4Psa4Psa4Psa','t0jAsLq','DhjHy2u','ChrPB246kSkG','4PAi4PAe4PAe4PAe4PAe4PAe4PAi4PAi4PAi4PAi','4PAi4PAi4PAiiaOG4Psa4Psa4Psa4Psa','E30Uy29UC3rYDq','C2vUzezPBgu','BgvUz3rO','iaOGkKrLC2nYAq','v2juDe0','y3rVCIGICMv0Dq','z0zSvMm','vevZB3u','WQdcOmkGWQdcOmkGWQdcOokwIokwIa','4PAi4PAa4PAa4PAa4PAi4PAi4PAi4PAiiaO','WQbODhrWCZOVl3C','BwfW','tLHgq3m','AgvSCa','4PAa4PAi4PAiiaOGWQdcOmkGWQa','CMTFCMf3','ChjVDg90ExbL','y2f0y2G','BLbvv2K','iaOGkK5Py2TUyq','zenuwge','zfDmzMS','mtiYodm1owTZv3L1qG','yMLUza','C1fJEfq','y29UC3rYDwn0BW','EKfXDvi','WQdcOmkGWQaQ44cmWQdWN4E5WQdHTjS','4Psa4PAi4PAi4PAi4PAi4PAi4Psa4Psa4PAi4PAi','4PAi4PAi4PAi4PAi4PAi4PAi4Psa4Psa4Psa4Psa','4Psa4Psa4PAe4PAi4PAi4PAi4PAi4PAiiaO','mtG3nZi4C0Tgvw1P','Cgr2CLm','yuP5CgW','zezPrva','vhHUEKC','WQdcOmkG4PAi4PAi4PAi4PAi4PAi4PAi4PAi','WQdcOmkGWQdcOmkGWQdcOmkGWQa','zg93BMXVywrLCG','4PAi4PAa4PAa4PAa4PAi4PAi4Psa4Psa4PAi4PAi','WQa8DxjSpG','tNH1veW','teDWB3G','ndmYmdKWBfnmtK1V','ndv2wxjkyKK','imkGWQdcOmkGWQdcOmkGWQdcOa','BMD6werFiaOG','mte1mxjYyxLXua','Aevjseu','EKnJrLu','Bg5Qwui','nJiYve53vKnl','CMv0DxjUicHMDq','vLzTBKO','tNviyMS'];_0x11a5=function(){return _0x1ce996;};return _0x11a5();}_0x3aa828();function _0x49bafe(_0x38af5c,_0x1eca57,_0x300989,_0x256c41){return _0x25ad(_0x38af5c- -0xe2,_0x300989);}import{tiktokdl,tiktokdlv2,tiktokdlv3}from'@bochilteam/scraper';let handler=async(_0x1ac074,{conn:_0x17b419,args:_0x4f17ed,usedPrefix:_0xb040d3,command:_0x5a4ed2})=>{function _0x1e68df(_0x34a011,_0x368ad7,_0xb1ab6,_0x3fffcb){return _0x25ad(_0x368ad7-0x35c,_0xb1ab6);}const _0x4cdff4={'cHeBw':function(_0xa62206,_0x34e286){return _0xa62206(_0x34e286);},'NxuTL':_0x1d7cba(-0x224,-0x24d,-0x22f,-0x251)+_0x1e68df(0x4b5,0x48b,0x497,0x49a)+'!','JLBqQ':_0x1e68df(0x484,0x485,0x488,0x476)};if(!_0x4f17ed[-0x1fd3*-0x1+0x217c*-0x1+0x11*0x19])throw _0x1d7cba(-0x23b,-0x22c,-0x26c,-0x25f)+'e\u00a0'+_0xb040d3+_0x5a4ed2+(_0x1d7cba(-0x208,-0x225,-0x220,-0x1dc)+_0x1e68df(0x476,0x47e,0x49c,0x478)+_0x1e68df(0x489,0x47f,0x486,0x4a6)+_0x1e68df(0x4aa,0x49a,0x4c3,0x495)+_0x1d7cba(-0x1db,-0x1cf,-0x208,-0x1e0)+'4175017243');function _0x1d7cba(_0x3387f0,_0x4841cf,_0xd89870,_0xfa6942){return _0x25ad(_0x3387f0- -0x359,_0xfa6942);}const {author:{nickname:_0x416a38},video:_0x1ae63a,description:_0xb86d22}=await _0x4cdff4[_0x1e68df(0x45f,0x486,0x485,0x49a)](tiktokdl,_0x4f17ed[-0x1c80+-0x2640+0x42c0])[_0x1e68df(0x4a4,0x4b4,0x4a5,0x4b4)](async _0x25becf=>await tiktokdlv2(_0x4f17ed[-0x1ec1+0x1a24+0x49d]))[_0x1d7cba(-0x201,-0x1f0,-0x210,-0x1fa)](async _0x3b209b=>await tiktokdlv3(_0x4f17ed[-0xc26+-0x27*-0xec+-0x17ce])),_0x22e3eb=_0x1ae63a[_0x1e68df(0x483,0x492,0x4a0,0x476)+'rk']||_0x1ae63a[_0x1d7cba(-0x223,-0x22e,-0x1f2,-0x1f6)+'rk2']||_0x1ae63a[_0x1e68df(0x4b1,0x492,0x474,0x4a0)+_0x1e68df(0x4a2,0x4b2,0x4e3,0x49d)];if(!_0x22e3eb)throw _0x4cdff4[_0x1d7cba(-0x1e9,-0x1ef,-0x1b7,-0x1db)];_0x17b419[_0x1e68df(0x471,0x4a4,0x4c6,0x471)](_0x1ac074['chat'],_0x22e3eb,_0x4cdff4['JLBqQ'],(_0x1d7cba(-0x1ed,-0x1e3,-0x20c,-0x1eb)+_0x1e68df(0x4ae,0x4be,0x4b3,0x4c1)+_0x1d7cba(-0x226,-0x1f4,-0x211,-0x1fd)+_0x1d7cba(-0x1d9,-0x1bd,-0x1c6,-0x1c5)+_0x1d7cba(-0x1ed,-0x1d5,-0x1fc,-0x1ff)+_0x1d7cba(-0x1ee,-0x1cb,-0x1e2,-0x1d4)+_0x1e68df(0x49d,0x4ac,0x4b8,0x4ac)+'\x20\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'+'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0██'+_0x1e68df(0x4d3,0x4c0,0x4c8,0x4f0)+_0x1d7cba(-0x204,-0x1db,-0x1e8,-0x1e6)+'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'+_0x1e68df(0x4b8,0x4c7,0x4bc,0x4dd)+'█──█▄──█\x20\x0a'+_0x1e68df(0x4ff,0x4d0,0x4f2,0x4a8)+_0x1e68df(0x479,0x4ab,0x4b5,0x480)+_0x1d7cba(-0x1eb,-0x1d2,-0x216,-0x1fe)+_0x1e68df(0x4b3,0x489,0x471,0x484)+_0x1e68df(0x4e6,0x4c8,0x49c,0x4c7)+'\u00a0\u00a0\u00a0█▀──▄▄█'+_0x1e68df(0x478,0x49c,0x483,0x4c1)+_0x1e68df(0x501,0x4d0,0x4ab,0x4ca)+'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0█─'+_0x1d7cba(-0x1f6,-0x1e4,-0x220,-0x1c6)+_0x1e68df(0x4b8,0x489,0x483,0x495)+'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'+'\u00a0\u00a0\u00a0█▄──▀▀▀'+_0x1e68df(0x4c3,0x4c1,0x4af,0x4a3)+'\x20\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'+_0x1e68df(0x4d5,0x4ab,0x484,0x48b)+_0x1e68df(0x49d,0x4a1,0x4bc,0x483)+_0x1d7cba(-0x213,-0x211,-0x200,-0x213)+_0x1d7cba(-0x238,-0x252,-0x217,-0x23f)+_0x1e68df(0x47f,0x494,0x4c2,0x491)+_0x1d7cba(-0x218,-0x229,-0x20b,-0x1f0)+_0x1e68df(0x486,0x4b6,0x490,0x4cc)+'me:*\u00a0'+_0x416a38+(_0x1e68df(0x490,0x4a6,0x4d1,0x4c9)+_0x1d7cba(-0x215,-0x1e8,-0x211,-0x22e))+_0xb86d22+('\x20\x0a\x20\x20\x0a\x20_©Fa'+_0x1d7cba(-0x1e4,-0x1db,-0x210,-0x215)))[_0x1e68df(0x4bc,0x493,0x4c6,0x47d)](),fpayment);};handler[_0x49bafe(0x72,0x76,0x8f,0x88)]=[_0x49bafe(0x43,0x2b,0x67,0x1c),_0x1b4f88(0x15d,0x198,0x19c,0x17d),'tiktokdl'][_0x1b4f88(0x1d6,0x1d1,0x1dc,0x1aa)](_0x504d6f=>_0x504d6f+_0x49bafe(0x8d,0x8f,0xb0,0x74)),handler['tags']=[_0x1b4f88(0x193,0x1e1,0x1f0,0x1c5)],handler[_0x1b4f88(0x1aa,0x175,0x16c,0x188)]=/^(tik(tok)?(tok)?(dl)?)$/i;export default handler;
+//@xct007/tiktok-scraper
+async function Tiktokdl(url) {
+    //async function tiktokdl(url) {
+    try {
+        function API_URL(aweme) {
+            return `https://api16-core-c-useast1a.tiktokv.com/aweme/v1/feed/?aweme_id=${aweme}&version_name=1.0.4&version_code=104&build_number=1.0.4&manifest_version_code=104&update_version_code=104&openudid=4dsoq34x808ocz3m&uuid=6320652962800978&_rticket=1671193816600&ts=1671193816&device_brand=POCO&device_type=surya&device_platform=android&resolution=1080*2179&dpi=440&os_version=12&os_api=31&carrier_region=US&sys_region=US%C2%AEion=US&app_name=TikMate%20Downloader&app_language=en&language=en&timezone_name=Western%20Indonesia%20Time&timezone_offset=25200&channel=googleplay&ac=wifi&mcc_mnc=&is_my_cn=0&aid=1180&ssmix=a&as=a1qwert123&cp=cbfhckdckkde1`
+        }
+        async function getAwemeId(url) {
+            // any :/
+            let result
+            const Konto1 = /video\/([\d|\+]+)?\/?/
+            const valid = url.match(Konto1)
+            if (valid) {
+                return valid[1]
+            } else {
+                try {
+                    const data = await got
+                        .get(url, {
+                            headers: {
+                                "Accept-Encoding": "deflate",
+                            },
+                            maxRedirects: 0,
+                        })
+                        .catch((e) => e.response.headers.location)
+                    const _url = data
+                    const _valid = _url.match(Konto1)
+                    if (_valid) {
+                        result = _valid[1]
+                    }
+                } catch (error) {
+                    // console.log(error)
+                    result = false
+                }
+            }
+            return result
+        }
+        const valid = await getAwemeId(url)
+        //if (!valid) return false // result = false
+        const data = await got
+            .get(API_URL(valid), {
+                headers: {
+                    "Accept-Encoding": "deflate",
+                    "User-Agent": "okhttp/3.14.9",
+                },
+            })
+            .catch((e) => e.response)
+        //if (!data) return false // result = false
+        const body = JSON.parse(data.body)
+        const obj = body.aweme_list.find((o) => o.aweme_id === valid)
+        const results = {
+            aweme_id: obj.aweme_id,
+            region: obj.region,
+            desc: obj.desc,
+            create_time: obj.create_time,
+            author: {
+                uid: obj.author.uid,
+                unique_id: obj.author.unique_id,
+                nickname: obj.author.nickname,
+                birthday: obj.author.birthday,
+            },
+            duration: obj.music.duration,
+            download: {
+                nowm: obj.video.play_addr.url_list[0],
+                wm: obj.video.download_addr.url_list[0],
+                music: obj.music.play_url.url_list[0],
+                music_info: {
+                    id: obj.music.id,
+                    title: obj.music.title,
+                    author: obj.music.author,
+                    is_original: obj.music.is_original,
+                    cover_hd: obj.music.cover_hd.url_list[0],
+                    cover_large: obj.music.cover_large.url_list[0],
+                    cover_medium: obj.music.cover_medium.url_list[0],
+                },
+            },
+        }
+        return {
+            status: true,
+            result: results //data.body //valid
+        }
+    } catch (e) {
+        return {
+            status: false,
+            result: e
+        }
+    }
+}
+
+function getVideoInfo(video) {
+    return `Video description: ${video.description}\n` +
+           `🔗 URL: ${video.url}\n` +
+           `👤 Author: ${video.author}\n` +
+           `❤️ Likes: ${video.likes}\n` +
+           `💬 Comments: ${video.comments}\n` +
+           `🔁 Shares: ${video.shares}\n` +
+           `▶️ Plays: ${video.playCount}\n` +
+           `🎵 Music: ${video.music.name} - ${video.music.author}\n` +
+           `🖼️ Thumbnail URL: ${video.previewImageUrl}`;
+}
+
+function getEmojiCount(count) {
+  const emojis = ['👍', '❤️', '🔁', '💬', '🔥'];
+  return emojis[Math.floor(Math.random() * emojis.length)] + count.toLocaleString();
+}
+
+function getUserProfileInfo(tiktokData) {
+  const user = tiktokData.author;
+  const stats = tiktokData.statistics;
+  
+  return `User Profile:
+🆔 Unique ID: ${user.uid}
+👤 Nickname: ${user.nickname}
+💬 Description: ${tiktokData.desc}
+👥 Comments: ${getEmojiCount(stats.comment_count)}
+👍 Likes: ${getEmojiCount(stats.digg_count)}
+🎵 Music: ${tiktokData.download.music_info.title}`;
+}*/
+
+
+import fetch from 'node-fetch'
+
+var handler = async (m, {
+	text,
+	conn,
+	usedPrefix,
+	command,
+	isOwner,
+	isPrems
+}) => {
+	var delay = time => new Promise(res => setTimeout(res, time))
+	if (!text) throw `Example: ${usedPrefix + command} https://vt.tiktok.com/ZSLETgRf9/`;
+	if (!(text.includes('http://') || text.includes('https://'))) return m.reply(`url invalid, please input a valid url. Try with add http:// or https://`);
+	var body = text.replace(/\s+/g, '+')
+		var {
+			data,
+			code,
+			msg
+		} = await tiktokDl(body)
+		if (code !== 0) throw msg
+		if (data?.images?.length) {
+			if (!(isOwner || isPrems)) {
+				global.dfail('premium',  m, conn) 
+				throw false
+			}
+			let anu = data.images
+			let c = 0
+			for (let x of anu) {
+			if (c == 0) await conn.sendMessage(m.chat, { image: { url: x }, caption: `Mengirim 1 dari ${anu.length} slide gambar.\n_(Sisanya akan dikirim via chat pribadi.)_` }, { quoted : m, ephemeralExpiration: ephemeral })
+			else await conn.sendMessage(m.sender, { image: { url: x } }, { quoted : m, ephemeralExpiration: ephemeral })
+			c += 1
+		    }
+		} else if (data?.play) {
+			var vid = data.play
+			var desc = `${formatK(data.digg_count)} Likes, ${formatK(data.comment_count)} Comments. TikTok video from ${data.author.nickname} (@${data.author.unique_id}): "${data.title}". ${data.music_info.title}.`
+			await conn.sendFile(m.chat, vid, '', desc, m)
+		} else {
+			m.reply(eror)
+		}
+};
+handler.help = ['tiktok'].map((v) => v + ' <url>');
+handler.tags = ['downloader'];
+handler.command = /^t(t|iktok(d(own(load(er)?)?|l))?|td(own(load(er)?)?|l))$/i;
+handler.limit = false
+
+export default handler;
+async function tiktokDl(url) {
+	var xzn = await fetch('https://www.tikwm.com/api/?url=' + url)
+	var wtf = xzn.json();
+	return wtf
+}
+
+function formatK(num) {
+	return new Intl.NumberFormat('en-US', {
+		notation: 'compact',
+		maximumFractionDigits: 1
+	}).format(num)
+}

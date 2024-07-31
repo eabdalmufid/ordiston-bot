@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 let timeout = 120000
 let poin = 4999
 let handler = async (m, { conn, command, usedPrefix }) => {
-let imgr = flaaa.getRandom()
+let imgr = flaaa
 
     conn.susunkata = conn.susunkata ? conn.susunkata : {}
     let id = m.chat
@@ -12,16 +12,16 @@ let imgr = flaaa.getRandom()
     }
     let src = await (await fetch('https://raw.githubusercontent.com/BochilTeam/database/master/games/susunkata.json')).json()
   let json = src[Math.floor(Math.random() * src.length)]
-  let caption = `
-  ${json.soal}
-  ${json.tipe}
+  let caption = `${json.soal}
+${json.tipe}
 
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik ${usedPrefix}hsus untuk bantuan
 Bonus: ${poin} XP
     `.trim()
     conn.susunkata[id] = [
-        await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
+        await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, caption + '\n\n' + author, `${imgr + command}`, '', m),
+        //await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
         json, poin,
         setTimeout(() => {
             if (conn.susunkata[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, author, null, [

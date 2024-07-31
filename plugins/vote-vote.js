@@ -1,14 +1,12 @@
 
-let handler = async (m, { conn, groupMetadata, usedPrefix, command }) => {
+let handler = async (m, { conn, usedPrefix, command }) => {
     let id = m.chat
     conn.vote = conn.vote ? conn.vote : {}
-    if (!(id in conn.vote)) await conn.sendButton(m.chat, `Tidak ada voting digrup ini!`, author, null, [
-    ['vote', `${usedPrefix}+vote`],
-    ['venu', `${usedPrefix}menu`]
+    if (!(id in conn.vote)) return await conn.sendButton(m.chat, `Tidak ada voting digrup ini!`, author, null, [
+    ['Up Vote', usedPrefix + 'upvote']
 ], m)
-    let isVote = conn.vote[id][1].concat(conn.vote[id][2])
-    const wasVote = isVote.includes(m.sender)
-    if (wasVote) throw 'Kamu sudah vote!'
+
+if (conn.vote[id][1].concat(conn.vote[id][2]).includes(m.sender)) throw 'Kamu sudah vote!'
     if (/up/i.test(command)) {
         conn.vote[id][1].push(m.sender)
     } else if (/de/i.test(command)) {
@@ -28,18 +26,17 @@ ${dmenuf}
 *${htjava} DEVOTE ${htjava}*
 *Total:* ${devote.length}
 ${dmenut}
-${devote.map((v, i) => `${dmenub} ${i + 1}.  @${v.split`@`[0]}`).join('\n')}
+${devote.map((v, i) => `${dmenub} ${i + 1}.  @${v.split`@`[0]}`).join('\n')} 
 ${dmenuf}
 `.trim()
 await conn.sendButton(m.chat, caption, author, null, [
-        ['upvote', `${usedPrefix}upvote`],
-        ['devote', `${usedPrefix}devote`]
+        ['Up Vote', usedPrefix + 'upvote'],
+        ['De Vote', usedPrefix + 'devote']
     ], m, { mentions: conn.parseMention(caption) })
+    
 }
 handler.help = ['upvote', 'devote']
 handler.tags = ['vote']
 handler.command = /^(up|de)vote$/i
-
-handler.group = true
 
 export default handler

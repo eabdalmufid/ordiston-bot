@@ -1,4 +1,4 @@
-const cooldown = 86800000
+const cooldown = 86400000
 let handler = async(m, { conn, args, usedPrefix }) => {
 let user = global.db.data.users[m.sender]
 let ctimer = (new Date - user.lastcode)
@@ -11,7 +11,7 @@ let timers = clockString(_ctimer)
     conn.reply(m.chat, `*SELAMAT!*\n\nKamu telah mendapatkan\n+25000 XP✨\n+250000 Money💵\n+25000 Bank🏦\n+25 Limit🌌`, m)
     user.exp += 25000
     user.limit += 25
-    user.atm += 6500000
+    user.bank += 6500000
     user.money += 250000000
    user.lastcode = new Date * 1
    } else {
@@ -29,9 +29,10 @@ handler.cooldown = cooldown
 export default handler
 
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

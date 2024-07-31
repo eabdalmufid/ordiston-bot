@@ -1,10 +1,9 @@
 
-let handler = async (m, { conn, groupMetadata, usedPrefix }) => {
+let handler = async (m, { conn, usedPrefix }) => {
     let id = m.chat
     conn.vote = conn.vote ? conn.vote : {}
     if (!(id in conn.vote)) await conn.sendButton(m.chat, `Tidak ada voting digrup ini!`, author, null, [
-    ['vote', `${usedPrefix}+vote`],
-    ['menu', `${usedPrefix}menu`]
+    ['Up Vote', usedPrefix + 'upvote']
 ], m)
 
     let [reason, upvote, devote] = conn.vote[id]
@@ -24,16 +23,13 @@ ${devote.map((v, i) => `${dmenub} ${i + 1}.  @${v.split`@`[0]}`).join('\n')}
 ${dmenuf}
 `.trim()
 await conn.sendButton(m.chat, caption, author, null, [
-        ['upvote', `${usedPrefix}upvote`],
-        ['devote', `${usedPrefix}devote`],
-        ['hapusvote', `${usedPrefix}-vote`]
+        ['Up Vote', usedPrefix + 'upvote'],
+        ['De Vote', usedPrefix + 'devote'],
+        ['DELETE VOTE', usedPrefix + 'hapusvote']
     ], m, { mentions: conn.parseMention(caption) })
 }
 handler.help = ['cekvote']
 handler.tags = ['vote']
 handler.command = /^cekvote$/i
-
-handler.admin = true
-handler.group = true
 
 export default handler

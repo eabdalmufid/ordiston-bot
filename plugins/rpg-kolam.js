@@ -49,7 +49,7 @@ let isi = ` *🦀Kepiting = ${kepiting}*
 *🦈Hiu = ${hiu}*
 *🐡Buntal = ${buntal}*
 *🐳Orca = ${orca}*`.trim()
-  conn.sendButton(m.chat, past, `${wm}`, [['Pasar', '#pasar']], m)
+  conn.reply(m.chat, past, m)
   }
   handler.help = ['kotakikan', 'kolam', 'kolamikan']
   handler.tags = ['rpg']

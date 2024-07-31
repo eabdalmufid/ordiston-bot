@@ -3,7 +3,7 @@ import { caklontong } from '@bochilteam/scraper'
 let timeout = 120000
 let poin = 4999
 let handler = async (m, { conn, command, usedPrefix }) => {
-let imgr = flaaa.getRandom()
+let imgr = flaaa
 
     conn.caklontong = conn.caklontong ? conn.caklontong : {}
     let id = m.chat
@@ -12,15 +12,15 @@ let imgr = flaaa.getRandom()
         throw false
     }
     const json = await caklontong()
-    let caption = `
-${json.soal}
+    let caption = `${json.soal}
 
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik ${usedPrefix}hcak untuk bantuan
 Bonus: ${poin} XP
     `.trim()
     conn.caklontong[id] = [
-        await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
+        await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, caption + '\n\n' + author, `${imgr + command}`, '', m),
+        //await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
         json, poin,
         setTimeout(() => {
             if (conn.caklontong[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, author, null, [

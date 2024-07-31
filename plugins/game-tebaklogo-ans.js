@@ -1,19 +1,18 @@
 import similarity from 'similarity'
 const threshold = 0.72
 export async function before(m) {
-    let imgr = flaaa.getRandom()
     let id = m.chat
     if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !m.text || !/Ketik.*hlog/i.test(m.quoted.text) || /.*hlog/i.test(m.text))
         return !0
     this.tebaklogo = this.tebaklogo ? this.tebaklogo : {}
     if (!(id in this.tebaklogo))
-        return conn.sendButton(m.chat, hiasan, 'Soal itu telah berakhir', `${imgr + 'Soal Berakhir'}`, buttontebaklogo, m)
+        return conn.sendButton(m.chat, 'Soal itu telah berakhir', author, null, buttontebaklogo, m)
     if (m.quoted.id == this.tebaklogo[id][0].id) {
         let isSurrender = /^((me)?nyerah|surr?ender)$/i.test(m.text)
         if (isSurrender) {
             clearTimeout(this.tebaklogo[id][3])
             delete this.tebaklogo[id]
-            return conn.sendButton(m.chat, hiasan, '*Yah Menyerah :( !*', `${imgr + 'Menyerah'}`, buttontebaklogo, m)
+            return conn.sendButton(m.chat, '*Yah Menyerah :( !*', author, null, buttontebaklogo, m)
         }
         let json = JSON.parse(JSON.stringify(this.tebaklogo[id][1]))
         // m.reply(JSON.stringify(json, null, '\t'))
@@ -25,8 +24,8 @@ export async function before(m) {
         } else if (similarity(m.text.toLowerCase(), json.hasil.data.jawaban.toLowerCase().trim()) >= threshold)
             m.reply(`*Dikit Lagi!*`)
         else
-            conn.sendButton(m.chat, hiasan, `*Salah!*`, `${imgr + 'Salah'}`, [
-                ['Hint', '/hani'],
+            conn.sendButton(m.chat, `*Salah!*`, author, null, [
+                ['Hint', '/hlog'],
                 ['Nyerah', 'menyerah']
             ], m)
     }
@@ -35,5 +34,5 @@ export async function before(m) {
 export const exp = 0
 
 const buttontebaklogo = [
-    ['COBA LAGI', '/tebaklogo']
+    ['tebaklogo', '/tebaklogo']
 ]

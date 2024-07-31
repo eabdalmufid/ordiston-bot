@@ -8,7 +8,7 @@ conn
     let timers = clockString(_timers) 
     
     if (user.stamina < 20) return m.reply(`Stamina anda tidak cukup untuk bekerja\nharap isi stamina anda dengan #eat`)
-    if (user.lastrob > 10800000) throw m.reply(`Kamu masih kelelahan untuk bekerja\nHarap tunggu ${timers} lagi untuk rob`)
+    if (user.lastrob > 10800000) throw `Kamu masih kelelahan untuk bekerja\nHarap tunggu ${timers} lagi untuk rob`
 
 let rndm1 = `${Math.floor(Math.random() * 10)}`
 let rndm2 = `${Math.floor(Math.random() * 10)}`
@@ -97,5 +97,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

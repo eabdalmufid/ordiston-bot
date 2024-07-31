@@ -28,32 +28,33 @@ let handler = async (m, { conn, usedPrefix, DevMode }) => {
             let sampah = `${Math.floor(Math.random() * 300)}`.trim()
             let legendary = (_legendary * 1)
             let diamond =  `${Math.floor(Math.random() * 10)}`.trim()
-            let kayu =  `${Math.floor(Math.random() * 150)}`.trim() 
-            let batu =  `${Math.floor(Math.random() * 100)}`.trim() 
+            let wood =  `${Math.floor(Math.random() * 150)}`.trim() 
+            let rock =  `${Math.floor(Math.random() * 100)}`.trim() 
             let iron = `${Math.floor(Math.random() * 100)}`.trim()
             let exp = `${Math.floor(Math.random() * 500)}`.trim() 
             let uang = `${Math.floor(Math.random() * 500)}`.trim() 
             conn.reply(m.chat, '↓Chopping:', m)
             let str = `
 ❤️ While you chopping, you got:
-🗡️wood: ${kayu}
+🗡️Wood: ${wood}
 🔩Iron: ${iron}
 💵Gold: ${uang}
 ⚜️Xp: ${exp}
 and you got Additional gifts
 💎diamond: ${diamond}
 `.trim()
-            await conn.sendButton(m.chat, str, wm, null, [['INVENTORY', '/inv']], m)
+            //await conn.sendButton(m.chat, str, wm, null, [['INVENTORY', '/inv']], m)
+            await conn.reply(m.chat, str, m)
             
-            global.db.data.users[m.sender].kayu += kayu * 1
+            global.db.data.users[m.sender].wood += wood * 1
             global.db.data.users[m.sender].diamond += diamond * 1
-            global.db.data.users[m.sender].batu += batu * 1
+            global.db.data.users[m.sender].rock += rock * 1
             global.db.data.users[m.sender].iron += iron * 1
             global.db.data.users[m.sender].exp += exp * 1
             global.db.data.users[m.sender].money += uang * 1
             global.db.data.users[m.sender].lastmining = new Date * 1
             } else conn.reply(m.chat, `Please wait  ${timers} again`, m)
-        } else conn.reply(m.chat, 'minimum 80 healt to do choping', m)
+        } else conn.reply(m.chat, 'Minimum 80 healt to do choping', m)
     } catch (e) {
         console.log(e)
         conn.reply(m.chat, 'Error', m)
@@ -75,9 +76,10 @@ function pickRandom(list) {
     return list[Math.floor(Math.random() * list.length)]
 }
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

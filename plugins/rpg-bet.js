@@ -6,15 +6,15 @@ async function handler(m, { conn, args }) {
     try {
         let user = global.db.data.users[m.sender]
         let count = (args[0] && number(parseInt(args[0])) ? Math.max(parseInt(args[0]), 1) : /all/i.test(args[0]) ? Math.floor(parseInt(user.money)) : 1) * 1
-        if ((user.money * 1) < count) return m.reply('💵Uang kamu tidak cukup!!')
+        if ((user.money * 1) < count) return m.reply('💹 Uang kamu tidak cukup!!')
         if (!(m.sender in confirm)) {
             confirm[m.sender] = {
                 sender: m.sender,
                 count,
                 timeout: setTimeout(() => (m.reply('timed out'), delete confirm[m.sender]), 60000)
             }
-            let txt = '⚠️Warning⚠️\n*Jangan judi karena tidak akan menang, BENERAN!!*\nApakah anda yakin (pikirkan baik-baik) mau melakukan judi (Y/n) (60s Timeout)'
-            return conn.sendButton(m.chat, txt, author, null, [['y'], ['n']], m)
+            let txt = `Apakah kamu yakin mau melakukan judi?\n\n*Taruhan:* ${count} 💹\n⏰ 60s Timeout\n\n_Silahkan ketik *Ya* atau *Tidak*_`
+            return conn.reply(m.chat, txt, m)
         }
     } catch (e) {
         console.error(e)
@@ -35,9 +35,9 @@ handler.before = async m => {
     let moneyDulu = user.money * 1
     let txt = (m.msg && m.msg.selectedDisplayText ? m.msg.selectedDisplayText : m.text ? m.text : '').toLowerCase()
     try {
-        if (/^y(es|a)?$/i.test(txt)) {
-            let Bot = (Math.ceil(Math.random() * 91)) * 1
-            let Kamu = (Math.floor(Math.random() * 71)) * 1
+        if (/^(Y(es|a))?$/i.test(txt)) {
+            let Bot = (Math.ceil(Math.random() * 101)) * 1
+            let Kamu = (Math.floor(Math.random() * 81)) * 1
             let status = 'Kalah'
             if (Bot < Kamu) {
                 user.money += count * 1
@@ -49,15 +49,16 @@ handler.before = async m => {
                 user.money += (Math.floor(count / 1.5)) * 1
             }
             m.reply(`
-Bot roll: *${Bot}*
-Kamu roll: *${Kamu}*
+| *PLAYERS* | *POINT* |
+*🤖 BOT:*      ${Bot}
+*👤 KAMU:*    ${Kamu}
 
-Kamu *${status}*, kamu ${status == 'Menang' ? `Mendapatkan *+${count * 2}*` : status == 'Kalah' ? `Kehilangan *-${count * 1}*` : `Mendapatkan *+${Math.floor(count / 1.5)}*`} 💵Money
+Kamu *${status}*, kamu ${status == 'Menang' ? `Mendapatkan *+${count * 2}*` : status == 'Kalah' ? `Kehilangan *-${count * 1}*` : `Mendapatkan *+${Math.floor(count / 1.5)}*`} Money 💹
     `.trim())
             clearTimeout(timeout)
             delete confirm[m.sender]
             return !0
-        } else if (/^no?$/i.test(txt)) {
+        } else if (/^(Tidak|no)?$/i.test(txt)) {
             clearTimeout(timeout)
             delete confirm[m.sender]
             m.reply('Rejected')

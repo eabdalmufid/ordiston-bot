@@ -6,7 +6,7 @@ let handler = async (m, { participants }) => {
 }
 handler.help = ['banchat']
 handler.tags = ['owner']
-handler.command = /^(banchat|bnc)$/i
+handler.command = /^banchat$/i
 
 handler.owner = true
 

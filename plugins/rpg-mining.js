@@ -1,40 +1,62 @@
-const cooldown = 300000
+const cooldown = 300000;
 let handler = async (m, { usedPrefix }) => {
-    let user = global.db.data.users[m.sender]
-    let timers = (cooldown - (new Date - user.lastmining))
-    if (user.health < 80) return m.reply(`
-Requires at least 80 ❤️Healths for the mining!!
-please buy ❤️Healths first by typing *${usedPrefix}buy potion <quantity>*,
-and type *${usedPrefix}heal <quantity>* to use potions
-`.trim())
-    if (user.pickaxe == 0) return m.reply('Mau mining ga punya pickaxe 🗿')
-    if (new Date - user.lastmining <= cooldown) return m.reply(`
-You're already mining!!, please wait *🕐${timers.toTimeString()}*
-`.trim())
-    const rewards = reward(user)
-    let text = 'you\'ve been mining and lost'
-    for (const lost in rewards.lost) if (user[lost]) {
-        const total = rewards.lost[lost].getRandom()
-        user[lost] -= total * 1
-        if (total) text += `\n*${global.rpg.emoticon(lost)}${lost}:* ${total}`
-    }
-    text += '\n\nBut you got'
-    for (const rewardItem in rewards.reward) if (rewardItem in user) {
-        const total = rewards.reward[rewardItem].getRandom()
-        user[rewardItem] += total * 1
-        if (total) text += `\n*${global.rpg.emoticon(rewardItem)}${rewardItem}:* ${total}`
-    }
-    m.reply(text.trim())
-    user.lastmining= new Date * 1
-}
-handler.help = ['mining']
-handler.tags = ['rpg']
-handler.command = /^(mining)$/i
+    let user = global.db.data.users[m.sender];
+    let timers = cooldown - (new Date() - user.lastmining);
 
-handler.cooldown = cooldown
-handler.disabled = false
-handler.group = true
-export default handler
+    if (user.health < 80) {
+        return m.reply(`
+⚠️ Butuh setidaknya 80 ❤️Healths untuk menambang!! ⚠️
+Silakan beli ❤️Healths terlebih dahulu dengan mengetik *${usedPrefix}buy potion <jumlah>*,
+dan ketik *${usedPrefix}heal <jumlah>* untuk menggunakan potion.
+`.trim());
+    }
+
+    if (user.pickaxe == 0) {
+        return m.reply('⛏️ Kamu tidak bisa menambang tanpa alat penambang (pickaxe)! ⛏️');
+    }
+
+    if (new Date() - user.lastmining <= cooldown) {
+        return m.reply(`
+⏳ Kamu sudah menambang sebelumnya! Silakan tunggu *${(timers / 1000).toFixed(2)} detik* sebelum menambang lagi.
+`.trim());
+    }
+
+    const rewards = reward(user);
+    let text = 'Kamu telah menambang dan kehilangan';
+    for (const lost in rewards.lost) {
+        if (user[lost]) {
+            const total = rewards.lost[lost].getRandom();
+            user[lost] -= total * 1;
+            if (total) {
+                text += `\n*${global.rpg.emoticon(lost)}${lost}:* ${total}`;
+            }
+        }
+    }
+
+    text += '\n\nNamun kamu mendapatkan';
+    for (const rewardItem in rewards.reward) {
+        if (rewardItem in user) {
+            const total = rewards.reward[rewardItem].getRandom();
+            user[rewardItem] += total * 1;
+            if (total) {
+                text += `\n*${global.rpg.emoticon(rewardItem)}${rewardItem}:* ${total}`;
+            }
+        }
+    }
+
+    m.reply(text.trim());
+    user.lastmining = new Date() * 1;
+};
+
+handler.help = ['mining'];
+handler.tags = ['rpg'];
+handler.command = /^(mining)$/i;
+handler.cooldown = cooldown;
+handler.disabled = false;
+handler.group = true;
+
+export default handler;
+
 
 function reward(user = {}) {
     let rewards = {

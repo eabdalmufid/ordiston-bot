@@ -1,8 +1,7 @@
 
 let handler = async (m, { conn }) => {
-  let imgr = flaaa.getRandom()
   let stats = Object.entries(global.db.data.stats).map(([key, val]) => {
-    let name = Array.isArray(plugins[key]?.help) ? plugins[key]?.help?.join(' & ') : plugins[key]?.help || key 
+    let name = Array.isArray(plugins[key]?.help) ? plugins[key]?.help?.join('\n• ') : plugins[key]?.help || key 
     if (/exec/.test(name)) return
     return { name, ...val }
   })
@@ -19,11 +18,11 @@ ${total}
 *${htjava} T I M E ${htjava}*
 ${getTime(last)}
 `}).join`\n\n`
-  conn.sendButton(m.chat, hiasan, txt, `${imgr + 'Dashboard'}`, [['LISTPC', '.listpc'],['MENU', '.menu']],m)
+  conn.reply(m.chat, txt, m)
 }
 handler.help = ['dashboard']
 handler.tags = ['info']
-handler.command = /^d(as(hbo(ard?|r)|bo(ard?|r))|b)$/i
+handler.command = /^^d(as(hbo(ard?|r)|bo(ard?|r))|b)$/i
 
 export default handler
 

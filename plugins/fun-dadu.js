@@ -1,16 +1,15 @@
-/* CREDITS TO https://github.com/FG98F */
-const dir = [
-  'https://tinyurl.com/ygms8wvy',
-  'https://tinyurl.com/yhdyhnap',
-  'https://tinyurl.com/yfwjbou7',
-  'https://tinyurl.com/yh3e3ogt',
-  'https://tinyurl.com/yfmhpvxs',
-  'https://tinyurl.com/ygpxka9q'
-];
+import { createSticker } from "wa-sticker-formatter"
 let handler = async (m, { conn }) => {
-conn.sendFile(m.chat, dir[Math.floor(Math.random() * dir.length)], 'dadu.webp', '', m)
+await m.reply(wait)
+let diceImage = rollDice()
+let stiker = await createSticker(diceImage, { pack: packname, author: m.name })
+await conn.sendFile(m.chat, stiker, "dadu.webp", "", m)
 }
-handler.help = ['dadu']
-handler.tags = ['game']
-handler.command = ['dadu'] 
+handler.help = ["dadu"]
+handler.tags = ["game"]
+handler.command = ["dadu"] 
 export default handler
+
+function rollDice() {
+  return "https://www.random.org/dice/dice" + (Math.floor(Math.random() * 6) + 1) + ".png"
+}

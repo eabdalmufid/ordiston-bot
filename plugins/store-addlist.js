@@ -1,19 +1,18 @@
-const { proto } = (await import('@adiwajshing/baileys')).default
+const { proto } = (await import("@adiwajshing/baileys")).default
 
 let handler = async (m, { conn, text, command, usedPrefix }) => {
 	let M = proto.WebMessageInfo;
-	if (!m.quoted) throw `balas pesan dengan perintah *${usedPrefix + command}*`;
-	if (!text) throw `penggunaan: ${usedPrefix + command} <teks>\n\ncontoh:\n${usedPrefix + command} DM FF`;
-	let msgs = db.data.msgs
-	if (text in msgs) throw `'${text}' telah Terdaftar di Data List`
+	if (!m.quoted) throw "Balas pesan dengan perintah *" + usedPrefix + command + "*";
+	if (!text) throw "Penggunaan: " + usedPrefix + command + " <teks>\n\ncontoh:\n" + usedPrefix + command + " tes";
+	let msgs = global.db.data.msgs
+	if (text in msgs) throw "[ " + text + " ] Telah terdaftar di List store"
 	msgs[text] = M.fromObject(await m.getQuotedObj()).toJSON()
-	m.reply(`berhasil menambahkan ${text} ke List\n\nakses dengan mengetik namanya`.trim())
+	throw "Berhasil menambahkan " + text + " ke List Store.\n\nakses dengan mengetik namanya"
 }
-handler.help = ['list'].map(v => 'add' + v + ' <teks>')
-handler.tags = ['store']
-handler.command = /^addlist$/i
-handler.premium = true
-handler.owner = true
-
+handler.help = ["store"].map(v => "add" + v + " <teks>")
+handler.tags = ["database"]
+handler.command = ["addstore"]
+handler.group = true
+handler.admin = true
 
 export default handler

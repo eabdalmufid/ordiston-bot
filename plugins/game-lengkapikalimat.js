@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 let timeout = 120000
 let poin = 4999
 let handler = async (m, { conn, command, usedPrefix }) => {
-let imgr = flaaa.getRandom()
+let imgr = flaaa
 
     conn.lengkapikalimat = conn.lengkapikalimat ? conn.lengkapikalimat : {}
     let id = m.chat
@@ -12,15 +12,15 @@ let imgr = flaaa.getRandom()
     }
     let src = await (await fetch('https://raw.githubusercontent.com/qisyana/scrape/main/lengkapikalimat.json')).json()
     let json = src[Math.floor(Math.random() * src.length)]
-  let caption = `
-  ${json.pertanyaan}
+  let caption = `${json.pertanyaan}
 
 Timeout *${(timeout / 1000).toFixed(2)} detik*
 Ketik ${usedPrefix}hlen untuk bantuan
 Bonus: ${poin} XP
     `.trim()
     conn.lengkapikalimat[id] = [
-        await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
+        await conn.sendFthumb(m.chat, `🎮 ${command.toUpperCase()} 🎮`, caption + '\n\n' + author, imgr + `${imgr + command}`, '', m),
+        //await conn.sendButton(m.chat, caption, author, `${imgr + command}`, buttons, m),
         json, poin,
         setTimeout(() => {
             if (conn.lengkapikalimat[id]) conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, author, null, [

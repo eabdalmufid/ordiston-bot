@@ -1,14 +1,14 @@
-let handler = async (m, { 
-	conn, 
-	args, 
-	usedPrefix, 
-	command 
+let handler = async (m, {
+    conn,
+    args,
+    usedPrefix,
+    command
 }) => {
     let type = (args[0] || '').toLowerCase()
     let wm = global.wm
-	let linkgc = global.gc
-	let pp = global.thumb
-	let user = global.db.data.users[m.sender]
+    let linkgc = global.gc
+    let pp = global.thumb
+    let user = global.db.data.users[m.sender]
     let timebah = 600000
     let timeda = 600000
     let timela = 600000
@@ -33,8 +33,8 @@ let handler = async (m, {
     let griffin = global.db.data.users[m.sender].griffin
     let rhinoceros = global.db.data.users[m.sender].rhinoceros
     let lion = global.db.data.users[m.sender].lion
-    
-    
+
+
     let baba = `Contoh penggunaan: *${usedPrefix + command} cat*
 *📮 LIST :*
 › cat
@@ -67,7 +67,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].foxlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *fox*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *fox*\nKarena sudah lapar..', m)
                     }, timebah)
                     if (fox > 0) {
                         let naiklvl = ((fox * 1000) - 1)
@@ -103,7 +103,7 @@ let handler = async (m, {
                 } else m.reply(`Makanan Pet Kamu Tidak Cukup`)
             } else m.reply(`Pet Kamu Sudah Kenyang, Cobalah Untuk Memberi Dia Makan ${wbadakaa} lagi`)
             break
-            case 'lion':
+        case 'lion':
             if (lion == 0) return m.reply('*Kamu tidak punya pet*')
             if (lion == 5) return m.reply('*Pet Kamu Telah Level Maximum*')
             let wlion = (new Date - global.db.data.users[m.sender].lionlastclaim)
@@ -139,7 +139,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].horselastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *horse*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *horse*\nKarena sudah lapar..', m)
                     }, timeda)
                     if (horse > 0) {
                         let naiklvl = ((horse * 1000) - 1)
@@ -165,7 +165,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].wolflastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *wolf*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *wolf*\nKarena sudah lapar..', m)
                     }, timela)
                     if (wolf > 0) {
                         let naiklvl = ((wolf * 10000) - 1)
@@ -191,7 +191,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].dragonlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *dragon*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *dragon*\nKarena sudah lapar..', m)
                     }, timega)
                     if (dragon > 0) {
                         let naiklvl = ((dragon * 10000) - 1)
@@ -203,8 +203,8 @@ let handler = async (m, {
                     }
                 } else m.reply(`Makanan pet kamu tidak cukup`)
             } else m.reply(`Pet kamu sudah kenyang, Cobalah Untuk Memberi Dia Makan ${wdragonaa} lagi`)
-            break 
-      case 'kyubi':
+            break
+        case 'kyubi':
             if (kyubi == 0) return m.reply('*Kamu tidak punya pet kyubi*')
             if (kyubi == 5) return m.reply('*Pet kamu sudah level max *')
             let wkyubi = (new Date - global.db.data.users[m.sender].kyubilastclaim)
@@ -217,7 +217,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].kyubilastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *Kyubi*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *Kyubi*\nKarena sudah lapar..', m)
                     }, timebi)
                     if (kyubi > 0) {
                         let naiklvl = ((kyubi * 10000) - 1)
@@ -229,8 +229,8 @@ let handler = async (m, {
                     }
                 } else m.reply(`Makanan pet kamu tidak cukup`)
             } else m.reply(`Pet kamu sudah kenyang, Cobalah Untuk Memberi Dia Makan ${wkyubiaa} lagi`)
-            break 
-      case 'centaur':
+            break
+        case 'centaur':
             if (centaur == 0) return m.reply('*Kamu tidak punya pet centaur*')
             if (centaur == 5) return m.reply('*Pet kamu sudah level max *')
             let wcentaur = (new Date - global.db.data.users[m.sender].centaurlastclaim)
@@ -243,7 +243,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].centaurlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *Centaur*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *Centaur*\nKarena sudah lapar..', m)
                     }, timeur)
                     if (centaur > 0) {
                         let naiklvl = ((centaur * 10000) - 1)
@@ -255,8 +255,8 @@ let handler = async (m, {
                     }
                 } else m.reply(`Makanan pet kamu tidak cukup`)
             } else m.reply(`Pet kamu sudah kenyang, Cobalah Untuk Memberi Dia Makan ${wcentauraa} lagi`)
-            break 
-         case 'phonix':
+            break
+        case 'phonix':
             if (phonix == 0) return m.reply('*Kamu tidak punya pet Phonix*')
             if (phonix == 5) return m.reply('*Pet kamu sudah level max *')
             let wphonix = (new Date - global.db.data.users[m.sender].phonixlastclaim)
@@ -269,7 +269,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].phonixlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *Phonix*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *Phonix*\nKarena sudah lapar..', m)
                     }, timenix)
                     if (phonix > 0) {
                         let naiklvl = ((phonix * 10000) - 1)
@@ -295,7 +295,7 @@ let handler = async (m, {
                     global.db.data.users[m.sender].griffinlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *Griffin*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *Griffin*\nKarena sudah lapar..', m)
                     }, timefin)
                     if (griffin > 0) {
                         let naiklvl = ((griffin * 10000) - 1)
@@ -321,9 +321,9 @@ let handler = async (m, {
                     global.db.data.users[m.sender].catlastclaim = new Date * 1
                     conn.reply(m.chat, `Feeding ${type} success`, m)
                     setTimeout(() => {
-                         conn.reply(m.chat, 'Waktunya memberi makan *cat*\nKarena sudah lapar..', m)
+                        conn.reply(m.chat, 'Waktunya memberi makan *cat*\nKarena sudah lapar..', m)
                     }, timecing)
-                    if (cat > 0) { 
+                    if (cat > 0) {
                         let naiklvl = ((cat * 1000) - 1)
                         if (global.db.data.users[m.sender].catexp > naiklvl) {
                             global.db.data.users[m.sender].cat += 1
@@ -334,7 +334,7 @@ let handler = async (m, {
                 } else m.reply(`Makanan pet kamu tidak cukup`)
             } else m.reply(`Pet kamu sudah kenyang, Cobalah Untuk Memberi Dia Makan ${wcataa} lagi`)
             break
-            case 'rubah':
+        case 'rubah':
             if (rubah == 0) return m.reply('*Kamu belum memiliki Pet Rubah*')
             if (rubah == 10) return m.reply('*Pet kamu dah lvl max*')
             let wrubah = (new Date - user.foxlastfeed)
@@ -427,77 +427,78 @@ let handler = async (m, {
             } else m.reply(`Pet kamu sudah kenyang, Cobalah Untuk Memberi Dia Makan ${wkudaaa} lagi`)
             break
         default:
-        await conn.sendMessage(m.chat, {
-				text: baba,
-				footer: author,
-				title: '「 *F E E D   PET* 」',
-				buttonText: "F E E D",
-				sections: [{
-					title: "List Featured",
-					rows: [{
-					title: "Feed Fox",
-				rowId: ".feed fox",
-				description: "Memberi makan Fox"
-			},{
-					title: "Feed rhinoceros",
-				rowId: ".feed rhinoceros",
-				description: "Memberi makan Rhinoceros"
-			},{
-					title: "Feed Lion",
-				rowId: ".feed lion",
-				description: "Memberi makan Lion"
-			},{
-					title: "Feed Horse",
-				rowId: ".feed horse",
-				description: "Memberi makan Horse"
-			},{
-					title: "Feed Wolf",
-				rowId: ".feed wolf",
-				description: "Memberi makan Wolf"
-			},{
-					title: "Feed Dragon",
-				rowId: ".feed dragon",
-				description: "Memberi makan Dragon"
-			},{
-					title: "Feed Kyubi",
-				rowId: ".feed kyubi",
-				description: "Memberi makan Kyubi"
-			},{
-					title: "Feed Centaur",
-				rowId: ".feed centaur",
-				description: "Memberi makan Centaur"
-			},{
-					title: "Feed Griffin",
-				rowId: ".feed griffin",
-				description: "Memberi makan Griffin"
-			},{
-					title: "Feed Phoenix",
-				rowId: ".feed phoenix",
-				description: "Memberi makan Phoenix"
-			},{
-					title: "Feed Cat",
-				rowId: ".feed cat",
-				description: "Memberi makan Cat"
-			},{
-					title: "Feed Rubah",
-				rowId: ".feed rubah",
-				description: "Memberi makan Rubah"
-			},{
-					title: "Feed Kuda",
-				rowId: ".feed kuda",
-				description: "Memberi makan Kuda"
-			},{
-					title: "Feed Kucing",
-				rowId: ".feed kucing",
-				description: "Memberi makan Kucing"
-			},{
-					title: "Feed Anjing",
-				rowId: ".feed anjing",
-				description: "Memberi makan Anjing"
-			}
-					]
-				}]
-			})
+            await conn.reply(m.chat, baba, m)
+            /*
+            await conn.sendMessage(m.chat, {
+                text: baba,
+                footer: author,
+                title: '「 *F E E D   PET* 」',
+                buttonText: "F E E D",
+                sections: [{
+                    title: "List Featured",
+                    rows: [{
+                        title: "Feed Fox",
+                        rowId: ".feed fox",
+                        description: "Memberi makan Fox"
+                    }, {
+                        title: "Feed rhinoceros",
+                        rowId: ".feed rhinoceros",
+                        description: "Memberi makan Rhinoceros"
+                    }, {
+                        title: "Feed Lion",
+                        rowId: ".feed lion",
+                        description: "Memberi makan Lion"
+                    }, {
+                        title: "Feed Horse",
+                        rowId: ".feed horse",
+                        description: "Memberi makan Horse"
+                    }, {
+                        title: "Feed Wolf",
+                        rowId: ".feed wolf",
+                        description: "Memberi makan Wolf"
+                    }, {
+                        title: "Feed Dragon",
+                        rowId: ".feed dragon",
+                        description: "Memberi makan Dragon"
+                    }, {
+                        title: "Feed Kyubi",
+                        rowId: ".feed kyubi",
+                        description: "Memberi makan Kyubi"
+                    }, {
+                        title: "Feed Centaur",
+                        rowId: ".feed centaur",
+                        description: "Memberi makan Centaur"
+                    }, {
+                        title: "Feed Griffin",
+                        rowId: ".feed griffin",
+                        description: "Memberi makan Griffin"
+                    }, {
+                        title: "Feed Phoenix",
+                        rowId: ".feed phoenix",
+                        description: "Memberi makan Phoenix"
+                    }, {
+                        title: "Feed Cat",
+                        rowId: ".feed cat",
+                        description: "Memberi makan Cat"
+                    }, {
+                        title: "Feed Rubah",
+                        rowId: ".feed rubah",
+                        description: "Memberi makan Rubah"
+                    }, {
+                        title: "Feed Kuda",
+                        rowId: ".feed kuda",
+                        description: "Memberi makan Kuda"
+                    }, {
+                        title: "Feed Kucing",
+                        rowId: ".feed kucing",
+                        description: "Memberi makan Kucing"
+                    }, {
+                        title: "Feed Anjing",
+                        rowId: ".feed anjing",
+                        description: "Memberi makan Anjing"
+                    }]
+                }]
+            })*/
     }
 }
 handler.help = ['feed [pet type]']
@@ -507,9 +508,10 @@ handler.command = /^(feed(ing)?)$/i
 export default handler
 
 function clockString(ms) {
-  let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
-  let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
-  let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
-  let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return [d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+    let d = isNaN(ms) ? '--' : Math.floor(ms / 86400000)
+    let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
+    let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
+    let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

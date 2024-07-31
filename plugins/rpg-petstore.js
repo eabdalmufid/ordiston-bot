@@ -23,48 +23,60 @@ let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
   let hphonix = 10
   let hwolf = 10
 
-let logo = `— *P E T   S T O R E* —
-▮▧▧▧▧▧▧▧▧▧▧▧▧▮`
+let logo = `${htki} PET STORE ${htka}\n${htka}`
 let caption = `
+
+${htjava} N O R M A L ${htjava}
 🐈 *Cat:* ${hcat} 🔖
 🐕 *Dog:* ${hdog} 🔖
 🐎 *Horse:* ${hhorse} 🔖
 🦊 *Fox:* ${hfox} 🔖
 🤖 *Robo:* ${hrobo} 🔖
 
-*S P E C I A L*
-*lion:* ${hlion} 🔖
-*rhinoceros:* ${hrhinoceros} 🔖
-*dragon:* ${hdragon} 🔖
-*centaur:* ${hcentaur} 🔖
-*kyubi:* ${hkyubi} 🔖
-*griffin:* ${hgriffin} 🔖
-*phonix:* ${hphonix} 🔖
-*wolf:* ${hwolf} 🔖
+${htjava} S P E C I A L ${htjava}
+🦁 *lion:* ${hlion} 🔖
+🦏 *rhinoceros:* ${hrhinoceros} 🔖
+🐉 *dragon:* ${hdragon} 🔖
+🎠 *centaur:* ${hcentaur} 🔖
+🦊 *kyubi:* ${hkyubi} 🔖
+🦅 *griffin:* ${hgriffin} 🔖
+🦤 *phonix:* ${hphonix} 🔖
+🐺 *wolf:* ${hwolf} 🔖
 
-〉 *ABILITY*
-Cooming soon...`
+${htjava} A B I L I T Y ${htjava}
+➞ 🐈 • ᴄᴀᴛ :
+- ɪɴᴄʀᴇᴀsᴇ ʜᴇᴀʟᴛʜ 5% / ʟᴇᴠᴇʟ ᴡʜᴇɴ ᴜsᴇ *.ʜᴇᴀʟ*
+
+➞ 🐕 • ᴅᴏɢ :
+- ᴄᴏᴍɪɴɢ sᴏᴏɴ...
+
+➞ 🐎 • ʜᴏʀsᴇ :
+- ᴄᴏᴍɪɴɢ sᴏᴏɴ...
+
+➞ 🦊 • ғᴏx :
+- ᴄᴏᴍɪɴɢ sᴏᴏɴ...
+`
 const sections = [
    {
 	title: "Buy A Pet",
 	rows: [
-	    {title: "Cat 🐈", rowId: ".petshop cat", description: "Adopt A Cat"},
-	    {title: "Dog 🐕", rowId: ".petshop dog", description: "Adopt A Dog"},
-	    {title: "Horse 🐎", rowId: ".petshop horse", description: "Adopt A Horse"},
-	    {title: "Fox 🦊", rowId: ".petshop fox", description: "Adopt A Fox"},
-	    {title: "Robo 🤖", rowId: ".petshop robo", description: "Buy A Robo"},
+	    {title: "🐈 Cat", rowId: ".petshop cat", description: "Adopt A Cat"},
+	    {title: "🐕 Dog", rowId: ".petshop dog", description: "Adopt A Dog"},
+	    {title: "🐎 Horse", rowId: ".petshop horse", description: "Adopt A Horse"},
+	    {title: "🦊 Fox", rowId: ".petshop fox", description: "Adopt A Fox"},
+	    {title: "🤖 Robo", rowId: ".petshop robo", description: "Buy A Robo"},
 	]
     },{
 	title: "Special Pet",
 	rows: [
-	{title: "lion", rowId: ".petshop lion", description: "Adopt A lion"},
-    {title: "rhinoceros", rowId: ".petshop rhinoceros", description: "Adopt A rhinoceros"},
-    {title: "dragon", rowId: ".petshop dragon", description: "Adopt A dragon"},
-    {title: "centaur", rowId: ".petshop centaur", description: "Adopt A centaur"},
-    {title: "kyubi", rowId: ".petshop kyubi", description: "Adopt A kyubi"},
-    {title: "griffin", rowId: ".petshop griffin", description: "Adopt A griffin"},
-    {title: "phonix", rowId: ".petshop phonix", description: "Adopt A phonix"},
-    {title: "wolf", rowId: ".petshop wolf", description: "Adopt A wolf"}
+	{title: "🦁 lion", rowId: ".petshop lion", description: "Adopt A lion"},
+    {title: "🦏 rhinoceros", rowId: ".petshop rhinoceros", description: "Adopt A rhinoceros"},
+    {title: "🐉 dragon", rowId: ".petshop dragon", description: "Adopt A dragon"},
+    {title: "🎠 centaur", rowId: ".petshop centaur", description: "Adopt A centaur"},
+    {title: "🦊 kyubi", rowId: ".petshop kyubi", description: "Adopt A kyubi"},
+    {title: "🦅 griffin", rowId: ".petshop griffin", description: "Adopt A griffin"},
+    {title: "🦤 phonix", rowId: ".petshop phonix", description: "Adopt A phonix"},
+    {title: "🐺 wolf", rowId: ".petshop wolf", description: "Adopt A wolf"}
 	]
     },
 ]
@@ -174,7 +186,23 @@ const listMessage = {
             break
             
           default:
-            return await conn.sendMessage(m.chat, listMessage)
+            let lister = [
+              "cat",
+              "dog",
+              "fox",
+              "horse",
+              "robo",
+              "lion",
+              "rhinoceros",
+              "dragon",
+              "centaur",
+              "kyubi",
+              "griffin",
+              "phonix",
+              "wolf"
+            ]
+            if (!lister.includes(args[0])) return m.reply("*Example:*\n.petshop cat\n\n*Pilih type yg ada*\n" + lister.map((v, index) => "  ○ " + v).join("\n"))
+            //return await conn.sendMessage(m.chat, listMessage)
         }
     } else if (/enchant|enchan/i.test(command)) {
       const count = args[2] && args[2].length > 0 ? Math.min(99999999, Math.max(parseInt(args[2]), 1)) : !args[2] || args.length < 4 ? 1 :Math.min(1, count)
@@ -185,7 +213,7 @@ const listMessage = {
           break
 
         default:
-          return conn.sendButton( m.chat, caption, wm, null, [`⋮☰ Menu`, `.menu`], m)
+          return conn.reply( m.chat, caption, m)
       }
     }
   } catch (err) {

@@ -16,7 +16,7 @@ let dapet = json.result.url
 		rowId: usedPrefix + 'get ' + v.url
 	}))
 	let button = {
-		buttonText: `⚜️ ${command} Search Disini ⚜️`,
+		buttonText: `${command} Search Disini`,
 		description: `⚡ Hai ${name}, Silakan pilih ${command} Search di tombol di bawah...\n*Teks yang anda kirim:* ${text}\n\nKetik ulang *${usedPrefix + command}* teks anda untuk mengubah teks lagi`,
 		footerText: wm
 	}
@@ -30,12 +30,12 @@ let dapet = json.result.dlink
 *${htki} YOUTUBE ${htka}*
 
 *${htjava} Title:* ${json.result.title}
-`.trim(), m, null, { fileLength: fsizedoc, seconds: fsizedoc, mimetype: 'audio/mp4', contextInfo: {
+`.trim(), m, null, { fileLength: fsizedoc, mimetype: 'audio/mp4', contextInfo: {
           externalAdReply :{
     mediaUrl: sig,
     mediaType: 2,
     description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
+    title: 'Hai, ' + name,
     body: botdate,
     thumbnail: await(await fetch(json.result.thumb)).buffer(),
     sourceUrl: json.result.dlink
@@ -43,9 +43,9 @@ let dapet = json.result.dlink
   })
 	}
 }
-handler.help = ['soundcloud'].map(v => v + ' <url>')
+handler.help = ['scloud'].map(v => v + ' <url>')
 handler.tags = ['downloader']
-handler.command = /^s(oundcloud(d(own|l))?|cd(own|l))$/i
+handler.command = /^scloud$/i
 
 handler.exp = 0
 handler.register = false

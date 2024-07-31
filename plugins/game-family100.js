@@ -1,12 +1,12 @@
 import { family100 } from '@bochilteam/scraper'
 const winScore = 4999
 async function handler(m) {
-let imgr = flaaa.getRandom()
+let imgr = flaaa
 
-    this.game = this.game ? this.game : {}
+    this.familygame = this.familygame ? this.familygame : {}
     let id = 'family100_' + m.chat
-    if (id in this.game) {
-        this.reply(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', this.game[id].msg)
+    if (id in this.familygame) {
+        this.reply(m.chat, 'Masih ada kuis yang belum terjawab di chat ini', this.familygame[id].msg)
         throw false
     }
     const json = await family100()
@@ -17,9 +17,10 @@ Terdapat *${json.jawaban.length}* jawaban${json.jawaban.find(v => v.includes(' '
 `: ''}
 +${winScore} XP tiap jawaban benar
     `.trim()
-    this.game[id] = {
+    this.familygame[id] = {
         id,
-        msg: await this.sendButton(m.chat, caption, author, imgr + 'Family100', [['Nyerah', 'nyerah']], m),
+        msg: await this.sendFthumb(m.chat, '🎮 Family 100 🎮', caption + '\n\n' + author, imgr + 'Family100', '', m),
+        //msg: await this.sendButton(m.chat, caption, author, imgr + 'Family100', [['Nyerah', 'nyerah']], m),
         ...json,
         terjawab: Array.from(json.jawaban, () => false),
         winScore,

@@ -28,17 +28,17 @@ let lgocraft = `
 *「 RECIPE 」*
 
 ⬡ Pickaxe ⛏️
-│• 10 Kayu
-│• 5 Batu
+│• 10 Wood
+│• 5 Rock
 │• 5 Iron
 │• 20 String
 ╰────┈⭑
 ⬡ Sword ⚔️
-│• 10 Kayu
+│• 10 Wood
 │• 15 Iron
 ╰────┈⭑
 ⬡ Fishingrod 🎣
-│• 10 Kayu
+│• 10 Wood
 │• 2 Iron
 │• 20 String
 ╰────┈⭑
@@ -52,12 +52,6 @@ let lgocraft = `
 │• 6 Diamond
 │• 10k Money
 ╰────┈⭑
-⬡ Join Limit 🎟️
-│• 1 Emerald
-│• 5 Iron
-│• 50k Money
-│• 20 Limit
-╰────┈⭑
 `
 const sections = [
    {
@@ -68,14 +62,13 @@ const sections = [
 	    {title: "FISHINGROD 🎣", rowId: ".craft fishingrod", description: "Crafting A Fishingrod"},
 	    {title: "ARMOR 🥼", rowId: ".craft armor", description: "Crafting A Armor"},
 	    {title: "ATM 💳", rowId: ".craft atm", description: "Crafting A Atm (but that's ilegal)"},
-	    {title: "JOIN LIMIT 🎟️", rowId: ".craft joinlimit", description: "Crafting Card (Join Limit)"},
 	]
     },
 ]
 
 const listMessage = {
-  text: bottime,
-  footer: caption,
+  text: caption,
+  footer: wm,
   title: lgocraft,
   buttonText: " C R A F T ",
   sections
@@ -87,7 +80,7 @@ const listMessage = {
         switch (type) {
           case 'pickaxe':
           if (user.pickaxe > 0) return m.reply('Kamu sudah memilik ini')
-            if(user.rock < 5 || user.wood < 10 || user.iron < 5 || user.string < 20) return m.reply(`Barang tidak cukup!\nUntuk membuat pickaxe. Kamu memerlukan : \n10 kayu🪵 \n5 iron⛓\n20 String🕸️\n5 Batu 🪨`)
+            if(user.rock < 5 || user.wood < 10 || user.iron < 5 || user.string < 20) return m.reply(`Barang tidak cukup!\nUntuk membuat pickaxe. Kamu memerlukan : \n10 Wood🪵 \n5 Iron⛓\n20 S tring🕸️\n5 Rock 🪨`)
             global.db.data.users[m.sender].wood -= 10
             global.db.data.users[m.sender].iron -= 5
             user.rock -= 5
@@ -96,20 +89,9 @@ const listMessage = {
             user.pickaxedurability = 40
             m.reply("Sukses membuat 1 pickaxe 🔨")
             break
-         case 'joinlimit':
-          if (user.joinlimit > 0) return m.reply('Kamu sudah memilik ini')
-            if(user.money < 50000 || user.emerald < 1 || user.iron < 5 || user.limit < 20) return m.reply(`Barang tidak cukup!\nUntuk membuat Kartu Join Limit. Kamu memerlukan : \n50k Uang💰 \n5 iron⛓\n1 Emerald✳️️\n20 Limit 🎫`)
-            global.db.data.users[m.sender].money -= 50000
-            global.db.data.users[m.sender].iron -= 5
-            user.emerald -= 1
-            global.db.data.users[m.sender].limit -= 20
-            global.db.data.users[m.sender].joinlimit += 1
-            user.joinlimitdurability = 100
-            m.reply("Sukses membuat 1 join limit 🎟️")
-            break
           case 'sword':
           if (user.sword > 0) return m.reply('Kamu sudah memilik ini')
-            if(user.wood < 10 || user.iron < 15) return m.reply(`Barang tidak cukup!\nUntuk membuat sword. Kamu memerlukan :\n10 kayu🪵\n15 iron⛓️`)
+            if(user.wood < 10 || user.iron < 15) return m.reply(`Barang tidak cukup!\nUntuk membuat sword. Kamu memerlukan :\n10 Wood🪵\n15 Iron⛓️`)
             global.db.data.users[m.sender].wood -= 10
             global.db.data.users[m.sender].iron -= 15
             global.db.data.users[m.sender].sword += 1
@@ -118,7 +100,7 @@ const listMessage = {
             break
           case 'fishingrod':
           if (user.fishingrod > 0) return m.reply('Kamu sudah memilik ini')
-            if(user.wood < 20 || user.iron < 5 || user.string < 20) return m.reply(`Barang tidak cukup!\nUntuk membuat pancingan. Kamu memerlukan :\n10 kayu🪵\n5 iron⛓\n20 String🕸️`)
+            if(user.wood < 20 || user.iron < 5 || user.string < 20) return m.reply(`Barang tidak cukup!\nUntuk membuat pancingan. Kamu memerlukan :\n10 Wood🪵\n5 Iron⛓\n20 String🕸️`)
             global.db.data.users[m.sender].wood -= 10
             global.db.data.users[m.sender].iron -= 2
             global.db.data.users[m.sender].string -= 20
@@ -148,6 +130,14 @@ const listMessage = {
             break
 
           default:
+            let lister = [
+              "pickaxe",
+              "sword",
+              "fishingrod",
+              "armor",
+              "atm"
+            ]
+         if (!lister.includes(args[0])) return m.reply("*Example:*\n.craft sword\n\n*Pilih type yg ada*\n" + lister.map((v, index) => "  ○ " + v).join("\n") + "\n\n" + readMore + lgocraft + "\n" + caption)
             return await conn.sendMessage(m.chat, listMessage)
         }
     } else if (/enchant|enchan/i.test(command)) {
@@ -159,7 +149,7 @@ const listMessage = {
           break
 
         default:
-          return conn.sendButton( m.chat, caption, wm, null, [`⋮☰ Menu`, `.menu`], m)
+          return conn.reply( m.chat, caption, m)
       }
     }
   } catch (err) {
@@ -172,3 +162,6 @@ handler.tags = ['rpg']
 handler.command = /^(craft|crafting|chant)/i
 
 export default handler
+
+const more = String.fromCharCode(8206)
+const readMore = more.repeat(4201)

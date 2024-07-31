@@ -1,36 +1,26 @@
 import fetch from 'node-fetch'
 
-let handler  = async (m, { conn, command, args, usedPrefix, DevMode }) => {
-let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender
-let pp = await conn.profilePictureUrl(who).catch(_ => hwaifu.getRandom())
-let name = await conn.getName(who)
-if (!args[0]) throw `Use example ${usedPrefix}${command} http://i.coco.fun/short/1513tui/`
-if (!args[1]) return conn.sendButton(m.chat, htki + ' SMULE ' + htka, null, null, [['🎥 VIDEO', `.smule ${args[0]} video`],['🎙️ AUDIO', `.smule ${args[0]} audio`]],m)
-let res = await fetch(`https://api.lolhuman.xyz/api/smule?apikey=${global.lolkey}&url=${args[1]}`)
-    let x = await res.json()
-  if (args[1] == 'video') {
-    await conn.sendButtonVid(m.chat, x.result.video, `*${htki} SMULE ${htka}*
-*title:* ${x.result.title}
-    `, author, 'To mp3', '.tomp3', fpayment, adReply)
-  }
-  if (args[1] == 'audio') {
-    await conn.sendFile(m.chat, x.result.audio, 'audio.mp3', '', m, null, { fileLength: fsizedoc, seconds: fsizedoc, contextInfo: {
-            mimetype: 'audio/mp4',
-          externalAdReply :{
-    mediaUrl: sig,
-    mediaType: 2,
-    description: wm, 
-    title: '👋 Hai, ' + name + ' ' + ucapan,
-    body: botdate,
-    thumbnail: await(await fetch(pp)).buffer(),
-    sourceUrl: x.result.audio
-     }}
-  })
-  }
-  }
-handler.help = ['smule'].map(v => v + ' <url>')
-handler.tags = ['downloader']
+let handler = async(m, { conn, text, usedPrefix, command }) => {
+	if (!text) throw `*Usage : ${usedPrefix + command} smule_url_media*\n\nExample :\n${usedPrefix + command} https://www.smule.com/recording/lewis-capaldi-someone-you-loved/2027750707_2937753991`
+	if (!(text.includes('http://') || text.includes('https://'))) throw `url invalid, please input a valid url. Try with add http:// or https://`
+	try {
+		let anu = await fetch(`https://api.lolhuman.xyz/api/smule?apikey=${global.lolkey}&url=${text}`)
+		let json = await anu.json()
+		let ini_txt = `*[ PILIH FORMAT MEDIA ]*\n\n_${json.result.title}_\n\nKetik *${usedPrefix}smulemp3* atau *${usedPrefix}smulemp4* apabila tombol tidak muncul/berfungsi.\n`
+		conn.sendButton(m.chat, ini_txt, namebot + ' - ' + author, [
+			[`🎧 Audio`, `${usedPrefix}smulemp3 ${text}`],
+			[`🎥 Video`, `${usedPrefix}smulemp4 ${text}`]
+		], m)
+	} catch (e) {
+		console.log(e)
+		m.reply(`Invalid Smule url.`)
+	}
+}
 
-handler.command = /^((smule)(downloder|dl)?)$/i
+handler.menu = ['smule <url>']
+handler.tags = ['search']
+handler.command = /^(smule(play|search)?)$/i
+
+handler.limit = true
 
 export default handler

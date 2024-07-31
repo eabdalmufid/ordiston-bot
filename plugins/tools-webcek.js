@@ -4,10 +4,8 @@ import fetch from 'node-fetch'
 let handler = async (m, { args, usedPrefix, command }) => {
 	if (!args[0]) throw `Ex: ${usedPrefix + command} nekopoi.care`
 	let res = await checkWeb(args)
-	m.reply(res.map(v => `*• 🌐Domain:* ${v.Domain}\n*• 📊Status:* ${v.Status}`).join('\n\n'))
+	m.reply(res.map(v => `*• Domain:* ${v.Domain}\n*• Status:* ${v.Status}`).join('\n\n'))
 }
-handler.tags = ['tools','internet']
-handler.help = ['checkweb']
 handler.command = /^web(check|cek)|(check|cek)web$/i
 
 export default handler

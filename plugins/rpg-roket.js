@@ -8,7 +8,7 @@ let handler = async (m, { conn }) => {
     let user = global.db.data.users[m.sender]
     
     if (user.stamina < 20) return m.reply(`Stamina anda tidak cukup\nharap isi stamina anda dengan *${usedPrefix}eat8`)
-    if (user.lastroket > 10800000) throw m.reply(`Kamu masih kelelahan\nHarap tunggu ${timers} lagi`)
+    if (user.lastroket > 10800000) throw `Kamu masih kelelahan\nHarap tunggu ${timers} lagi`
     
      if (new Date - global.db.data.users[m.sender].lastroket > 300000) {
 let ngerok1 = `${Math.floor(Math.random() * 10)}`
@@ -90,42 +90,30 @@ global.db.data.users[m.sender].roket += 1
 
 
 setTimeout(() => {
-                     conn.sendHydrated(m.chat, hsl, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, hsl, m)
                      }, 27000) 
                
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, rokit4, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, rokit4, null)
                       }, 25000)
                 
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, rokit3, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, rokit3, null)
                      }, 20000) 
                         
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, rokit2, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, rokit2, null)
                      }, 15000) 
                     
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, rokit, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, rokit, null)
                      }, 10000) 
                      
                      setTimeout(() => {
-                     conn.sendHydrated(m.chat, `🔍 ${name} Mencari Lokasi.....`, botdate, null, null, null, null, null, [
-      [null, null]
-    ], null)
+                     conn.reply(m.chat, `🔍 ${name} Mencari Lokasi.....`, null)
                      }, 0) 
   user.lastroket = new Date * 1
-    } else conn.sendButton(m.chat, `Sepertinya Anda Sudah Kecapekan Silahkan Istirahat Dulu sekitar\n🕔 *${timers}*`, wm, null, [['inventory', '.inv']], m )
+    } else conn.reply(m.chat, `Sepertinya Anda Sudah Kecapekan Silahkan Istirahat Dulu sekitar\n🕔 *${timers}*`, m)
 }
 handler.help = ['roket']
 handler.tags = ['rpg']
@@ -140,5 +128,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }

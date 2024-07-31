@@ -1,12 +1,7 @@
 const rewards = {
-  exp: 9999,
-  money: 4999,
-  potion: 5,
-  iron: 2,
-  legendary: 1,
-  emas: 2,
-  string: 3,
-  limit: 1,
+  exp: 4999,
+  money: 2999,
+  potion: 1,
 }
 const cooldown = 3600000
 let handler = async (m,{ conn} ) => {
@@ -18,7 +13,7 @@ let handler = async (m,{ conn} ) => {
     user[reward] += rewards[reward]
     text += `*+${rewards[reward]}* ${global.rpg.emoticon(reward)}${reward}\n`
   }
-  conn.sendButton(m.chat,`${htki} HOURLY ${htka}`, text.trim(), null, [['Inventory', '.inv'], ['Daily', '.daily']],m)
+  conn.reply(m.chat,`${htki} HOURLY ${htka}` + `\n` + text.trim(), m)
   user.lasthourly = new Date * 1
 }
 handler.help = ['hourly']

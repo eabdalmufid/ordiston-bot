@@ -1,5 +1,5 @@
 
-let handler = async ( m, { conn, args, command}) => {
+let handler = async ( m, { conn, text, args, command}) => {
   conn.duel = conn.duel ? conn.duel : []
   args.length != 0 ? conn.duel.push(m.mentionedJid ? m.mentionedJid[0] : (args[0].replace(/[@ .+-]/g, '').replace(' ', '') + '@s.whatsapp.net')) : ""
   let who = conn.duel[0]
@@ -7,7 +7,7 @@ let handler = async ( m, { conn, args, command}) => {
   let enemy = global.db.data.users[who]
   let user = global.db.data.users[m.sender]
   let count = args[1] && args[1].length > 0 ? Math.min(100, Math.max(parseInt(args[1]), 1)) : Math.min(1)
-  let nama = conn.getName(m.sender)
+  let nama = await conn.getName(m.sender)
 
   let randomaku = `${Math.floor(Math.random() * 101)}`.trim()
   let randomkamu = `${Math.floor(Math.random() * 81)}`.trim()
@@ -26,14 +26,14 @@ let handler = async ( m, { conn, args, command}) => {
      let mentionedJid = [m.sender]
 
        if (new Date - user.lastduel > 300000) {
-      conn.send2Button(m.chat, pler, `Games wabot`, `Ya`, `.dya`, `No`, `.dno`, m, false, { contextInfo: { mentionedJid }})
+      conn.reply(m.chat, pler + "\n\nKetik *.dya* untuk Ya, Ketik *.dno* untuk Tidak", m, { mentions: conn.parseMention(mentionedJid) })
 
-      } else conn.reply( m.chat, `Kamu Sudah Berduel Tunggu hingga *${timers}*`, m)
+      } else conn.reply( m.chat, `Kamu Sudah Berduel Tunggu hingga ${timers}`, m)
      }
 
      if (/dya/.test(command)) {
-     //let kenal = !who.includes(m.sender)
-     //if(kenal) throw 'Lu siapa?\nkok ikut kut mau duel'
+     let kenal = !who.includes(m.sender)
+     if(kenal) throw 'Lu siapa?\nkok ikut kut mau duel'
      user.lastduel = new Date * 1
      if (Aku > Kamu) {
        user.money -= 900
@@ -53,14 +53,14 @@ let handler = async ( m, { conn, args, command}) => {
      }
    }
    if (/dno/.test(command)) {
-   //let kenal = !who.includes(m.sender)
-   //if(kenal) return conn.sendButton(m.chat, `Lu siapa?\nkok ikut kut mau duel`, `Sesion`, `NO`, `.dno`, m)
+   let kenal = !who.includes(m.sender)
+   if(kenal) return conn.reply(m.chat, `Lu siapa?\nkok ikut kut mau duel`, m)
     //if (!who) return m.reply('tag yg ingin di ajak duel!')
     conn.reply( m.chat, `@${who.split("@")[0]} Membatalkan Ajakan Duel`, m)
     delete conn.duel[m.sender]
    }
  } catch (e) {
-   //return conn.sendButton( m.chat, `Sepertinya ada bug`, `laporkan ke owner`, `Kanjut Badag`, `+bug duel ${e.stack}`, m)
+   //return conn.sendBut( m.chat, `Sepertinya ada bug`, `laporkan ke owner`, `Kanjut Badag`, `+bug duel ${e.stack}`, m)
    return m.reply(`${e}`)
  }
 }
@@ -80,5 +80,6 @@ function clockString(ms) {
   let h = isNaN(ms) ? '--' : Math.floor(ms / 3600000) % 24
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
-  return ['\n' + d, ' *Days ☀️*\n ', h, ' *Hours 🕐*\n ', m, ' *Minute ⏰*\n ', s, ' *Second ⏱️* '].map(v => v.toString().padStart(2, 0)).join('')
+	console.log({ ms, d, h, m, s })
+	return [d, h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
