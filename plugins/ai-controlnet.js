@@ -1,6 +1,6 @@
 import { Prodia } from "prodia.js";
 const apiKey = "df165bab-9893-4f02-92bf-e8b09592b43a";
-const prodia = new Prodia(apiKey);
+const prodia = Prodia(apiKey);
 
 import uploadFile from '../lib/uploadFile.js'
 import uploadImage from '../lib/uploadImage.js'

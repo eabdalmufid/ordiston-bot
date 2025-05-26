@@ -6,9 +6,7 @@ import fg from "api-dylux"
 import {
     fetchVideo
 } from "@prevter/tiktok-scraper"
-import {
-    Tiktok
-} from "@xct007/tiktok-scraper"
+import Tiktok from "@xct007/tiktok-scraper"
 
 export async function before(m) {
     const regex = /(http(?:s)?:\/\/)?(?:www\.)?(?:tiktok\.com\/@[^\/]+\/video\/(\d+))|(http(?:s)?:\/\/)?vm\.tiktok\.com\/([^\s&]+)|(http(?:s)?:\/\/)?vt\.tiktok\.com\/([^\s&]+)/g;

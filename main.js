@@ -1,4 +1,4 @@
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '1';
 import './config.js';
 
 import {
@@ -75,7 +75,6 @@ const {
     MessageRetryMap,
     fetchLatestBaileysVersion,
     makeCacheableSignalKeyStore,
-    makeInMemoryStore,
     proto,
     jidNormalizedUser,
     PHONENUMBER_MCC,
@@ -86,6 +85,7 @@ import readline from "readline"
 import {
     parsePhoneNumber
 } from "libphonenumber-js"
+import makeInMemoryStore from "./lib/aguz.js"
 const store = makeInMemoryStore({
     logger: Pino().child({
         level: 'fatal',
@@ -94,7 +94,7 @@ const store = makeInMemoryStore({
 })
 import emojiRegex from 'emoji-regex';
 
-const pairingCode = process.argv.includes("--pairing-code")
+const pairingCode = true
 const useMobile = process.argv.includes("--mobile")
 const useQr = process.argv.includes("--qr")
 
@@ -210,7 +210,7 @@ const connectionOptions = {
             stream: 'store'
         })),
     },
-    browser: ['Chrome (Linux)', '', ''],
+    browser: Browsers.ubuntu("Edge"),
     version,
     syncFullHistory: false,
     markOnIineOnConnect: true,
@@ -237,7 +237,8 @@ if (pairingCode && !conn.authState.creds.registered) {
     let phoneNumber = await question(`   ${chalk.cyan('- Number')}: `);
     console.log(chalk.cyan('╰──────────────────────────────────────···'));
     phoneNumber = phoneNumber.replace(/[^0-9]/g, '')
-    if (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v))) {
+    const PHONE_CC = await (await fetch('https://raw.githubusercontent.com/eabdalmufid/Databasee/refs/heads/main/data/countryphonecode.json')).json()
+    if (!Object.keys(PHONE_CC).some(v => phoneNumber.startsWith(v))) {
         console.log(chalk.cyan('╭─────────────────────────────────────────────────···'));
         console.log(`💬 ${chalk.redBright("Start with your country's WhatsApp code, Example 62xxx")}:`);
         console.log(chalk.cyan('╰─────────────────────────────────────────────────···'));

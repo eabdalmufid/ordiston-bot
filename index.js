@@ -7,7 +7,7 @@ import { promises as fsPromises } from 'fs';
 import chalk from 'chalk';
 
 const app = express();
-const port = process.env.PORT || 8080 || 3128;
+const port = process.env.PORT || 3128 || 8080;
 
 const basePath = new URL(import.meta.url).pathname;
 const htmlDir = path.join(path.dirname(basePath), 'html');

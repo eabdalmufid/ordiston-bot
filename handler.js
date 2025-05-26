@@ -22,9 +22,9 @@ const delay = ms => isNumber(ms) && new Promise(resolve => setTimeout(function()
  * @param {import("@adiwajshing/baileys").BaileysEventMap<unknown>["messages.upsert"]} groupsUpdate 
  */
 const {
-    getAggregateVotesInPollMessage,
-    makeInMemoryStore
+    getAggregateVotesInPollMessage
 } = await (await import('@adiwajshing/baileys')).default;
+import makeInMemoryStore from "./lib/aguz.js"
 import Pino from "pino"
 const store = makeInMemoryStore({
     logger: Pino().child({
