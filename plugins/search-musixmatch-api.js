@@ -1,6 +1,6 @@
 import axios from "axios"
 import fetch from "node-fetch"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import got from "got"
 const API_KEY = "46a908cae9e6fe663a1fe8ef339f08f6";
 

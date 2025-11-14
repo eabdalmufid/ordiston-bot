@@ -1,6 +1,6 @@
 import axios from 'axios'
 import fetch from 'node-fetch'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 let handler = async (m, { conn, args, usedPrefix, text, command }) => {
 	let res = await fetch('https://api.unsplash.com/search/photos?query=' + text + '&client_id=STxusJIgGSHWruiaq77WMAbMXmXRXAFr0JQQq3FY9v8')

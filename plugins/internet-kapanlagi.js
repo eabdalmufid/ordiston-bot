@@ -1,7 +1,7 @@
 import {
     generateWAMessageFromContent
 } from "@adiwajshing/baileys"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import fetch from "node-fetch"
 
 

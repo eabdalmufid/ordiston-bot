@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import PDFDocument from 'pdfkit';
 import fetch from 'node-fetch';
 

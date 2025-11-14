@@ -1,6 +1,6 @@
 /*import axios from "axios"
 import fetch from "node-fetch"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import got from "got"
 import fg from "api-dylux"
 import { fetchVideo } from "@prevter/tiktok-scraper"

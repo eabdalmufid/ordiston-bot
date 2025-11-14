@@ -3,7 +3,7 @@ const {
 } = await (await import('../lib/serpapi.js'));
 import fetch from 'node-fetch'
 import axios from 'axios'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 let handler = async (m, {
     command,

@@ -29,7 +29,7 @@ let date = d.toLocaleDateString(locale, {
 
 /*⫘⫘⫘⫘ OWNER NUMBER ⫘⫘⫘⫘⫘*/
 global.owner = [
-  ["62895411954396"],
+  ["6289509952003"],
   ["62851769520030", "️ owner", true],
 ];
 global.mods = ["62851769520030"];

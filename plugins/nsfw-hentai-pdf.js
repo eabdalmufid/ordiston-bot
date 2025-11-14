@@ -3,7 +3,7 @@ import PDFDocument from "pdfkit";
 import request from "request";
 import fs from "fs";
 import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from 'cheerio';;
 
 let handler = async (m, { conn, command, usedPrefix, args, text }) => {
 	

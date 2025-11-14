@@ -18,7 +18,7 @@ handler.all = async function (m) {
 
         // Module 
         global.fetch = await (await import('node-fetch')).default
-        global.bochil = await import('@bochilteam/scraper')
+        // global.bochil = await import('@bochilteam/scraper')
 
         //Begin
         //global.ephemeral = m.msg?.contextInfo?.expiration || 0

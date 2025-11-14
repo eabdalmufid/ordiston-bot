@@ -1,5 +1,5 @@
 import axios from "axios"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import fs from "fs"
 import { spawn, exec } from "child_process"
 import FormData from "form-data"

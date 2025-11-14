@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 const handler = async (m, { text }) => {
   if (!text) return m.reply('🎵 *Penggunaan:* .laguplus query|num');

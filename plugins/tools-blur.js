@@ -1,4 +1,5 @@
-import jimp from 'jimp';
+import pkg from 'jimp';
+const { Jimp } = pkg;
 
 let handler = async (m, { conn, text }) => {
 	try {

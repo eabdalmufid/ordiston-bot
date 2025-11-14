@@ -1,6 +1,6 @@
 import fetch from 'node-fetch'
 import axios from 'axios'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 let handler = async (m, { conn, text, args, usedPrefix, command }) => {
 let who = m.mentionedJid && m.mentionedJid[0] ? m.mentionedJid[0] : m.fromMe ? conn.user.jid : m.sender

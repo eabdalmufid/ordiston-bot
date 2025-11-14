@@ -110,8 +110,8 @@ async function start(file) {
 		console.log(chalk.yellow(`🟡 Found ${files.length} plugins in folder ${pluginsFolder}`));
 
 		try {
-			const { default: baileys } = await import('@adiwajshing/baileys');
-			const version = (await baileys.fetchLatestBaileysVersion()).version;
+			const { fetchLatestBaileysVersion } = await import('@adiwajshing/baileys');
+			const version = (await fetchLatestBaileysVersion()).version;
 			console.log(chalk.yellow(`🟡 Baileys library version ${version} is installed`));
 		} catch (e) {
 			console.error(chalk.red('❌ Baileys library is not installed'));

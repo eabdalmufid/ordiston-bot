@@ -1,5 +1,5 @@
 import got from 'got';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { Maker } from 'imagemaker.js';
 
 const handler = async (m, { conn, args }) => {

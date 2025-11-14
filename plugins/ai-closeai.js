@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import fetch from 'node-fetch';
 const API_BASE = ["https://api.closeai-proxy.xyz", "https://api.openai-proxy.live"];
 const API_KEY = "sk-zaTFbMjIUsKv23JlrhbyYdJG6A9gNOK2G713GvoZ0TBRkfI3";

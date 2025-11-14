@@ -1,6 +1,6 @@
 
 import fetch from "node-fetch"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 
 let handler = async (m, { conn, args, text }) => {
   await m.reply(wait)

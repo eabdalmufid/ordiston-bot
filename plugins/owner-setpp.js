@@ -1,7 +1,8 @@
 import {
     webp2png
 } from '../lib/webp2mp4.js'
-import Jimp from 'jimp'
+import pkg from 'jimp';
+const { Jimp } = pkg;
 import { URL_REGEX } from '@adiwajshing/baileys'
 
 const handler = async (m, {

@@ -4,7 +4,8 @@ import uploadImage from '../lib/uploadImage.js'
 import { webp2png } from '../lib/webp2mp4.js'
 import { Sticker, StickerTypes } from 'wa-sticker-formatter'
 import fetch from 'node-fetch'
-import Jimp from 'jimp'
+import pkg from 'jimp';
+const { Jimp } = pkg;
 import TinyColor from 'tinycolor2'
 
 let handler = async (m, { conn, args, text }) => {

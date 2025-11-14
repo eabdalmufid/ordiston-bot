@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import { sticker } from '../lib/sticker.js';
 
 async function emojiGraph(url) {

@@ -10,7 +10,7 @@ import {
    sticker
 } from "../lib/sticker.js"
 import got from "got"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import emojiRegex from "emoji-regex"
 
 let handler = async (m, {

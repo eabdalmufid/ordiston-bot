@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import axios from 'axios';
 import request from 'request';
 import got from 'got';

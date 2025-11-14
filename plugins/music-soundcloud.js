@@ -1,5 +1,5 @@
 import axios from 'axios'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 let handler = async (m, { conn, text, args, usedPrefix: _p, command: cmd }) => {
 	let sc = new SoundCloud

@@ -1,5 +1,5 @@
 import got from "got"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 
 let handler = async (m, { text, usedPrefix, command }) => {
   if (!text) throw `uhm.. teksnya mana?\n\ncontoh:\n${usedPrefix + command} kejadian`

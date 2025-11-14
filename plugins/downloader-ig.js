@@ -1,6 +1,6 @@
 /*import fetch from "node-fetch"
 import got from "got"
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 import {
     instagram
 } from "@xct007/frieren-scraper"
@@ -138,42 +138,42 @@ async function getVideo(url) {
 }*/  //lihat line 123
 
 
-import {
-    instagramdl
-} from '@bochilteam/scraper'
-var handler = async (m, {
-    args,
-    text,
-    usedPrefix,
-    command
-}) => {
-    if (!args[0]) throw `*Use example:* ${usedPrefix}${command} https://www.instagram.com/reel/Cfi6nIVpGYj/?igshid=Yzg5MTU1MDY=`
-    if (!(text.includes('http://') || text.includes('https://'))) return m.reply(`url invalid, please input a valid url. Try with add http:// or https://`)
-    if (!text.includes('instagram.com')) return m.reply(`Invalid Instagram URL.`)
-    try {
-        let res = await bochil.snapsave(args[0])
-        let media = await res[0].url
-        const short = await (await fetch(`https://tinyurl.com/api-create.php?url=${args[0]}`)).text();
-        const text = `🔗 *Url:* ${short}`.trim();
-        if (!res) throw 'Can\'t download the post'
-        m.reply('_In progress, please wait..._')
-        conn.sendFile(m.chat, media, 'file', text, m)
-        //conn.sendMessage(m.chat, { video : { url : media }}, m) 
-    } catch {
-        try {
-            let res2 = await instagramdl(args[0])
-            let media2 = res2.url
-            let cap = res2.title
-            return conn.sendFile(m.chat, media2, 'file', cap, m)
-            //return conn.sendFile(m.chat, media2, 'instagram.mp4', cap, m)
-        } catch {
-            conn.sendFile(m.chat, media, '', '', m)
-        } finally {}
-    }
-}
-handler.help = ['instagram']
-handler.tags = ['downloader']
-handler.command = /^(ig(dl)?|instagram(dl)?)$/i
-handler.limit = true
+// import {
+//     instagramdl
+// } from '@bochilteam/scraper'
+// var handler = async (m, {
+//     args,
+//     text,
+//     usedPrefix,
+//     command
+// }) => {
+//     if (!args[0]) throw `*Use example:* ${usedPrefix}${command} https://www.instagram.com/reel/Cfi6nIVpGYj/?igshid=Yzg5MTU1MDY=`
+//     if (!(text.includes('http://') || text.includes('https://'))) return m.reply(`url invalid, please input a valid url. Try with add http:// or https://`)
+//     if (!text.includes('instagram.com')) return m.reply(`Invalid Instagram URL.`)
+//     try {
+//         let res = await bochil.snapsave(args[0])
+//         let media = await res[0].url
+//         const short = await (await fetch(`https://tinyurl.com/api-create.php?url=${args[0]}`)).text();
+//         const text = `🔗 *Url:* ${short}`.trim();
+//         if (!res) throw 'Can\'t download the post'
+//         m.reply('_In progress, please wait..._')
+//         conn.sendFile(m.chat, media, 'file', text, m)
+//         //conn.sendMessage(m.chat, { video : { url : media }}, m) 
+//     } catch {
+//         try {
+//             let res2 = await instagramdl(args[0])
+//             let media2 = res2.url
+//             let cap = res2.title
+//             return conn.sendFile(m.chat, media2, 'file', cap, m)
+//             //return conn.sendFile(m.chat, media2, 'instagram.mp4', cap, m)
+//         } catch {
+//             conn.sendFile(m.chat, media, '', '', m)
+//         } finally {}
+//     }
+// }
+// handler.help = ['instagram']
+// handler.tags = ['downloader']
+// handler.command = /^(ig(dl)?|instagram(dl)?)$/i
+// handler.limit = true
 
-export default handler
+// export default handler

@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import path from 'path';
 
 let timeout = 120000

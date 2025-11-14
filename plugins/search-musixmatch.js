@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import cheerio from "cheerio";
+import * as cheerio from 'cheerio';;
 
 let handler = async (m, { conn, isOwner, usedPrefix, command, args }) => {
   let query = "input text\nEx. .musixmatch minecraft\n<command> <tex>";

@@ -1,6 +1,6 @@
 
 import fetch from 'node-fetch';
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 
 let handler = async (m, { conn, text }) => {
   const [subcommand, query] = text.split('|').map(str => str.trim().toLowerCase());

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import fetch from 'node-fetch'
 import fs from 'fs'
-import cheerio from 'cheerio'
+import * as cheerio from 'cheerio'
 
 let handler = async (m, { conn, args, usedPrefix, text, command }) => {
 	if (command == 'nicecerpen') {

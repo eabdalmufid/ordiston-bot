@@ -6,7 +6,7 @@ import {
 import {
     fileTypeFromBuffer
 } from 'file-type';
-import cheerio from "cheerio"
+import * as cheerio from 'cheerio';
 let handler = async (m, {
     conn,
     text,

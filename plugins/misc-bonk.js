@@ -1,4 +1,5 @@
-import jimp from 'jimp'
+import pkg from 'jimp';
+const { Jimp } = pkg;
 
 let handler = async (m, { conn, text }) => {
 	let img = await jimp.read('https://i.imgur.com/nav6WWX.png'),
